@@ -1,0 +1,180 @@
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>login</title>
+  {% load static %}
+  <link rel="stylesheet" href="{%static 'styles.css' %}">
+  <script src="{% static 'scripts.js' %}"></script>
+  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  {% endblock %}
+</head>
+<!--ONLOADILLA FUNKTIOTA KUTSUTAAN AINA SIVUN LATAUKSEN YHTEYDESSÄ.-->
+
+<body class="loginPage" onload="Check();">
+  <h3 class="loginHeader">Log-in Page</h3>
+  <center>
+    <p>Visitor count:</p>
+    <p id="times">{{times}}</p>
+
+    <div id="Plot" style="width:25%;max-width:400px; height:150px;">Hide by doubleclick</div>
+  </center>
+  <div id="showDiv" style="display: none;">
+    <button id="showBtn">Show chart</button>
+  </div>
+
+  <script>
+    //jquery koodi plot-divn piilottamiseen tuplaklikkaamlla piilottamisen jälkeen
+    //näytetään shwoDiv ja button elementti
+    $(document).ready(function () {
+      $('#Plot').dblclick(function () {
+        $("#Plot").hide();
+        $('#showDiv').show();
+      })
+    });
+    //jquery funktion liittäminen buttoniin showBtn klikattaessa näytetään Plot div
+    $(document).ready(function () {
+      $('#showBtn').click(function () {
+        $('#Plot').show()
+      })
+    })
+
+  </Script>
+
+  <!--Bar chartin js-koodi eli visitor counter-->
+  <script>
+    var visits = document.getElementById('times').innerHTML;
+    //muunto kokonaisluvuksi
+    parseInt(visits)
+    const xArray = [visits];
+    const yArray = [""];
+
+    const data = [{
+      x: xArray,
+      y: yArray,
+      type: "bar",
+      orientation: "h",
+      marker: { color: "rgba(50, 168, 145)" }
+    }];
+
+    const layout = { title: "Visits on page" };
+
+    Plotly.newPlot("Plot", data, layout);
+
+  </script>
+  <form action="/login-form/" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" id="username" placeholder="Username">
+    <input type="password" name="password" id="password" placeholder="Password">
+
+
+    <br>
+    <input type="submit" value="Login" onclick="moveImage();"></input>
+  </form>
+  <button id="showpsw" onclick="showPsw()" style=" position:relative; left:390px; top:-60px;"><i
+      class="fa-solid fa-eye"></i></button>
+  <script>
+    function showPsw() {
+      psw = document.getElementById("password")
+      if (psw.type === "password") {
+        psw.type = "text";
+      }
+      else {
+        psw.type = "password";
+      }
+    }
+  </script>
+  <p>Login status: {{info}}</p>
+
+  <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
+  <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
+  <input type="checkbox" onclick="showModal()" id="instructions">
+  <label for="instructions">Show log in instructions</label>
+  <br>
+  <script>
+
+    var imgVariable = null;
+
+    //funktio tallentaa img id tagin eli kuvan muuttujaan ja antaa alkuarvo sijainnille
+    function initImage() {
+      imgVariable = document.getElementById("imgPlace");
+      imgVariable.style.position = 'relative';
+      imgVariable.style.left = '450px';
+      imgVariable.style.top = '-125px';
+    }
+
+    //funktio siirtää kuvan 20 pikseliä ylöspäin.
+    function moveImage() {
+      imgVariable.style.top = parseInt(imgVariable.style.top) - 20 + 'px';
+    }
+    //initimage funktio suoritetaan aina kun sivu ladataan
+    window.onload = initImage;
+
+  </script>
+
+  <img id="imgPlace" class="imgClass" src="/static/lock.png" width="50" height="50"><br>
+  <!-- <input type="button" value="move" onclick="moveImage();">-->
+
+  <form action="/logout/" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+  </form>
+  <script>
+
+    function Check() {
+      var psw = document.getElementById('password').value;
+      var user = document.getElementById('username').value;
+
+      //talletetaan times muuttujaan times p tagin sisältö eli view.py:ssä
+      //määritelty numero
+      var times = document.getElementById('times').innerHTML
+
+      console.log(times)
+      //times muuttujan avulla suoritetaan modal ikkunan näyttö vain kerran ilman ehtoa
+      //modal ikkuna näytettäisiin joka kerta kun sivua päivitys. päivitys kasvattaa times
+      //muuttujaa aina yhdellä
+      if (psw === '' && user === '' && times == 1) {
+        //ehdon toteutuessa click metodilla toteutetaan painaminen
+        //käyttäjän ei siis tarvitse sitä erikseen klikata
+        document.getElementById("modalBtn").click()
+      }
+
+    }
+  </script>
+  <!-- Button trigger modal -->
+  <button type="button" hidden id="modalBtn" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#exampleModal">
+    Notice
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Info</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Fill username and input fields and click Login button to sign in.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Titles</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'styles.css' %}">
+</head>
+
+<body class="filt">
+    <div>
+        <h3>Filtered results</h3>
+        <p>{{option}}</p>
+        <table class="tab">
+            <!--jos option on 1 näytetään allaolevat td:t muussa tapauksessa mennään else haaran mukaisesti
+            option on määritelty views.py filterpost funktiossa-->
+            {%if option == '1' %}
+            <tr>
+                <th>Post-ID</th>
+                <th>Titles</th>
+            </tr>
+            {%else%}
+            <tr>
+                <th>Post-ID</th>
+                <th>Bodytext</th>
+            </tr>
+            {%endif%}
+
+            
+            {% for t in titles %}
+            <tr>
+                <td>{{t.postid}}</td>
+                <td>{{t.title}}</td>
+                 
+            </tr>
+            {%endfor%}
+
+        </table>
+
+        <table class="tab">
+        {% for b in body %}
+        <tr>
+            <td>{{b.postid}}</td>
+            <td>{{b.body}}</td>
+        </tr>
+        
+        {%endfor%}
+    </table>
+
+
+
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,372 @@
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DBoard</title>
+  <!--bootstrap ja fontawesome-->
+  {% load static %}
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+      <link rel="stylesheet" href = "{% static 'styles.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'scripts.js' %}"></script>
+
+
+  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  {% endblock %}
+</head>
+
+<body>
+  <form action="/post-filter/" method="post">
+    {% csrf_token %}
+  <div class="form-check">
+    <!--HUOMAA ONCLICK KUN JOMPIKUMPI CHECKBOX ON VALITTU SUORITETAAN SET FILTER JOKA AINOASTAAN
+    TOTEUTTAA SETBUTTONIN PAINALLUKSEN. NÄIN SAADAAN SUORITETTU VIEWS.PY:N FILTERPOST FUNKTIO ILMAN
+    ERILLISTÄ PAINIKKEEN KLIKKAUSTA-->
+    <input class="form-check-input" type="checkbox" value="title" id="titleCB" name="selection" onclick="setFilter()">
+    <label class="form-check-label" for="titleCB">
+      Show titles
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="body" id="bodyCB" name="selection" onclick="setFilter()">
+    <label class="form-check-label" for="bodyCB">
+      Show bodytext
+    </label>
+  </div>
+  <input hidden type="submit" value="set" id="setBtn">
+</form>
+
+
+  <!--for silmukoilla käydään kannasta haettu data läpi. data ja likedata on määritelty views.py:ssä-->
+  {% for d in data %}
+
+
+
+  <!--forloop.counter laskee for silmukan kierroksen ja kun kierrosnumero
+        lisätään div id jatkoksi saadaan accordion/collapse toimimaan yksi div kerrallaan klikkaamalla-->
+  <div class="accordion" id="accordionExample{{forloop.counter}}">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne">
+
+
+          <strong>Subject: </strong> {{d.title}}
+
+          <!--
+          {% for l in context %}
+          <p>{{ l }}</p>
+          {%endfor%}-->
+          <form action="/post-delete/" method="post">
+            {% csrf_token %}<button>X</button>
+            <input hidden name="deletePostId" value="{{d.postid}}">
+          </form>
+          <!--font awesome ikoni + tykkäysten määrä-->
+
+
+
+
+        </button>
+
+
+
+      </h2>
+
+      <div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse show"
+        data-bs-parent="#accordionExample{{forloop.counter}}">
+        <div class="accordion-body">
+
+
+
+
+          <strong>{{d.body}}<br> Reply: {{d.replymsg}}
+          <br>
+          {{d.replymsg2}}</strong>
+          <br>
+          
+         <!--IF/endif templatessa, jos postauksella ei ole tykkäyksiä, sen arvo on null jolloin näytetään likes:0-->
+          {%if d.likes == null %}
+          <strong>Likes: 0</strong>
+          <!--jos tykkäyksiä on eli arvo on suurempi kuin 0 niin näytetään kannasta haettu likes arvo-->
+          {%elif d.likes > 0 %}
+          <strong>Likes:{{d.likes}}</strong>
+          {%endif%}
+     
+
+          <p class="postid">Post ID: {{d.postid}}</p>
+          <!--
+          <input type="text" name="postIDval" value="{{d.postid}}">-->
+
+
+
+
+          <br>
+          <!--template if lauseen käyttö, jos reply eli tietokannan reply-kenttä on tyhjä näytetään
+                empty reply teksti-->
+        
+          <p>{{postId}}</p>
+        
+
+        </div>
+
+
+
+        <br>
+
+
+        <br>
+        <p class="d-inline-flex gap-1">
+          <a id="" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseReply{{forloop.counter}}"
+            role="button" aria-expanded="false" aria-controls="collapseExample">
+            Reply
+          </a>
+          <!--font awesome-->
+        <form action="/post-Like/" method="post">
+          {% csrf_token %}
+          <input hidden type="number" name="postIDval" value="{{d.postid}}">
+          <!--
+          <input hidden type="text" value={{forloop.counter}} name="postNumber">-->
+          <input type="submit" value="Like">
+        </form>
+
+        <div>
+
+          <script>
+            const container = document.getElementById('container')
+            function openForm() {
+              var subject = document.createElement('input')
+              subject.placeholder = 'New subject'
+
+              container.appendChild(subject)
+
+
+            }
+          </script>
+
+
+
+
+          <i id="copy" class="fa-solid fa-copy fa-lg" onclick="copyText()"></i>
+          <!--lomake saa parametrina mongodb:n postid:n eli d.postid joka käydään html:ssä for silmukalla
+        läpi näin post-edit lomake saa id numeron tietoon ja osaa välittää sen edit.html sivulle-->
+          <form action="/post-edit-send/{{d.postid}}/">
+            <!--button sisään on kääritty fontawesome kuvake, eli kuvake näkyy button-->
+            <button>
+              <a href="/post-edit-send/{{d.postid}}/">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+            </button>
+
+          </form>
+
+
+
+          <div class="collapse" id="collapseReply{{forloop.counter}}">
+            <div class="card card-body">
+              <form action="/post-Reply/" method="post">
+                {% csrf_token %}
+                <input type="number" name="postIDval" value="{{d.postid}}">
+                <input id="reply" name="reply" placeholder="Your reply">
+                <input type="submit" value="Reply to message">
+              </form>
+
+              <form action="/post-Reply-Old/" method="post">
+                {% csrf_token %}
+                <input type="number" name="postIDval" value="{{d.postid}}">
+                <input id="reply" name="reply" placeholder="Your reply">
+                <input type="submit" value="Reply and keep old data">
+              </form>
+
+              
+              
+          
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    {%endfor%}
+<!--
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            Replies
+          </button>
+        </h2>
+        {% for r in replymessage%}
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+
+            <p>Postid: {{r.postid}} <b>{{r.replymsg}}</b></p>
+
+
+          </div>
+        </div>
+      </div>
+
+      {%endfor%}-->
+
+
+      <p class="d-inline-flex gap-1">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+          aria-controls="collapseExample">
+          Submit a new post
+        </a>
+
+      </p>
+
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+
+          <form action="/post-New/" method="post">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input id="postTitle" name="postTitle">
+            <input id="bodyText" name="bodyText" placeholder="Your post">
+            <input type="submit" value="Send">
+
+          </form>
+
+
+
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<!--
+  <p class="d-inline-flex gap-1">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+      aria-controls="collapseExample">
+      See Likes
+    </a>
+
+  </p>
+
+  <div class="collapse" id="collapseExample">
+
+    <div class="card card-body">
+      {%for i in likedata%}
+      <p>Post: {{forloop.counter}} has {{i.likecount}} <i class="fa-solid fa-thumbs-up"></i></p>
+      {%endfor%}
+
+    </div>
+
+  </div>-->
+
+
+
+  <p class="d-inline-flex gap-1">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+      aria-controls="collapseExample">
+      Statistics
+    </a>
+
+  </p>
+  <form action="/save-to-csv/" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-primary btn-md" value="Save messages to csv">
+  </form>
+
+  <div class="collapse" id="collapseExample">
+
+    <div class="card card-body">
+      {% for de in deleted%}
+      <p id="del">Deleted posts: <b>{{de.count}}</p></b> Latest delete: <b>{{de.deldate}}</b>
+      <br>
+      <p id="posted">New posts: {{de.postCount}} since {{de.postDate}}</p>
+      <!--tietokanta arvojen tallennus input kenttin, josta ne talletetaan javascript muuttujiin
+      ja käytetään muuttujia js koodissa-->
+      <input hidden id="delinput" type="number" value="{{de.count}}">
+
+      <br>
+
+
+      {%endfor%}
+      <!--posted dictionaryssa on vain deleted collection id 2:lla haettu data. erilliset dictionaryt ja for-silmukka, koska
+      muuten postCountia ei saanut näkymään sivulla-->
+      {% for p in posted %}
+      {{p.postCount}}
+      <input hidden id="postinput" type="number" value="{{p.postCount}}">
+      {%endfor%}
+
+
+
+      <!--TIETOKANNAN LUKUJEN NÄYTTÖ GRAAFISSA-->
+      <canvas id="myChart" width="900" height="400"></canvas>
+      <script type="text/javascript">
+        var deleted = document.getElementById("delinput").value;
+        var posted = document.getElementById('postinput').value;
+        console.log(deleted)
+        console.log(posted)
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Deleted', 'Posted'],
+            datasets: [
+              {
+                label: 'Deleted & posted',
+                data: [deleted, posted],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                ],
+
+                borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+
+      </script>
+
+
+
+
+    </div>
+
+  </div>
+
+
+
+</body>
+
+</html>

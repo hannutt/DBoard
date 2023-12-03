@@ -1,0 +1,64 @@
+.form-check {
+    background-color: lightblue;
+}
+
+.tab {
+ 
+    border: 2px solid black;
+    font-size: x-large;
+    border-color: #7b9db3;
+    background-color: azure;
+}
+
+
+.container {
+    width: 550px; 
+    left: 550px;
+    background: red;
+}
+.animate {
+    width: 10px;
+    height:10px;
+    position: absolute;
+    top:250px;
+    left:450px;
+    background: green;
+    
+}
+
+
+.loginHeader {
+    text-align: center;
+    background-color: bisque;
+
+}
+.times {
+    text-align: center;
+}
+
+.filt {
+    background-color: aqua;
+}
+.prodCheck {
+    font-size: x-large;
+    font-family: 'Brush Script MT',cursive;
+    background: gray;
+}
+
+.card-body {
+    background: green;
+    font-size: medium;
+    font-family: 'Brush Script MT',cursive;
+}
+
+
+
+.loginPage {
+    background-color: #7383d1;
+}
+
+.openBtn {
+    background-color: #04AA6D;
+    background: white;
+    padding: 16px 20px;
+}
