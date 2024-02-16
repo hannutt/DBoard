@@ -1,0 +1,135 @@
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+      {% load static %}
+      <link rel="stylesheet" href="{%static 'styles.css' %}">
+      {% endblock %}
+        <title>
+
+        </title>
+    </head>
+    <body>
+        <style>
+            table, th, td {
+              border:1px solid black;
+            }
+            </style>
+        <h3>Ban Ip-address</h3>
+        <!--counter arvo tuoaan views.py funktiosta ja näytetään tässä-->
+        <p id="counter">{{counter}}</p>
+        <p id="checker"></p>
+        <p id="days"></p>
+        {%for r in result%}
+        <table id="table">
+            <tr>
+              <th>IP-address</th>
+              <th>Banned since</th>
+              
+            </tr>
+            <tr>
+              <td>{{r.ip}}</td>
+              {%if r.BanDate == None %}
+              <td class="daterow">Unknown</td>
+              {%else%}
+              <td class="daterow">{{r.BanDate}}</td>
+              {%endif%}
+            
+              
+             
+            </tr>
+         
+          </table>
+        
+        {%endfor%}
+
+        <table id="tableDays" class="tableDays">
+          <tr>
+            <th>Days Banned</th>
+          </tr>
+       
+        </table>
+        <form action="/ban-form/" method="post">
+            {% csrf_token %}
+            <input type="text" name="ipadd" id="ipadd" placeholder="Ip-address" onchange="checkIp()">
+            <br>
+            <input type="submit" value="Ban"></input>
+          </form>
+          <script>
+            function checkIp()
+            {
+                var ip = document.getElementById("ipadd").value;
+                if (ip[3]!='.')
+                {
+                    document.getElementById("checker").innerHTML="Incorrect address"
+                }
+                else {
+                    document.getElementById("checker").innerHTML=""
+
+                }
+            }
+            
+            function getBanDate() {
+              //counterin arvo saadaan views.py funktiosta jossa lasketaan
+              //bannedips kokoelman docukemnttien määrä
+              var counter = document.getElementById("counter").innerHTML
+              var datevalueList = []
+              var finalList = []
+                console.log("counter: ",counter)
+                var table = document.getElementById("table");
+                var tableDays = document.getElementById("tableDays");
+               //byclassnamella saadaan kaikki luokan td-sarakkeessa olevat arvot
+                var datevalue = document.getElementsByClassName("daterow")
+                console.log(datevalue)
+                //datevalueList.push(datevalue)
+                var date1=''
+                var txt=''
+                var targetTime = new Date(Date.now())
+               // var rowCount = document.getElementById('table').rows[0].cells.length;
+                
+                //counter muuttujan käyttö silmukassa
+                for (var i = 0;i<counter; i++)
+                {
+                   //datevalue on käytännössä lista jonka arot käydään silmukalla ja i muuttujalla yksitellen läpi
+                    datevalueList.push(datevalue[i].innerHTML)
+                    //txt +=datevalueList[i]+"<br>"
+                    //document.getElementById("days").innerHTML=txt
+                    //date1 muuttujaan talletetaan vuorollaan jokainen datevaluelistassa oleva arvo (i)
+                    date1=datevalueList[i]
+                    console.log(date1)
+
+                    var date1Final = date1.split(".")
+                     //date1 on muodossa PP.KK.VVVv ja se täytyy muuttaa muotoon KK.PP.VVVV eetä aikaeron laskeminen
+                //toimii. jaetaan merkkijonon . merkin kohdalta osiin
+                    var dateObject = new Date(+date1Final[2], date1Final[1] - 1, +date1Final[0]);
+                    //lasketaan 2 päivämäärän erotus 
+                    var result = targetTime.getTime() - dateObject.getTime()
+                    var difDays = Math.round(result / (1000 * 3600 * 24));
+                    console.log(difDays)
+                    txt +=datevalueList[i]+" " +difDays+"<br>"
+                    finalList.push(difDays)
+                    var row = tableDays.insertRow();
+                    var cell1 = row.insertCell();
+                    cell1.innerHTML = "Days"
+                   
+                    var row2 = tableDays.insertRow(i)
+                    var cell2 = row.insertCell(0);
+                    cell2.innerHTML=finalList[i]
+                   
+                    
+                
+                }
+            
+               
+               
+               
+               
+                
+               
+                
+            }
+            window.onload=getBanDate;
+          </script>
+          
+    </body>
+</html>

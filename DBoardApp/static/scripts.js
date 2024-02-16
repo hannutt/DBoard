@@ -1,4 +1,33 @@
+function CheckId()
+{   //haetaan käyttäjän syöttämä arvo
+    var userInput = document.getElementById("prodIdVal").value;
+    //muunnetaan se kokonaisluvuksi
+    var userInputInt = parseInt(userInput)
+    console.log(typeof(userInputInt))
+    
+    var numberList = []
+    //käytetyt numerot ovat li-tagin sisällä, joten haku kohdistuu
+    //li tagiin
+    var numbers = document.getElementsByTagName("li")
+    
+    //var result = Array.isArray(numberList)
+   
+    //käytettyjen numeroiden läpikäynti    
+    for (var i = 0; i < numbers.length; i++)
+    {
+        //numeroiden tallennus listaan ja muunto kokonaisluvuksi
+        numberList.push(numbers[i].innerHTML)
+        numberList = numberList.map(Number)
+        console.log(numberList)
 
+                         
+ 
+    } //jos lista sisältää käyttäjän syöttämän numero, tulostetaan ilmoitus
+    if (numberList.includes(userInputInt))
+        {
+            alert("id already used")
+        } 
+      }
 
 function showModal() {
     document.getElementById("modalBtn").click()
@@ -8,6 +37,7 @@ function showModal() {
 function orderForm() {
 //input muuttujaan talletetaan checkboxin true/false arvo
    // var input = document.querySelector('.orderCB')
+   //lomakkeen sisältämän input kentät yms
     var form = '<h3>Order form</h3> <form method="post" action="send-order"> <input type="text" id="pname"> <input type="text" id="untPrice">'
     /*
     var pname = document.getElementById("prodName").value
@@ -32,7 +62,7 @@ function orderForm() {
    
   
 }
-
+//simuloidaan setBtn ja startBtn painikkeiden klikkaus
 function setFilter() {
     document.getElementById("setBtn").click()
 }
@@ -68,5 +98,20 @@ function DoClick() {
         
       }
     }
+  }
+
+  function Banned() {
+    var add = document.getElementById("ip").innerHTML;
+    console.log(add)
+    if (add === "banned!") 
+    {//asetetaan loginBtn id:llä nimettu buttoni disabloiduksi
+       
+
+      //document.querySelector('#ban').click();
+
+      document.querySelector('#loginBtn').setAttribute('disabled', true);
+
+    }
+    console.log(add)
   }
 

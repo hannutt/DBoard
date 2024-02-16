@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit post</title>
+    </head>
+    <body>
+        <h3>Edit Product</h3>
+        {%for p in prods %}
+        <form action="/edit-product/" method="post">
+            {% csrf_token %}
+            <input type="text" name="prodId" value="{{p.productId}}">
+            <input type="text" name="prodName" value="{{p.name}}">
+            <br>
+           <input type="text" name="prodPrice" value="{{p.price}}">
+           <input type="text" name="instock" value="{{p.instock}}">
+           <input type="submit" value="Save">
+           
+        </form>
+         {%endfor%}
+       
+    </body>
+</html>

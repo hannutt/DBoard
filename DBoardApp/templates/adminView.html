@@ -10,11 +10,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
+
+
     <title>Admin View</title>
 </head>
 
-<body>
+<body onload="countItems()">
     <h3>Admin view</h3>
+    <br>
+    <!--usedid sql-taulun numerot-->
+    {% for num in numbers %}
+    <ul>
+        <li hidden>
+
+
+
+            {{num}}
+        </li>
+
+    </ul>
+
+    {%endfor%}
     <!--accordion divin pituus 250 pikseliin-->
     <div class="accordion" id="accordionExample1" style="width: 250px;">
         <div class="accordion-item" style="background-color: lightgray;">
@@ -45,8 +61,10 @@
                             <div class="accordion-body">
                                 <form action="/add-product/" method="post">
                                     {% csrf_token %}
-                                    <input type="number" name="prodId" id="prodId" placeholder="Product ID"> <input
-                                        type="text" name="prodName" id="prodName" placeholder="Product name">
+
+                                    <input type="text" name="prodId" id="prodIdVal" placeholder="Product ID"
+                                        onchange="CheckId()">
+                                    <input type="text" name="prodName" id="prodName" placeholder="Product name">
                                     <input type="number" name="prodPrice" id="prodPrice" placeholder="Product price €">
                                     <input type="number" name="prodStock" id="prodStock" placeholder="Pcs in stock">
                                     <button type="submit" class="btn btn-outline-primary">Save</button>
@@ -54,18 +72,59 @@
                             </div>
                         </div>
                     </div>
-                  
+                    <script>
+                        function CheckId() {   //haetaan käyttäjän syöttämä arvo
+                            var userInput = document.getElementById("prodIdVal").value;
+                            //muunnetaan se kokonaisluvuksi
+                            var userInputInt = parseInt(userInput)
+                            console.log(typeof (userInputInt))
+
+                            var numberList = []
+                            //käytetyt numerot ovat li-tagin sisällä, joten haku kohdistuu
+                            //li tagiin
+                            var numbers = document.getElementsByTagName("li")
+
+                            //var result = Array.isArray(numberList)
+
+                            //käytettyjen numeroiden läpikäynti    
+                            for (var i = 0; i < numbers.length; i++) {
+                                //numeroiden tallennus listaan ja muunto kokonaisluvuksi
+                                numberList.push(numbers[i].innerHTML)
+                                numberList = numberList.map(Number)
+                                console.log(numberList)
+
+
+
+                            } //jos lista sisältää käyttäjän syöttämän numero, tulostetaan ilmoitus
+                            if (numberList.includes(userInputInt)) {
+                                alert("id already used")
+                                document.getElementById("prodIdVal").value = ''
+
+                                document.getElementById("prodIdVal").style.background = "red"
+                                //3 sekunnin jälkeen kutsutaan changecolorback funktiota
+                                //joka muuttaa input taustavärin takaisin oletusväriksi
+                                const Mytimeout = setTimeout(changeColorBack, 3000)
+                            }
+
+                        }
+
+                        function changeColorBack() {
+                            document.getElementById("prodIdVal").style.background = "#1fe0"
+                        }
+                    </script>
+
+
                     <div class="accordion-item">
-                       
+
                         <div class="accordion" id="accordionExample3" style="width: 350px;">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
-                                        Delete/edit products
+                                        Edit products
                                     </button>
                                 </h2>
-                               
+
                                 <div id="collapse3" class="accordion-collapse collapse show"
                                     data-bs-parent="#accordionExample3">
                                     <div class="accordion-body">
@@ -73,30 +132,103 @@
                                         {{p.productId}}
                                         {{p.name}}
 
-                                        <button type="submit" class="btn btn-outline-primary">Delete</button>
-                                        <form action="/edit-product/{{p.productId}}/" method="post">
+
+                                        <form action="/post-edit-product-send/{{p.productId}}/" method="post">
                                             {% csrf_token %}
-                                        <button type="submit" class="btn btn-outline-primary" onclick="editForm()">Edit</button>
-                                        <br>
-                                        
-                                       
-                                        
+
+                                            <button type="submit" class="btn btn-outline-primary">Edit</button>
+
+                                            <br>
                                         </form>
+
+
+
+
                                         {%endfor%}
+
                                         <script>
-                                            function editForm () {
-                                                var form = `<input type=text name="prodname" value={{p.name}}>`
+                                            function editForm() {
+                                                var form = `<input type=text name="prodname" value={{p.productId}}>`
                                                 document.getElementById("editForm").innerHTML = form
                                             }
                                         </script>
-                                    
+
 
 
                                     </div>
                                 </div>
                             </div>
                             <div class="accordion-item">
-                                <div id="editForm"></div>
+
+                                <div class="accordion" id="accordionExample4" style="width: 350px;">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse4" aria-expanded="true"
+                                                aria-controls="collapse4">
+                                                MIN/MAX
+                                            </button>
+                                        </h2>
+
+                                        <div id="collapse4" class="accordion-collapse collapse show"
+                                            data-bs-parent="#accordionExample4">
+                                            <div class="accordion-body">
+                                                <p>Most in stock:</p>
+                                                
+                                                <br>
+                                                {%for max in maxInstock %}
+                                               <p id="most"><strong>{{max.name}} {{max.instock}} pcs</strong></p> 
+                                                {%endfor%}
+                                                <p>Least in stock:</p>
+                                                
+                                                {%for min in minInstock %}
+                                                <p id="least"><strong>{{min.name}} {{min.instock}} pcs</strong> </p>
+                                                {%endfor%}
+
+                                                {%for total in stockTotal %}
+                                                <p class="amount" hidden>{{total.instock}}</p>
+                                                {%endfor%}
+                                                <p id="sum"></p>
+
+
+                                                <script>
+
+
+                                                    //lasketaan varastomäärä kaikkien tuotteiden osalta
+                                                    function countItems() {
+                                                        var items = []
+                                                        var sum = 0
+                                                        //classnamella voidaan hakea kaikki luokan sisällä olevat arvot
+                                                        var amount = document.getElementsByClassName("amount")
+
+                                                        //toisto eli niin kauan kuin i on pienempi kuin amount
+                                                        //luokan merkkimäärä lisätään merkkejä listaan
+                                                        for (i = 0; i < amount.length; i++) {
+                                                            //muunto luvuiksi
+                                                            items.push(Number(amount[i].outerText))
+                                                            //yhteenlasku
+                                                            sum += Number(amount[i].outerText)
+                                                            console.log(items)
+                                                            console.log(sum)
+
+
+                                                        }
+                                                        //tuloksen näyttö sum p-tagissa ja värien määrittely
+                                                        document.getElementById("sum").style.background="lightgray"
+                                                        document.getElementById("sum").style.color="blue"
+                                                        document.getElementById("most").style.background="lightgray"
+                                                        document.getElementById("most").style.color="green"
+                                                        document.getElementById("least").style.background="lightgray"
+                                                        document.getElementById("least").style.color="red"
+                                                        
+                                                        document.getElementById("sum").innerHTML = "Sum of all products: " + sum
+
+
+                                                    }
+                                                </script>
+
+                                                <div class="accordion-item">
+                                                    <div id="editForm"></div>
 
 
 

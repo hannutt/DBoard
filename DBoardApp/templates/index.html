@@ -23,7 +23,7 @@
   {% endblock %}
 </head>
 
-<body>
+<body onload="fixReplyMsg()">
   <form action="/post-filter/" method="post">
     {% csrf_token %}
   <div class="form-check">
@@ -88,9 +88,40 @@
 
 
 
-          <strong>{{d.body}}<br> Reply: {{d.replymsg}}
+          <strong>{{d.body}}<br> 
+           <p id="reply">
+          Reply: {{d.replymsg}} </p>
+        
+       
+        <p  id="fixedReply" style="background-color: lightblue;">{{d.replymsg}}</p>
+        <script>
+          function fixReplyMsg() {
+            /*var paragraphs = document.getElementsByTagName("p");
+for(var i = 0; i < paragraphs.length; i++)
+{
+    alert(paragraphs[i].innerHTML);
+} */
+
+            
+            var replyList = []
+            
+            var reply = document.getElementById("reply").innerHTML
+          
+            
+           
+            var replied = reply.replace('[','').replace(']','').replace('replymsg','').replace('{','').replace('}','')
+          
+            document.getElementById("fixedReply").innerHTML=replied
+            console.log(reply)
+           
+           
+
+
+          }
+        </script>
+          
           <br>
-          {{d.replymsg2}}</strong>
+          
           <br>
           
          <!--IF/endif templatessa, jos postauksella ei ole tykkäyksiä, sen arvo on null jolloin näytetään likes:0-->
@@ -178,13 +209,13 @@
                 <input id="reply" name="reply" placeholder="Your reply">
                 <input type="submit" value="Reply to message">
               </form>
-
+              <!--
               <form action="/post-Reply-Old/" method="post">
                 {% csrf_token %}
                 <input type="number" name="postIDval" value="{{d.postid}}">
                 <input id="reply" name="reply" placeholder="Your reply">
                 <input type="submit" value="Reply and keep old data">
-              </form>
+              </form>-->
 
               
               
@@ -197,7 +228,7 @@
       </div>
 
     </div>
-
+    </div>
     {%endfor%}
 <!--
     <div class="accordion" id="accordionExample">

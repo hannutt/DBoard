@@ -10,6 +10,9 @@ import random
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 import pandas as pd
+import sqlite3
+import socket
+from datetime import datetime
 
 global today
 today = date.today()
@@ -25,10 +28,35 @@ amount = 0
 
 
 def loginView(request):
+
+     #myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+     #mydb = myclient['DBoardDB']
+     collection = dbname['BannedIps']
+     result= collection.find({},{ "_id": 0, "ip": 1})
+     for i in result: 
+        print(i)    
+
+    
      global times
      times +=1
      loginfo = "[Not logged in]"
-     context = {'info':loginfo,'status':status,'times':times}
+     hostname = socket.gethostname()
+     ip = socket.gethostbyname(hostname)
+     #ip = '192.90.45.73'
+     #ltarkastetaan onko ip-osoite bannattu, eli löytyykö se kannasta
+     isIpExist = collection.count_documents({"ip":ip})
+     print(isIpExist)
+     #existIp=mycol.find({"ip": ip},{'_id':0}).count()
+     #jos ip-osoite löytyy
+     if isIpExist == 1:
+        result='banned!' 
+        context = {'info':loginfo,'status':status,'times':times,'result':result}
+     else:
+        result=ip
+        context = {'info':loginfo,'status':status,'times':times,'result':result}
+
+    
+   
    
      return render(request,'login.html',context)
 
@@ -59,6 +87,19 @@ def logout_user(request):
     context = {'info':loginfo}
     return render(request,'login.html',context)
 
+def BanPage(request):
+
+    collection = dbname['BannedIps']
+    result= collection.find({},{ "_id": 0, "ip": 1,"BanDate":1})
+    dateInfo = collection.find({},{"_id":0,"ip":0,"BanDate":1})
+    #lasketaan BannedIps kokoelman dokumenttien määrä
+    counter = collection.count_documents({})
+    print(counter)
+    context={'result':result,'counter':counter}
+    dateContext = {'dateInfo':dateInfo}
+    print(dateInfo)
+    
+    return render(request,'banIps.html',context)
 
 def FrontPage(request):
      #kirjautumisen tarkastus, jos käyttäjä ei ole kirjautunut näytetään login.html sivu
@@ -78,7 +119,7 @@ def FrontPage(request):
     #näytetään vain ne tietueet, joissa on replymsg kenttä.
       replymessage = collection.find({'replymsg':{'$exists':'true'}})
       #isZero = collection.find({"likes":{"$exists":"true"}})
-  
+      
       deleted = col4.find()
       posted =  col4.find({'_id':2})
      
@@ -86,38 +127,46 @@ def FrontPage(request):
 
 def postReply(request):
      data = []
-     postid=449
-     collection = dbname['posts']
-     #postid = request.POST['postIDval']
-     #postid tulee merkkijonona joten se täytyy muuntaa kokonaisluvuksi
-     #että se voidaan tallentaa kantaan
-     postidInt = int(postid)
-     query = collection.find({"postid":postidInt},{"_id":0,"replymsg":1})
-     data.append(query)
-    
-     #msg = request.POST['reply']
-     #isEmpty = collection.find({"replymsg":{"$exists":"true","$eq":""}}) 
-     #if isEmpty:
-    
-     #filtteri eli minkä dokumentin replymsg kenttääm vastaus tallennetaan
-     #filter = {'postid':postidInt}
-     #lisätään muuttujan teksti dokumentin replymsg kenttään
-     #replydata = {"$set":{"replymsg":msg}}
-   
-     #collection.update_one(filter,replydata)
-     for i in query:
-      #data.append(i)
-      print(i)
-     return render(request,'index.html')
-
-def postReplyOld(request):
+     
      collection = dbname['posts']
      postid = request.POST['postIDval']
+     msg = request.POST['reply']
      #postid tulee merkkijonona joten se täytyy muuntaa kokonaisluvuksi
      #että se voidaan tallentaa kantaan
      postidInt = int(postid)
-     msg = request.POST['reply']
+     '''
+     isEmpty = collection.find({"replymsg":{"$exists":"true","$eq":""}})
+     if isEmpty:
+         filter = {'postid':postidInt}
+         replydata = {"$set":{"replymsg":msg}}
+     else:
+     '''
+      #haetaan postid:llä ja talletetaan muuttujan replymsg kentässä jo oleva data
+     previousData = collection.find({"postid":postidInt},{"_id":0,"replymsg":1})
+     #previousdatan läpikäynti silmukassa että se saadaan lukukelpoiseen muotoon
+     #ja tallennus data listaan
+     for i in previousData:
+         data.append(i)
+         
+     #data.append(previousData)
+     #data.append(query)
+    
+     
+     data.append(msg)
+     
+    
+     #filtteri eli minkä dokumentin replymsg kenttääm vastaus tallennetaan
      filter = {'postid':postidInt}
+     #datalista sijoitetaan replymsg kenttään
+     replydata = {"$set":{"replymsg":data}}
+   
+     collection.update_one(filter,replydata)
+    
+      
+     print(data)
+     return render(request,'index.html')
+
+
     
     
     
@@ -258,7 +307,27 @@ def showEdit(request,postid):
 def editProduct(request,productId):
     collection = dbname['products']
     prods = collection.find({'productId':productId})
-    return render(request,'adminView.html',{'prods':prods})
+    return render(request,'editProducts.html',{'prods':prods})
+
+#tällä muokataan products kokoelman tuotteita
+def updateProd(request):
+    collection = dbname['products']
+    prodId = request.POST['prodId']
+    prodIdInt = int(prodId)
+    prodName = request.POST['prodName']
+    prodPrice = request.POST['prodPrice']
+    instock = request.POST['instock']
+    #vastaa sql WHERE ID = LAUSETTA
+    filter = {'productId':prodIdInt}
+    #päivitys tapahtuu avain-arvo pareina. ensin tulee kentän nimi, sen jälkeen muuttuja jonka
+    #arvo kenttään päivitetäänF
+    updateData = {"$set":{"name":prodName,"price":prodPrice,"instock":instock}}
+
+    collection.update_one(filter,updateData)
+
+    return render(request,'editProducts.html')
+
+    
 
 def saveCsv(request):
     collection = dbname['posts']
@@ -270,10 +339,15 @@ def saveCsv(request):
 
 def webshop(request):
     collection = dbname['products']
+    
+    
+    #maxId = collection.find().sort({'productId':-1}).limit(1)
     prods = collection.find()
+    #print(maxId)
     return render(request,'webshop.html',{'prods':prods})
 
 def webshopAdmin(request):
+    
     collection = dbname['products']
     prods = collection.find()
     return render(request,'adminView.html',{'prods':prods})
@@ -325,10 +399,40 @@ def discount(request):
     return render(request,'webshop.html')
 
 def showAdminView(request):
+     numbers = []
+     connection = sqlite3.connect('db.sqlite3')
+     connection.row_factory = sqlite3.Row
+     cursor = connection.cursor()
+     cursor.execute("SELECT used FROM usedId")
+     rows = cursor.fetchall()
+     for used in rows: 
+        numbers.append(used[0])
+     collection = dbname['products']
+     print(numbers)
      
+     #haetaan kannasta tuote, jota on eniten varastossa, eli instock arvo on suurin
+     maxInstock = collection.find().sort('instock',-1).limit(1)
+     #haetaan pienin instock arvo
+     minInstock = collection.find().sort('instock',1).limit(1)
+     stockTotal = collection.find().sort("instock",-1)
+    
      collection = dbname['products']
      prods = collection.find()
-     return render(request,'adminView.html',{'prods':prods})
+     #for maxstock in maxInstock:
+      #  maxiumStock={'maxiumStock':maxstock}
+     print(maxInstock)
+   
+     return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal})
+
+def SaveBannedIp(request):
+    Dnow = datetime.now()
+    formatted = Dnow.strftime("%d.%m.%Y")
+    #print(formatted)
+    ipCol = dbname['BannedIps']
+    ip = request.POST['ipadd']
+    saveData = {'ip':ip,'BanDate':formatted}
+    ipCol.insert_one(saveData)
+    return render(request,'banIps.html')
 
 def AddProducts(request):
     prodCollection = dbname['products']
@@ -338,6 +442,7 @@ def AddProducts(request):
     prodStock = request.POST['prodStock']
     addQuery={'productId':prodId,'name':prodName,'price':prodPrice,'instock':prodStock}
     prodCollection.insert_one(addQuery)
+    prodId = prodId +1
     return render(request,'adminView.html')
   
 

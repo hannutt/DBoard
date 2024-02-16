@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+<head onload>
   <title>login</title>
   {% load static %}
   <link rel="stylesheet" href="{%static 'styles.css' %}">
@@ -24,6 +24,16 @@
   <center>
     <p>Visitor count:</p>
     <p id="times">{{times}}</p>
+    <br>
+    <p>Ip Address</p>
+   
+    <p id="ip">{{result}}</p>
+    {% for i in result %}
+    <p>{{i.ip}}</p>
+    {%endfor%}
+ 
+    
+   
 
     <div id="Plot" style="width:25%;max-width:400px; height:150px;">Hide by doubleclick</div>
   </center>
@@ -60,7 +70,11 @@
     const data = [{
       x: xArray,
       y: yArray,
+      //numeroväli 1, eli desimaaleja ei näytetä
+      dtick:1,
+      //kaavion tyyppi
       type: "bar",
+      //kaavion piirtosuunta
       orientation: "h",
       marker: { color: "rgba(50, 168, 145)" }
     }];
@@ -70,6 +84,7 @@
     Plotly.newPlot("Plot", data, layout);
 
   </script>
+  
   <form action="/login-form/" method="post">
     {% csrf_token %}
     <input type="text" name="username" id="username" placeholder="Username">
@@ -77,10 +92,29 @@
 
 
     <br>
-    <input type="submit" value="Login" onclick="moveImage();"></input>
+    <input id="loginBtn" type="submit" value="Login" onclick="moveImage();"></input>
   </form>
   <button id="showpsw" onclick="showPsw()" style=" position:relative; left:390px; top:-60px;"><i
       class="fa-solid fa-eye"></i></button>
+      <script>
+        //banned funktion kutsu rivillä 156, funktio suoritetaan aina sivun latautuessa (window.onload = Banned;)
+      function Banned() {
+        var add = document.getElementById("ip").innerHTML;
+        console.log(add)
+        if (add === "banned!") 
+        {//asetetaan loginBtn id:llä nimettu buttoni disabloiduksi
+           
+    
+          //document.querySelector('#ban').click();
+    
+          document.querySelector('#loginBtn').setAttribute('disabled', true);
+
+        }
+        console.log(add)
+      }
+    </script>
+   
+
   <script>
     function showPsw() {
       psw = document.getElementById("password")
@@ -93,12 +127,14 @@
     }
   </script>
   <p>Login status: {{info}}</p>
-
+  <a class="btn btn-primary btn-md" href="/banIps">Ban</a>
+  <br><br>
   <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
   <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
   <input type="checkbox" onclick="showModal()" id="instructions">
   <label for="instructions">Show log in instructions</label>
   <br>
+  
   <script>
 
     var imgVariable = null;
@@ -114,9 +150,12 @@
     //funktio siirtää kuvan 20 pikseliä ylöspäin.
     function moveImage() {
       imgVariable.style.top = parseInt(imgVariable.style.top) - 20 + 'px';
+      //imgVariable.style="transform: rotate(5deg)"
+      
     }
     //initimage funktio suoritetaan aina kun sivu ladataan
     window.onload = initImage;
+    window.onload = Banned;
 
   </script>
 
@@ -130,12 +169,15 @@
   <script>
 
     function Check() {
+      
+    
       var psw = document.getElementById('password').value;
       var user = document.getElementById('username').value;
 
       //talletetaan times muuttujaan times p tagin sisältö eli view.py:ssä
       //määritelty numero
       var times = document.getElementById('times').innerHTML
+      
 
       console.log(times)
       //times muuttujan avulla suoritetaan modal ikkunan näyttö vain kerran ilman ehtoa
