@@ -4,6 +4,9 @@ Project keywords: Python,Django,JavaScript,JQuery,NoSQL,Bootstrap
 
 MAIN FEATURES:
 
+USER AUTHENTICATION:
+Basic Log-in and Log-out features
+
 VISITOR COUNTER:
 Visitor counter with Python and javascript. The Python code counts the visits and the javascript code displays the number graphically using the ChartJS library.
 
