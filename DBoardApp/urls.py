@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls import path
 from .views import FrontPage,postReply,postNew,likePost,deletePost,showEdit,login_user,loginView,logout_user,saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,showAdminView,AddProducts,webshopAdmin,editProduct,updateProd,\
-BanPage,SaveBannedIp
+BanPage,SaveBannedIp,DeleteFromBan
 
 urlpatterns = [
     path("",loginView),
@@ -10,6 +10,7 @@ urlpatterns = [
     path("index/",FrontPage),
     path('banIps/',BanPage),
     path('ban-form/',SaveBannedIp),
+    path('del-ban/',DeleteFromBan),
     #html-lomake ja funtio yhdistetään toisiinsa näin
     path('post-Reply/',postReply),
     path('post-New/',postNew),

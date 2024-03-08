@@ -4,6 +4,8 @@
     <head>
       {% load static %}
       <link rel="stylesheet" href="{%static 'styles.css' %}">
+      <script src="{% static 'scripts.js' %}"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       {% endblock %}
         <title>
 
@@ -21,19 +23,26 @@
         <p id="checker"></p>
         <p id="days"></p>
         {%for r in result%}
-        <table id="table">
+        <table id="table" class="primaryTable">
             <tr>
               <th>IP-address</th>
               <th>Banned since</th>
               
+              
             </tr>
             <tr>
               <td>{{r.ip}}</td>
+              <form action="/del-ban/" method="post">
+              <input hidden type="text" name="ip" value="{{r.ip}}">
               {%if r.BanDate == None %}
               <td class="daterow">Unknown</td>
               {%else%}
               <td class="daterow">{{r.BanDate}}</td>
               {%endif%}
+             
+                {% csrf_token %}
+              <td><button type="submit">X</button></td>
+            </form>
             
               
              
@@ -42,8 +51,21 @@
           </table>
         
         {%endfor%}
-
-        <table id="tableDays" class="tableDays">
+      
+        <p id="bannedDays" class="bannedDays">Double-click this to see Banned days</p>
+        <script>
+          //jquery taulukon näyttöön,piilottamiseen ja teksti vaihtoon
+          $("#bannedDays").dblclick(function(){
+            $("#tableDays").show()
+            //p-tagin tekstin vaihto tuplaklikkauksen jälkeen
+            $('#bannedDays').text('Click to hide')
+          });
+          $("#bannedDays").click(function(){
+            $("#tableDays").hide()
+            $('#bannedDays').text('Double-click this to see Banned days')
+          });
+        </script>
+        <table id="tableDays" class="tableDays" hidden>
           <tr>
             <th>Days Banned</th>
           </tr>
@@ -56,15 +78,43 @@
             <input type="submit" value="Ban"></input>
           </form>
           <script>
+            //funktio tarkistaa että ip osoitteessa on 3 pistettä
             function checkIp()
             {
                 var ip = document.getElementById("ipadd").value;
-                if (ip[3]!='.')
+                var checkelem =  document.getElementById("checker")
+                var char = '.'
+                var count = 0
+                for (i=0;i<ip.length;i++)
                 {
-                    document.getElementById("checker").innerHTML="Incorrect address"
+                  //jos ip muuttijasta löytyy . merkki kasvatetaan count muuttujaa luvulla 1
+                  //i muuttujalla ja for-silmukalla käydään jokainen muuttujan merkki läpi
+                  if (ip.charAt(i)== char)
+                  {
+                    count+=1
+
+                  }
+
+                }
+                console.log(count)
+                
+                if (count == 3)
+                {
+                    //var checkelem =  document.getElementById("checker")
+                    checkelem.innerHTML="Correct address"
+                  //document.getElementById("checker").innerHTML="Correct address"
+                    checkelem.style.background="green";
+                    checkelem.style.fontSize="large"
+                   
+                    
                 }
                 else {
-                    document.getElementById("checker").innerHTML=""
+
+                    checkelem.innerHTML="Incorrect address"
+                    //var checkelem =  document.getElementById("checker")
+                   // document.getElementById("checker").innerHTML="Incorrect address"
+                    checkelem.style.background="red";
+                    checkelem.style.fontSize="large"
 
                 }
             }
@@ -114,19 +164,9 @@
                    
                     var row2 = tableDays.insertRow(i)
                     var cell2 = row.insertCell(0);
-                    cell2.innerHTML=finalList[i]
-                   
-                    
-                
+                    cell2.innerHTML=finalList[i]    
                 }
             
-               
-               
-               
-               
-                
-               
-                
             }
             window.onload=getBanDate;
           </script>

@@ -87,19 +87,8 @@ def logout_user(request):
     context = {'info':loginfo}
     return render(request,'login.html',context)
 
-def BanPage(request):
 
-    collection = dbname['BannedIps']
-    result= collection.find({},{ "_id": 0, "ip": 1,"BanDate":1})
-    dateInfo = collection.find({},{"_id":0,"ip":0,"BanDate":1})
-    #lasketaan BannedIps kokoelman dokumenttien määrä
-    counter = collection.count_documents({})
-    print(counter)
-    context={'result':result,'counter':counter}
-    dateContext = {'dateInfo':dateInfo}
-    print(dateInfo)
-    
-    return render(request,'banIps.html',context)
+
 
 def FrontPage(request):
      #kirjautumisen tarkastus, jos käyttäjä ei ole kirjautunut näytetään login.html sivu
@@ -424,7 +413,23 @@ def showAdminView(request):
    
      return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal})
 
+def BanPage(request):
+
+    collection = dbname['BannedIps']
+    result= collection.find({},{ "_id": 0, "ip": 1,"BanDate":1})
+    dateInfo = collection.find({},{"_id":0,"ip":0,"BanDate":1})
+    #lasketaan BannedIps kokoelman dokumenttien määrä
+    counter = collection.count_documents({})
+    print(counter)
+    context={'result':result,'counter':counter}
+    dateContext = {'dateInfo':dateInfo}
+    print(dateInfo)
+    
+    return render(request,'banIps.html',context)
+
+
 def SaveBannedIp(request):
+    
     Dnow = datetime.now()
     formatted = Dnow.strftime("%d.%m.%Y")
     #print(formatted)
@@ -432,7 +437,18 @@ def SaveBannedIp(request):
     ip = request.POST['ipadd']
     saveData = {'ip':ip,'BanDate':formatted}
     ipCol.insert_one(saveData)
-    return render(request,'banIps.html')
+    #palautetaan BanPage näkymä, eli funktio voi palauttaa myös toisessa funktiossa luodun näkymän
+    return BanPage(request)
+
+def DeleteFromBan(request):
+    ipCol = dbname['BannedIps']
+
+    address = request.POST['ip']
+    delData = {'ip':address}
+    ipCol.delete_one(delData)
+    print(address)
+
+    return BanPage(request)
 
 def AddProducts(request):
     prodCollection = dbname['products']
@@ -444,18 +460,7 @@ def AddProducts(request):
     prodCollection.insert_one(addQuery)
     prodId = prodId +1
     return render(request,'adminView.html')
-  
-
-
-
-    
-    
-      
-      
-     
-    
-   
-     
+       
      
 
 

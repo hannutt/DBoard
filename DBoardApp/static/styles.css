@@ -67,12 +67,24 @@
     background-color: lightblue;
 }
 
+.primaryTable {
+    background-color: hsl(158, 80%, 47%);
+}
 .tableDays {
     
     position: relative;
-    left: 200px;
+    left: 280px;
     top:-215px;
     line-height: 35px;
     
 
+}
+
+.bannedDays {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.checkerRed {
+    background-color: red;
 }
