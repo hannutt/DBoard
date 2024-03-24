@@ -15,15 +15,19 @@ Simulates an online discussion board. You can post a new thread, reply to an exi
 All messages are stored in a MongoDB NoSQL database.
 Message statistics. See the number of deleted and new messages, as well as the date of the last deletion and the date of the most recent message.
 
+TEXT CENSORSHIP ON THE DISCUSSION BOARD
+You can hide forum texts with administrator credentials. The JavaScript function runs automatically and checks if an administrator is logged in. if so, the jQuery function becomes available. With the jquery function, you can hide the texts by double-clicking
+
 IP-ADDRESS BLOCKING
 save the IP address you want to block in the database. A Python function checks if the address is in the database. 
 If the address is found, the javaScript function blocks the login option
 
 WEBSHOP
-in the user view:
+
+IN THE USER VIEW:
 simulates a purchase transaction in an online store. the user selects the desired products and quantity and fills in the address information.
 then the entire order is stored in the database.
 
-in the admin view:
+IN THE ADMIN VIEW:
 Perform CRUD operations on products. in the admin view you can also use Bootstrap's accordion/collapse features.
 Coming soon to the admin view: Automatic email every time a new order is saved in the database.

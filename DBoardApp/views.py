@@ -1,6 +1,8 @@
+import base64
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import pymongo
+from pymongo import MongoClient
 from bson import ObjectId
 from django import template
 import clipboard
@@ -13,6 +15,9 @@ import pandas as pd
 import sqlite3
 import socket
 from datetime import datetime
+from bson.binary import Binary
+from PIL import Image
+import io
 
 global today
 today = date.today()
@@ -25,6 +30,21 @@ dbname = client['DBoardDB']
 status = 'True'
 times = 0
 amount = 0
+
+'''
+def DBimages(request):
+    l=[]
+    client=MongoClient()
+    db=client.DBoardDB
+    images=db.images
+    image=images.find_one()
+
+
+    pil_img=Image.open(io.BytesIO(image['data']))
+    pil_img.save('img.png')
+    context={'pil_img':'img.png'}
+    return render(request,'login.html',context)
+'''
 
 
 def loginView(request):
@@ -64,6 +84,7 @@ def login_user(request):
      username = request.POST["username"]
      password = request.POST["password"]
     #authenticate metodi, joka saa parametreina tunnuksen ja salasanan
+     global user
      user = authenticate(username = username, password = password)
     #jos tiedot löytyvät/täsmäävät tietokannassa oleviin niin kirjataan käyttäjä sisälle
      if user:
@@ -96,7 +117,7 @@ def FrontPage(request):
         return render(request,'login.html')
      else:
          
-    
+      
       collection = dbname['posts']
       col2 = dbname['reply']
  
@@ -112,7 +133,7 @@ def FrontPage(request):
       deleted = col4.find()
       posted =  col4.find({'_id':2})
      
-      return render(request,'index.html',{"data":data,"reply1":replydata,'deleted':deleted,'posted':posted,'replymessage':replymessage})
+      return render(request,'index.html',{"data":data,"reply1":replydata,'deleted':deleted,'posted':posted,'replymessage':replymessage,'user':user})
 
 def postReply(request):
      data = []

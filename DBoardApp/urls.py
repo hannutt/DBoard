@@ -11,6 +11,7 @@ urlpatterns = [
     path('banIps/',BanPage),
     path('ban-form/',SaveBannedIp),
     path('del-ban/',DeleteFromBan),
+    #path('img-form/',DBimages),
     #html-lomake ja funtio yhdistetään toisiinsa näin
     path('post-Reply/',postReply),
     path('post-New/',postNew),
