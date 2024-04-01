@@ -20,6 +20,13 @@
      
         <a class="btn btn-outline-primary" href="/adminView">Admin view</a>
         <br><br>
+        <a class="btn btn-outline-primary" onclick="openProductForm()">Shopping cart</a>
+        <div class="form_popup" id="productForm" style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
+          <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
+          
+         <textarea id="orderTxt"></textarea>
+        </div>
+
         <div class="ourProducts" id="ourProducts">
            
            <p id="prodCheck" class="prodCheck"><i class="fa-solid fa-hand-point-right"></i>Check our products <i class="fa-solid fa-hand-point-left"></i></p>
@@ -121,7 +128,7 @@
                           var am = quantity[i].value
                           console.log(am)
                           localStorage.setItem("qty",am)
-                         
+                        
 
                         }
                         
@@ -212,7 +219,7 @@
                   document.getElementById('amountField').value=placeAmount
                   document.getElementById('strengthField').value=strength
                   document.getElementById('totalField').value=total
-                  localStorage.clear()
+                  //localStorage.clear()
                   
                 }
 
@@ -225,10 +232,31 @@
                 <th>Product</th><th>Unit price</th><th>Amount</th><th>Strength</th> <th>Total price</th>
                 </tr>
                 <tr>
-
-                <td>{{d.name}}</td> <td id="price">{{d.price}} €</td><td id="finalAm" name="finaAm"></td><td id="str"></td><td id="total"></td>
+                  <!--order form rivi-->
+                <td id="product">{{d.name}}</td> <td id="price">{{d.price}} €</td><td id="finalAm" name="finaAm"></td><td id="str"></td><td id="total"></td>
               </tr>
               </table>
+              <script>
+                var orders=[]
+                function saveOrderRow() {
+                  var ordernro=Math.floor(Math.random() * 100);
+                  console.log(ordernro)
+                  
+                  var product = document.getElementById("product").innerHTML
+                  var price = document.getElementById("price").innerHTML
+                  var amount = document.getElementById("finalAm").innerHTML
+                  var strength = document.getElementById("str").innerHTML
+                  var total = document.getElementById("total").innerHTML
+                  document.getElementById("orderRow").innerHTML=product+' '+price+' '+amount+' '+strength+' '+total
+                  var row = document.getElementById("orderRow").innerHTML
+                  console.log(row)
+                  //localstoragen avaimeen pystyy lisäämään numerotunnisteen
+                  localStorage.setItem('orderrow'+ordernro,row)
+                  orders.push('orderrow'+ordernro)
+                }
+              </script>
+              <p id="orderRow"></p>
+              <button id="createorder" onclick="saveOrderRow()">Add to cart</button>
               <p id="compare">{{code}}</p>
               <form action="/discount-code/" method="post">
                 {% csrf_token %}
@@ -290,6 +318,39 @@
                   if (clicks % 2 === 0)
                   {
                     document.getElementById("formPlace").style.display="none";
+
+                  }
+                }
+                
+                function openProductForm() {
+                  console.log(orders)
+                  clicks = clicks +1
+                  //var lng = orders.length
+                  //console.log(lng)
+                  document.getElementById("productForm").style.display="block";
+                  for (var i=0;i<localStorage.length; i++)
+                  {
+                    //document.getElementById("orderTxt").value+=localStorage.key(i)
+                    //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
+                    //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
+                    //tilausriviä on talletettu)
+                    document.getElementById("orderTxt").value+=localStorage.getItem(localStorage.key(i))
+
+                  }
+
+                    //order=localStorage.getItem(orders[i])
+                    //console.log(order)
+                   // var row = localStorage.getItem('orderrow72')
+                   
+
+                  
+                
+                 
+                  //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
+                  //on klikattu avauksen jälkeen uudelleen
+                  if (clicks % 2 === 0)
+                  {
+                    document.getElementById("ProductForm").style.display="none";
 
                   }
                 }

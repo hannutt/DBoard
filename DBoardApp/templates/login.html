@@ -89,12 +89,13 @@
     {% csrf_token %}
     <input type="text" name="username" id="username" placeholder="Username">
     <input type="password" name="password" id="password" placeholder="Password">
+    <img src="/static/lock.png" width="40" height="40"><br>
 
 
     <br>
     <input id="loginBtn" type="submit" value="Login" onclick="moveImage();"></input>
   </form>
-  <button id="showpsw" onclick="showPsw()" style=" position:relative; left:390px; top:-60px;"><i
+  <button id="showpsw" onclick="showPsw()" style=" position:relative; left:435px; top:-100px;"><i
       class="fa-solid fa-eye"></i></button>
       <script>
         //banned funktion kutsu rivillä 156, funktio suoritetaan aina sivun latautuessa (window.onload = Banned;)
@@ -151,20 +152,20 @@
       imgVariable.style.top = '-125px';
     }
 
-    //funktio siirtää kuvan 20 pikseliä ylöspäin.
+    /*funktio siirtää kuvan 20 pikseliä ylöspäin.
     function moveImage() {
       imgVariable.style.top = parseInt(imgVariable.style.top) - 20 + 'px';
       //imgVariable.style="transform: rotate(5deg)"
       
     }
+    
     //initimage funktio suoritetaan aina kun sivu ladataan
-    window.onload = initImage;
+    window.onload = initImage; */
     window.onload = Banned;
 
   </script>
 
-  <img id="imgPlace" class="imgClass" src="/static/lock.png" width="50" height="50"><br>
-  <!-- <input type="button" value="move" onclick="moveImage();">-->
+
 
   <form action="/logout/" method="post">
     {% csrf_token %}
