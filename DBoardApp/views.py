@@ -357,9 +357,10 @@ def webshop(request):
     return render(request,'webshop.html',{'prods':prods})
 
 def webshopAdmin(request):
-    
+   
     collection = dbname['products']
     prods = collection.find()
+    
     return render(request,'adminView.html',{'prods':prods})
 
 def productSelection(request,productId):
@@ -409,6 +410,9 @@ def discount(request):
     return render(request,'webshop.html')
 
 def showAdminView(request):
+     col = dbname['order']
+     Orders = col.find()
+    
      numbers = []
      connection = sqlite3.connect('db.sqlite3')
      connection.row_factory = sqlite3.Row
@@ -432,7 +436,7 @@ def showAdminView(request):
       #  maxiumStock={'maxiumStock':maxstock}
      print(maxInstock)
    
-     return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal})
+     return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal,'Orders':Orders})
 
 def BanPage(request):
 

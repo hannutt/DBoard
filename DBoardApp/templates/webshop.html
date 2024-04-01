@@ -1,98 +1,103 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% load static %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-          <link rel="stylesheet" href = "{% static 'styles.css' %}">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-        <link rel="stylesheet" type="text/css" href = "{%static 'styles.css' %}">
-        <script src="{% static 'scripts.js' %}"></script>
-        <title>Webshop</title>
 
-    </head>
-    <body>
-        <h2>Webshop</h2>
-     
-        <a class="btn btn-outline-primary" href="/adminView">Admin view</a>
-        <br><br>
-        <a class="btn btn-outline-primary" onclick="openProductForm()">Shopping cart</a>
-        <div class="form_popup" id="productForm" style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
-          <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
-          
-         <textarea id="orderTxt"></textarea>
-        </div>
+<head>
+  {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{%static 'styles.css' %}">
+  <script src="{% static 'scripts.js' %}"></script>
+  <title>Webshop</title>
 
-        <div class="ourProducts" id="ourProducts">
-           
-           <p id="prodCheck" class="prodCheck"><i class="fa-solid fa-hand-point-right"></i>Check our products <i class="fa-solid fa-hand-point-left"></i></p>
-        </div>
-        <div class="prods" id="prods" style="display: none";>
-          <p><--Large font Medium font--></p>
-          <div class="form-check form-switch" style="width: 25px; height: 25px;" >
-            
-            <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange()">
-            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-          </div>
-          <script>
-            //funktiolla muutetaan tuotekortin fontin sisältöä medium-large välillä
-            function fontChange() {
-              var switchVar = document.getElementById('toggleSwitch')
-              var prodCard = document.getElementById('Prodcard')
-              if (switchVar.checked==true)
-              {
-                prodCard.style.fontSize = "medium";
-              }
-              else {
-                prodCard.style.fontSize="large";
-              }
+</head>
+
+<body>
+  <h2>Webshop</h2>
+
+  <a class="btn btn-outline-primary" href="/adminView">Admin view</a>
+  <br><br>
+  <a class="btn btn-outline-primary" onclick="openProductForm()">Shopping cart</a>
+  <div class="form_popup" id="productForm"
+    style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
+    <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
+    <h4>Your orders</h4>
+    <textarea id="orderTxt"></textarea>
+  </div>
+
+  <div class="ourProducts" id="ourProducts">
+
+    <p id="prodCheck" class="prodCheck"><i class="fa-solid fa-hand-point-right"></i>Check our products <i
+        class="fa-solid fa-hand-point-left"></i></p>
+  </div>
+  <div class="prods" id="prods" style="display: none" ;>
+    <p><--Large font Medium font--></p>
+    <div class="form-check form-switch" style="width: 25px; height: 25px;">
+
+      <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange()">
+      <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+    </div>
+    <script>
+      //funktiolla muutetaan tuotekortin fontin sisältöä medium-large välillä
+      function fontChange() {
+        var switchVar = document.getElementById('toggleSwitch')
+        var prodCard = document.getElementById('Prodcard')
+        if (switchVar.checked == true) {
+          prodCard.style.fontSize = "medium";
+        }
+        else {
+          prodCard.style.fontSize = "large";
+        }
+
+      }
+    </script>
+
+
+    {%for p in prods %}
+    <form action="/select-product-send/{{p.productId}}/" method="post"></form>
+    <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
+
+    {% csrf_token %}
+
+
+    <div class="card text-bg-primary mb-3" style="max-width: 18rem; background-image: url(/static/productBG.jpg)">
+      <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
+      {% if p.instock < 5 %} <div class="card-header"
+        style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}
+    </div>
+    {%else%}
+    <div class="card-header"
+      style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}</div>
+    {%endif%}
+    <div class="card-body" style="background-image: url(/static/productBG.jpg)">
+      <h5 id="Prodcard" class="card-title" style="background-image: url(/static/productBG.jpg) font-size: large
+                      font-family: 'Brush Script MT',cursive;">{{p.productId}} Price: {{p.price}} €/can inStock:
+        {{p.instock}} pcs</h5>
+      <p class="card-text" style="background-image: url(/static/productBG.jpg)"></p>
+      <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength()">8 MG
+      <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength()">16 MG
+
+      <script>
+        function setStrength() {
+          var elem = document.getElementsByName("str")
+          //silmukassa käydään läpi str nimiset radiobuttonit
+          for (i = 0; i < elem.length; i++)
+            //jos jokin buttoneista on valittu talletetaan sen value localstorageen
+            if (elem[i].checked) {
+              console.log(elem[i].value)
+              localStorage.setItem('str', elem[i].value)
 
             }
-          </script>
-          
-          
-          {%for p in prods %}
-          <form action="/select-product-send/{{p.productId}}/" method="post"></form>
-          <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
-        
-            {% csrf_token %}
-            
-           
-                  <div class="card text-bg-primary mb-3" style="max-width: 18rem; background-image: url(/static/productBG.jpg)">
-                    <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
-                    {% if p.instock < 5 %}
-                    <div class="card-header" style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}</div>
-                    {%else%}
-                    <div class="card-header" style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}</div>
-                    {%endif%}
-                    <div class="card-body"style="background-image: url(/static/productBG.jpg)">
-                      <h5 id="Prodcard" class="card-title"style="background-image: url(/static/productBG.jpg) font-size: large
-                      font-family: 'Brush Script MT',cursive;">{{p.productId}} Price: {{p.price}} €/can inStock: {{p.instock}} pcs</h5>
-                      <p class="card-text"style="background-image: url(/static/productBG.jpg)"></p>
-                      <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength()">8 MG
-                      <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength()">16 MG
-                      
-                      <script>
-                        function setStrength() {
-                          var elem = document.getElementsByName("str")
-                          //silmukassa käydään läpi str nimiset radiobuttonit
-                          for (i =0;i<elem.length;i++)
-                          //jos jokin buttoneista on valittu talletetaan sen value localstorageen
-                          if(elem[i].checked)
-                          {
-                            console.log(elem[i].value)
-                            localStorage.setItem('str',elem[i].value)
 
-                          }
-                          
-                        }
-                     
-                      </script>
-                      <!--onchange eli kun joki vaihtoehto on valittu suoritetaan getStrength funktio
+        }
+
+      </script>
+      <!--onchange eli kun joki vaihtoehto on valittu suoritetaan getStrength funktio
                       <select id="amount" name="amount" onchange="getStrength();">
     
                         
@@ -112,265 +117,277 @@
                           console.log(selectedStrength)
                         }
                       </script>-->
-                      
-                      <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0" onchange="setAmountField()">
-                      <script> 
-                      function setAmountField() {
-      
-                        var quantity = document.getElementsByName("amount")
-                        //silmukassa käydään läpi str nimiset radiobuttonit
-                        for (i =0;i<quantity.length;i++)
-                        //jos jokin amount nimisen input kentän arvo on suurempi kuin 0 talletetaan arvo am-muuttujaan ja am
-                      //muuttuja puolestaan talletetaan localstorageen
-                        if(quantity[i].value > 0)
-                        {
 
-                          var am = quantity[i].value
-                          console.log(am)
-                          localStorage.setItem("qty",am)
-                        
+      <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
+        onchange="setAmountField()">
+      <script>
+        function setAmountField() {
 
-                        }
-                        
-                      }
-                     </script>
-                     <script>
-                      //amount kentän arvon tallennus localstorageen
-                      function getAmount () {
-                        var amount = document.getElementById("amount").value;
-                        //localStorage.setItem("Amount",amount)
-                        document.getElementById("setBtn").click()
-                     
+          var quantity = document.getElementsByName("amount")
+          //silmukassa käydään läpi str nimiset radiobuttonit
+          for (i = 0; i < quantity.length; i++)
+            //jos jokin amount nimisen input kentän arvo on suurempi kuin 0 talletetaan arvo am-muuttujaan ja am
+            //muuttuja puolestaan talletetaan localstorageen
+            if (quantity[i].value > 0) {
 
-                      }    
-                      </script>
-                      
-                  
-                    </div>
-                  </div>
-                
+              var am = quantity[i].value
+              console.log(am)
+              localStorage.setItem("qty", am)
 
-               
-                
-                
-                <input hidden type="text" value="{{p.name}}" id="prodName" name="prodName">
-                <input hidden type="text" value="{{p.price}}" id="unitPrice">
-              
-               <!--for silmukaan sisältyy linkki joissa on jokaisen tuotteen productid parametrina-->
-               <button id="sendOrder">
-               
-                <a href="/select-product-send/{{p.productId}}/">
-                  <i class="fa-solid fa-cart-plus"></i></a>
-                 
-              </button>
-          
-                {%endfor%}
-                
-              
-           
-        </div>
-        <script>
-            //jquery koodi plot-divn piilottamiseen tuplaklikkaamlla piilottamisen jälkeen
-            //näytetään shwoDiv ja button elementti
-            $(document).ready(function() {
-              $('#ourProducts').dblclick(function() {
-                $('#prods').show();
-              })
-            });
 
-            $(document).ready(function() {
-              $('#ourProducts').click(function() {
-                $('#prods').hide();
-              })
-            });
-            </script>
-           
-              {%for d in data %}
-            <div id="orderFormPlace">
-             
-              <h3>Order form</h3>
-              <!--toteutetaan latauksen bobtnclick funktio joka painaa ohjelmallisesti setBtn painiketta. setbtn
+            }
+
+        }
+      </script>
+      <script>
+        //amount kentän arvon tallennus localstorageen
+        function getAmount() {
+          var amount = document.getElementById("amount").value;
+          //localStorage.setItem("Amount",amount)
+          document.getElementById("setBtn").click()
+
+
+        }    
+      </script>
+
+
+    </div>
+  </div>
+
+
+
+
+
+  <input hidden type="text" value="{{p.name}}" id="prodName" name="prodName">
+  <input hidden type="text" value="{{p.price}}" id="unitPrice">
+
+  <!--for silmukaan sisältyy linkki joissa on jokaisen tuotteen productid parametrina-->
+  <button id="sendOrder">
+
+    <a href="/select-product-send/{{p.productId}}/">
+      <i class="fa-solid fa-cart-plus"></i></a>
+
+  </button>
+
+  {%endfor%}
+
+
+
+  </div>
+  <script>
+    //jquery koodi plot-divn piilottamiseen tuplaklikkaamlla piilottamisen jälkeen
+    //näytetään shwoDiv ja button elementti
+    $(document).ready(function () {
+      $('#ourProducts').dblclick(function () {
+        $('#prods').show();
+      })
+    });
+
+    $(document).ready(function () {
+      $('#ourProducts').click(function () {
+        $('#prods').hide();
+      })
+    });
+  </script>
+
+  {%for d in data %}
+  <div id="orderFormPlace">
+
+    <h3>Order form</h3>
+    <!--toteutetaan latauksen bobtnclick funktio joka painaa ohjelmallisesti setBtn painiketta. setbtn
               suorittaa setAmount funktion joka hakee localstoragesta sinne talletetun Amount avaimen arvon-->
-              <body  onload="DoBtnClick()"></body>
-              <script>
-              function DoBtnClick() {
-                document.getElementById("setBtn").click()
-              }
-            </script>
-              <button hidden id="setBtn" onclick="setAmount()">set</button>
-              <script>
 
-                function setAmount() {
-                  //muuttujaan talletetaan html tagin sisältö ( tagin id on price)
-                  price = document.getElementById("price").innerHTML
-                  //korvataan € merkki tyhjällä
-                  priceRep = price.replace('€','')
-                  //talletetaan muuttujiin local storagesta haetut arvot.
-                  placeAmount = localStorage.getItem("qty")
-                  strength = localStorage.getItem("str")
-                  //kerrotaan hinta ja kappalemäärä
-                  total = priceRep * placeAmount
-                  console.log(total)
-                  //localstoragen arvojen asetus <td> tageihin
-                  document.getElementById("finalAm").innerHTML=placeAmount
-                  document.getElementById('total').innerHTML=total
-                  document.getElementById("str").innerHTML=strength
-                  //asetetaan input kenttiin localstoragen arvo
-                  document.getElementById('amountField').value=placeAmount
-                  document.getElementById('strengthField').value=strength
-                  document.getElementById('totalField').value=total
-                  //localStorage.clear()
-                  
-                }
+    <body onload="DoBtnClick()"></body>
+    <script>
+      function DoBtnClick() {
+        document.getElementById("setBtn").click()
+      }
+    </script>
+    <button hidden id="setBtn" onclick="setAmount()">set</button>
+    <script>
 
-               
-               </script>
-              
-              <table border="1px solid black">
-                
-                <tr>
-                <th>Product</th><th>Unit price</th><th>Amount</th><th>Strength</th> <th>Total price</th>
-                </tr>
-                <tr>
-                  <!--order form rivi-->
-                <td id="product">{{d.name}}</td> <td id="price">{{d.price}} €</td><td id="finalAm" name="finaAm"></td><td id="str"></td><td id="total"></td>
-              </tr>
-              </table>
-              <script>
-                var orders=[]
-                function saveOrderRow() {
-                  var ordernro=Math.floor(Math.random() * 100);
-                  console.log(ordernro)
-                  
-                  var product = document.getElementById("product").innerHTML
-                  var price = document.getElementById("price").innerHTML
-                  var amount = document.getElementById("finalAm").innerHTML
-                  var strength = document.getElementById("str").innerHTML
-                  var total = document.getElementById("total").innerHTML
-                  document.getElementById("orderRow").innerHTML=product+' '+price+' '+amount+' '+strength+' '+total
-                  var row = document.getElementById("orderRow").innerHTML
-                  console.log(row)
-                  //localstoragen avaimeen pystyy lisäämään numerotunnisteen
-                  localStorage.setItem('orderrow'+ordernro,row)
-                  orders.push('orderrow'+ordernro)
-                }
-              </script>
-              <p id="orderRow"></p>
-              <button id="createorder" onclick="saveOrderRow()">Add to cart</button>
-              <p id="compare">{{code}}</p>
-              <form action="/discount-code/" method="post">
-                {% csrf_token %}
-              <input type="text" id="code" name="code">
-              <button type="submit" >Discount</button>
-            </form>
-              <script>
-                 function Discount () {
-                  code = document.getElementById('code').value
-                  compareCode = document.getElementById("compare").innerHTML
-                  if (code === compareCode)
-                  {
+      function setAmount() {
+        //muuttujaan talletetaan html tagin sisältö ( tagin id on price)
+        price = document.getElementById("price").innerHTML
+        //korvataan € merkki tyhjällä
+        priceRep = price.replace('€', '')
+        //talletetaan muuttujiin local storagesta haetut arvot.
+        placeAmount = localStorage.getItem("qty")
+        strength = localStorage.getItem("str")
+        //kerrotaan hinta ja kappalemäärä
+        total = priceRep * placeAmount
+        console.log(total)
+        //localstoragen arvojen asetus <td> tageihin
+        document.getElementById("finalAm").innerHTML = placeAmount
+        document.getElementById('total').innerHTML = total
+        document.getElementById("str").innerHTML = strength
+        //asetetaan input kenttiin localstoragen arvo
+        document.getElementById('amountField').value = placeAmount
+        document.getElementById('strengthField').value = strength
+        document.getElementById('totalField').value = total
+        //localStorage.clear()
 
-                    totalDiscount = total -2
-                    document.getElementById("total").innerHTML=totalDiscount
+      }
 
-                  }
-                  
-                }
-              </script>
-            
-              
-              <form action="/save-order/" method="post">
-                {% csrf_token %}
-              <!--arvot input kenttiin, että ne voidan view.py:ssä tallettaa muuttujiin ja tietokantaan-->
-              <input hidden type="text" name="prod" value="{{d.name}}"> <input hidden type="number"name="price" value="{{d.price}}">
-              <input hidden type="number" id="amountField" name="amount"><input hidden type="text" id="strengthField" name="strength">
-              <input hidden type="number" id="totalField" name="total">
-            
-              <input type="submit" value="Save">
-            </form>
 
-              </table>
-              <br>
-              
-              {%endfor%}
+    </script>
 
-              <button class="openBtn" style="padding: 16px 20px; background-color: #555; color: white;" onclick="openForm()">Open form</button>
-              <div class="form_popup" id="formPlace" style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
-                <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
-                
-                <label for="names">First and lastname</label>
-                <input type="text" placeholder="first and lastname" name="names">
-                <br>
-                <label for="email">E-mail</label>
-                <input type="text" placeholder="example@mail.com" name="email">
-                <br>
-                <label for="phone">Phone</label>
-                <input type="text" placeholder="phone number" name="phone">
-              </div>
+    <table border="1px solid black">
 
-              <script>
-                var clicks = 0
-                function openForm() {
-                  clicks = clicks +1
-                  document.getElementById("formPlace").style.display="block";
-                  //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
-                  //on klikattu avauksen jälkeen uudelleen
-                  if (clicks % 2 === 0)
-                  {
-                    document.getElementById("formPlace").style.display="none";
+      <tr>
+        <th>Product</th>
+        <th>Unit price</th>
+        <th>Amount</th>
+        <th>Strength</th>
+        <th>Total price</th>
+      </tr>
+      <tr>
+        <!--order form rivi-->
+        <td id="product">{{d.name}}</td>
+        <td id="price">{{d.price}} €</td>
+        <td id="finalAm" name="finaAm"></td>
+        <td id="str"></td>
+        <td id="total"></td>
+      </tr>
+    </table>
+    <script>
+      var orders = []
 
-                  }
-                }
-                
-                function openProductForm() {
-                  console.log(orders)
-                  clicks = clicks +1
-                  //var lng = orders.length
-                  //console.log(lng)
-                  document.getElementById("productForm").style.display="block";
-                  for (var i=0;i<localStorage.length; i++)
-                  {
-                    //document.getElementById("orderTxt").value+=localStorage.key(i)
-                    //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
-                    //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
-                    //tilausriviä on talletettu)
-                    document.getElementById("orderTxt").value+=localStorage.getItem(localStorage.key(i))
+      //TILAUKSEN TIETOJEN TALLENNUS LOCALSTORAGEEN
+      function saveOrderRow() {
+        var ordernro = Math.floor(Math.random() * 100);
+        console.log(ordernro)
 
-                  }
+        var product = document.getElementById("product").innerHTML
+        var price = document.getElementById("price").innerHTML
+        var amount = document.getElementById("finalAm").innerHTML
+        var strength = document.getElementById("str").innerHTML
+        var total = document.getElementById("total").innerHTML
+        document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total
+        var row = document.getElementById("orderRow").innerHTML
+        console.log(row)
+        //localstoragen avaimeen pystyy lisäämään numerotunnisteen
+        localStorage.setItem('orderrow' + ordernro, row)
+        orders.push('orderrow' + ordernro)
+      }
+    </script>
+    <p id="orderRow"></p>
+    <button id="createorder" onclick="saveOrderRow()">Add to cart</button>
+    <p id="compare">{{code}}</p>
+    <form action="/discount-code/" method="post">
+      {% csrf_token %}
+      <input type="text" id="code" name="code">
+      <button type="submit">Discount</button>
+    </form>
+    <script>
+      function Discount() {
+        code = document.getElementById('code').value
+        compareCode = document.getElementById("compare").innerHTML
+        if (code === compareCode) {
 
-                    //order=localStorage.getItem(orders[i])
-                    //console.log(order)
-                   // var row = localStorage.getItem('orderrow72')
-                   
+          totalDiscount = total - 2
+          document.getElementById("total").innerHTML = totalDiscount
 
-                  
-                
-                 
-                  //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
-                  //on klikattu avauksen jälkeen uudelleen
-                  if (clicks % 2 === 0)
-                  {
-                    document.getElementById("ProductForm").style.display="none";
+        }
 
-                  }
-                }
-              </script>
-            
-             
-             
-              <br>
-              <!--
+      }
+    </script>
+
+
+    <form action="/save-order/" method="post">
+      {% csrf_token %}
+      <!--arvot input kenttiin, että ne voidan view.py:ssä tallettaa muuttujiin ja tietokantaan-->
+      <input hidden type="text" name="prod" value="{{d.name}}"> <input hidden type="number" name="price"
+        value="{{d.price}}">
+      <input hidden type="number" id="amountField" name="amount"><input hidden type="text" id="strengthField"
+        name="strength">
+      <input hidden type="number" id="totalField" name="total">
+
+      <input type="submit" value="Save">
+    </form>
+
+    </table>
+    <br>
+
+    {%endfor%}
+
+    <button class="openBtn" style="padding: 16px 20px; background-color: #555; color: white;" onclick="openForm()">Open
+      form</button>
+    <div class="form_popup" id="formPlace"
+      style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
+      <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
+
+      <label for="names">First and lastname</label>
+      <input type="text" placeholder="first and lastname" name="names">
+      <br>
+      <label for="email">E-mail</label>
+      <input type="text" placeholder="example@mail.com" name="email">
+      <br>
+      <label for="phone">Phone</label>
+      <input type="text" placeholder="phone number" name="phone">
+    </div>
+
+    <script>
+      var clicks = 0
+      function openForm() {
+        clicks = clicks + 1
+        document.getElementById("formPlace").style.display = "block";
+        //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
+        //on klikattu avauksen jälkeen uudelleen
+        if (clicks % 2 === 0) {
+          document.getElementById("formPlace").style.display = "none";
+
+        }
+      }
+      var clicks=0
+      var orderTxt = document.getElementById("orderTxt").value
+      function openProductForm() {
+        document.getElementById("orderTxt").value=''
+       //console.log(orders)
+        clicks = clicks + 1
+        //var lng = orders.length
+        //console.log(lng)
+        document.getElementById("productForm").style.display = "block";
+        for (var i = 0; i < localStorage.length; i++) {
+          //document.getElementById("orderTxt").value+=localStorage.key(i)
+          //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
+          //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
+          //tilausriviä on talletettu)
+          
+          console.log(orderTxt)
+          document.getElementById("orderTxt").value += localStorage.getItem(localStorage.key(i))
+
+        }
+        
+
+        //order=localStorage.getItem(orders[i])
+        //console.log(order)
+        // var row = localStorage.getItem('orderrow72')
+        //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
+        //on klikattu avauksen jälkeen uudelleen
+        if (clicks % 2 === 0) {
+          document.getElementById("ProductForm").style.display = "none";
+
+        }
+      }
+    </script>
+
+
+
+    <br>
+    <!--
               {{forloop.counter}}
               {% if forloop.counter == 1 %}<br>
             
               <input type="text" name="prodName" id="prodName{{forloop.counter}}" value="">
               <input type="text" name="prodPrice" id="prodPrice{{forloop.counter}}" value="">
               {%endif%}-->
-              
-          
-              
-             
 
-            </div>
-    </body>
+
+
+
+
+  </div>
+</body>
+
 </html>

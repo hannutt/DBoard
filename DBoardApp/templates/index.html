@@ -25,6 +25,7 @@
 </head>
 <p>User:</p>
 <p id="user">{{user}}</p>
+
 <body onload="fixReplyMsg()">
   <form action="/post-filter/" method="post">
     {% csrf_token %}
@@ -93,19 +94,16 @@
             <strong>{{d.body}}<br>
           </p>
 
-          <p id="reply">
+          <p id="reply" class="reply">
             Reply: {{d.replymsg}} </p>
 
 
-          <p id="fixedReply" style="background-color: lightblue;">{{d.replymsg}}</p>
+          <p id="fixedReply" hidden style="background-color: lightblue;">{{d.replymsg}}</p>
           <script>
             function fixReplyMsg() {
-              /*var paragraphs = document.getElementsByTagName("p");
-  for(var i = 0; i < paragraphs.length; i++)
-  {
-      alert(paragraphs[i].innerHTML);
-  } */
-
+              var paragraphs = document.getElementsByClassName("reply");
+            
+            
 
               var replyList = []
 
@@ -113,7 +111,7 @@
 
 
 
-              var replied = reply.replace('[', '').replace(']', '').replace('replymsg', '').replace('{', '').replace('}', '')
+              var replied = reply.replace('[{', '').replace('}]', '').replace('replymsg', '').replace('{', '').replace('}', '').replace().replace('{},', '')
 
               document.getElementById("fixedReply").innerHTML = replied
               console.log(reply)
@@ -234,25 +232,24 @@
     </div>
   </div>
   {%endfor%}
-  
+
   <script>
     function isAdmin() {
-       //tekstin piilotus tupla klikkaamalla sitä jos kirjautunut käyttäjä on admin
+      //tekstin piilotus tupla klikkaamalla sitä jos kirjautunut käyttäjä on admin
       var user = document.getElementById("user").innerHTML
       console.log(user)
-      if (user==='admin')
-      {
+      if (user === 'admin') {
         jQuery(".bodyTxt").dblclick(function () {
-        event.preventDefault();
-        var text = jQuery(this).hide();
-    })
-        
+          event.preventDefault();
+          var text = jQuery(this).hide();
+        })
+
       }
     }
     isAdmin()
-       
 
-    
+
+
 
 
 
