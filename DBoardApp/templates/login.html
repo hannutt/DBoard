@@ -57,6 +57,8 @@
       })
     })
 
+  
+
   </Script>
 
   <!--Bar chartin js-koodi eli visitor counter-->
@@ -89,13 +91,14 @@
     {% csrf_token %}
     <input type="text" name="username" id="username" placeholder="Username">
     <input type="password" name="password" id="password" placeholder="Password">
-    <img src="/static/lock.png" width="40" height="40"><br>
+    <!--
+    <img id="lock" src="/static/lock.png" width="40" height="40"><br>-->
 
 
     <br>
-    <input id="loginBtn" type="submit" value="Login" onclick="moveImage();"></input>
+    <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
   </form>
-  <button id="showpsw" onclick="showPsw()" style=" position:relative; left:435px; top:-100px;"><i
+  <button id="showpsw" onclick="showPsw()" style=" position:relative; left:390px; top:-61px;"><i
       class="fa-solid fa-eye"></i></button>
       <script>
         //banned funktion kutsu rivillä 156, funktio suoritetaan aina sivun latautuessa (window.onload = Banned;)
@@ -132,7 +135,7 @@
 
   
   <p>Login status: {{user}} {{info}}</p>
-  <a class="btn btn-primary btn-md" href="/banIps">Ban</a>
+  <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
   <br><br>
   <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
   <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>

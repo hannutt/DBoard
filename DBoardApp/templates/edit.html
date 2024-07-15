@@ -7,11 +7,12 @@
     <body>
         <h3>Edit post</h3>
         {%for d in data %}
-        <form action="post-edit/{{d.postid}}/" method="post">
-         
-            <input type="text" name="subject" value="{{d.title}}">
+        <form action="/edit-post/" method="post">
+            {% csrf_token %}
+            <input type="text" name="postid" value="{{d.postid}}">
+            <input type="text" name="title" value="{{d.title}}">
             <br>
-           <input type="text" name="txt" value="{{d.body}}">
+           <input type="text" name="body" value="{{d.body}}">
            <input type="submit" value="Save">
            
         </form>

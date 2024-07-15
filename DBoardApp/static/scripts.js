@@ -70,6 +70,11 @@ function setFilter() {
 function DoClick() {
     document.getElementById("startBtn").click()
   }
+
+function setDelivered() {
+  document.getElementById("setdeliv").click()
+  document.getElementById("setdeliv").hidden=true
+}
   function move() {
     let id = null;
     const animateDiv = document.getElementById("animate");

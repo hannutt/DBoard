@@ -6,19 +6,23 @@
       <link rel="stylesheet" href="{%static 'styles.css' %}">
       <script src="{% static 'scripts.js' %}"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+      
+      
       {% endblock %}
         <title>
 
         </title>
     </head>
-    <body>
+    <body style="background-image: url(/static/BGPic.jpg);" >
         <style>
             table, th, td {
               border:1px solid black;
             }
             </style>
-        <h3>Ban Ip-address</h3>
+        <h2>Ban Ip-address</h2>
         <!--counter arvo tuoaan views.py funktiosta ja näytetään tässä-->
+        <p>Addressed total:</p>
         <p id="counter">{{counter}}</p>
         <p id="checker"></p>
         <p id="days"></p>
@@ -66,16 +70,17 @@
           });
         </script>
         <table id="tableDays" class="tableDays" hidden>
-          <tr>
-            <th>Days Banned</th>
-          </tr>
+          
        
         </table>
         <form action="/ban-form/" method="post">
             {% csrf_token %}
-            <input type="text" name="ipadd" id="ipadd" placeholder="Ip-address" onchange="checkIp()">
-            <br>
-            <input type="submit" value="Ban"></input>
+            <input type="text" name="ipadd" id="ipadd" placeholder="Ip-address">
+            <br><br>
+           
+            <Button type="submit">Ban
+              <i class="fa-solid fa-ban"></i>
+            </Button>
           </form>
           <script>
             //funktio tarkistaa että ip osoitteessa on 3 pistettä
@@ -120,6 +125,8 @@
             }
             
             function getBanDate() {
+              var Primarytable = document.getElementById("table")
+              var sencondaryTable = document.getElementById("tableDays")
               //counterin arvo saadaan views.py funktiosta jossa lasketaan
               //bannedips kokoelman docukemnttien määrä
               var counter = document.getElementById("counter").innerHTML
@@ -166,6 +173,13 @@
                     var cell2 = row.insertCell(0);
                     cell2.innerHTML=finalList[i]    
                 }
+                tableHeight=Primarytable.scrollHeight
+                sencondaryTable.scrollHeight=tableHeight
+                console.log('height ',tableHeight)
+                console.log(sencondaryTable.scrollHeight)
+               
+                
+                
             
             }
             window.onload=getBanDate;

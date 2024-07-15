@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls import path
 from .views import FrontPage,postReply,postNew,likePost,deletePost,showEdit,login_user,loginView,logout_user,saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,showAdminView,AddProducts,webshopAdmin,editProduct,updateProd,\
-BanPage,SaveBannedIp,DeleteFromBan
+BanPage,SaveBannedIp,DeleteFromBan,delivered,updatePost
 
 urlpatterns = [
     path("",loginView),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('post-delete/',deletePost),
     #postid-muuttujaan talletetaan index.html sivulla saatu d.postid arvo
     path('post-edit-send/<int:postid>/',showEdit),
+    path('edit-post/',updatePost),
      #siirtyminen editoinitisivulle, id täytyy myös lähettää sinne
     path('post-edit-product-send/<int:productId>/',editProduct),
     #varsinainen editointi tapahtuu tässä
@@ -31,6 +32,7 @@ urlpatterns = [
     path('save-order/',saveOrderToDb),
     path('adminView/',showAdminView),
     path('add-product/',AddProducts),
+    path('mark-delivered/',delivered)
     #path('adminView/',webshopAdmin),
     #path('edit-product/<int:productId>/',editProduct)
 ]

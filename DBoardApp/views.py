@@ -174,7 +174,8 @@ def postReply(request):
     
       
      print(data)
-     return render(request,'index.html')
+
+     return redirect (FrontPage)
 
 
     
@@ -287,6 +288,7 @@ def filterPost(request):
     titles = collection.find({},{'title':1,'postid':1})
     body = collection.find({},{'body':1,'postid':1})
     sel = request.POST.getlist('selection')
+    print(sel)
     
     #checkboksien valinnat, jos valittu cb jonka value on title haetaan otsikot 
     if sel == ['title']:
@@ -337,6 +339,22 @@ def updateProd(request):
 
     return render(request,'editProducts.html')
 
+def updatePost(request):
+    collection = dbname['posts']
+    postId = request.POST['postid']
+    postIdInt = int(postId)
+    body = request.POST['body']
+    title = request.POST['title']
+    #vastaa sql WHERE ID = LAUSETTA
+    filter = {'postid':postIdInt}
+    #päivitys tapahtuu avain-arvo pareina. ensin tulee kentän nimi, sen jälkeen muuttuja jonka
+    #arvo kenttään päivitetäänF
+    updateData = {"$set":{"body":body,"title":title}}
+
+    collection.update_one(filter,updateData)
+
+    return redirect (FrontPage)
+
     
 
 def saveCsv(request):
@@ -385,12 +403,16 @@ def saveOrderToDb(request):
     orderId = random.randint(1,1500)
     collection = dbname['order']
     prodCollection = dbname['products']
+    name = request.POST['flname']
+    address = request.POST['address']
+    city = request.POST['city']
+    zip = request.POST['zip']
     prod = request.POST['prod']
     Unitprice = request.POST['price']
     amount = request.POST['amount']
     str = request.POST['strength']
     total = request.POST['total']
-    orderQuery = {'orderId':orderId,'product':prod,'unitPrice':Unitprice,'amount':amount,'total':total,'strength':str,'orderDate':todayStr}
+    orderQuery = {'orderId':orderId,'product':prod,'unitPrice':Unitprice,'amount':amount,'total':total,'strength':str,'orderDate':todayStr,'name':name,'address':address,'city':city,'zip':zip}
     collection.insert_one(orderQuery)
     
     return render (request,'webshop.html')
@@ -408,6 +430,12 @@ def discount(request):
   
   
     return render(request,'webshop.html')
+
+def delivered(request):
+    isDelivered = request.POST.getlist('delivered')
+    print(isDelivered)
+
+    return redirect(showAdminView)
 
 def showAdminView(request):
      col = dbname['order']

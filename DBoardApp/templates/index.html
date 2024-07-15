@@ -4,6 +4,9 @@
 
 <head>
   <title>DBoard</title>
+  <style> 
+   
+</style> 
   <!--bootstrap ja fontawesome-->
   {% load static %}
 
@@ -17,16 +20,27 @@
   <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="{% static 'scripts.js' %}"></script>
+ 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css" rel="stylesheet">
   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <!--google kääntäjä-->
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+    </script>
   {% endblock %}
 </head>
-<p>User:</p>
-<p id="user">{{user}}</p>
 
-<body onload="fixReplyMsg()">
+<p id="user">{{user}}</p>
+<center>
+<h3>DISCUSSION BOARD</h3>
+</center>
+<div id="google_translate_element"></div>
+<body class="forum" onload="fixReplyMsg()">
   <form action="/post-filter/" method="post">
     {% csrf_token %}
     <div class="form-check">
@@ -46,6 +60,7 @@
     </div>
     <input hidden type="submit" value="set" id="setBtn">
   </form>
+ 
 
 
   <!--for silmukoilla käydään kannasta haettu data läpi. data ja likedata on määritelty views.py:ssä-->
@@ -57,12 +72,12 @@
         lisätään div id jatkoksi saadaan accordion/collapse toimimaan yksi div kerrallaan klikkaamalla-->
   <div class="accordion" id="accordionExample{{forloop.counter}}">
     <div class="accordion-item">
-      <h2 class="accordion-header">
+      <h2 class="accordion-header" >
 
         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne">
+          data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="false" aria-controls="collapseOne">
 
-
+          
           <strong>Subject: </strong> {{d.title}}
 
           <!--
@@ -93,6 +108,7 @@
           <p id="bodyTxt" class="bodyTxt">
             <strong>{{d.body}}<br>
           </p>
+         
 
           <p id="reply" class="reply">
             Reply: {{d.replymsg}} </p>
@@ -168,7 +184,9 @@
           <input hidden type="number" name="postIDval" value="{{d.postid}}">
           <!--
           <input hidden type="text" value={{forloop.counter}} name="postNumber">-->
-          <input type="submit" value="Like">
+          <button type="submit" >
+            <i class="fa-solid fa-thumbs-up"></i>
+          </button>
         </form>
 
         <div>
@@ -187,8 +205,8 @@
 
 
 
-
-          <i id="copy" class="fa-solid fa-copy fa-lg" onclick="copyText()"></i>
+          <!--
+          <i id="copy" class="fa-solid fa-copy fa-lg" onclick="copyText()"></i>-->
           <!--lomake saa parametrina mongodb:n postid:n eli d.postid joka käydään html:ssä for silmukalla
         läpi näin post-edit lomake saa id numeron tietoon ja osaa välittää sen edit.html sivulle-->
           <form action="/post-edit-send/{{d.postid}}/">
@@ -282,14 +300,14 @@
 
 
   <p class="d-inline-flex gap-1">
-    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#NewPost" role="button" aria-expanded="false"
       aria-controls="collapseExample">
       Submit a new post
     </a>
 
   </p>
 
-  <div class="collapse" id="collapseExample">
+  <div class="collapse" id="NewPost">
     <div class="card card-body">
 
       <form action="/post-New/" method="post">
@@ -339,9 +357,11 @@
     </a>
 
   </p>
+
   <form action="/save-to-csv/" method="post">
     {% csrf_token %}
-    <input type="submit" class="btn btn-primary btn-md" value="Save messages to csv">
+    <!--
+    <input type="submit" class="btn btn-primary btn-md" value="Save messages to csv">-->
   </form>
 
   <div class="collapse" id="collapseExample">

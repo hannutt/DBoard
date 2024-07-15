@@ -17,12 +17,12 @@
 
 </head>
 
-<body>
+<body style="background-image: url(/static/BGPic.jpg);">
   <h2>Webshop</h2>
 
-  <a class="btn btn-outline-primary" href="/adminView">Admin view</a>
+  <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
-  <a class="btn btn-outline-primary" onclick="openProductForm()">Shopping cart</a>
+  <a class="btn btn-primary" onclick="openProductForm()">Shopping cart (test use only) </a>
   <div class="form_popup" id="productForm"
     style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
     <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
@@ -302,6 +302,10 @@
       <input hidden type="number" id="amountField" name="amount"><input hidden type="text" id="strengthField"
         name="strength">
       <input hidden type="number" id="totalField" name="total">
+      <input type="text" name="flname" placeholder="First and lastname">
+      <input type="text" name="address" placeholder="Address">
+      <input type="text" name="city" placeholder="City">
+      <input type="text" name="zip" placeholder="Zip code">
 
       <input type="submit" value="Save">
     </form>
@@ -310,9 +314,9 @@
     <br>
 
     {%endfor%}
-
+    <!--
     <button class="openBtn" style="padding: 16px 20px; background-color: #555; color: white;" onclick="openForm()">Open
-      form</button>
+      form</button>-->
     <div class="form_popup" id="formPlace"
       style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
       <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>

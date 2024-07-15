@@ -45,12 +45,23 @@
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
                 <div class="accordion-body">
                     {% for o in Orders %}
+                    {{o.name}}
+                    {{o.address}}
+                    {{o.city}}
+                    {{o.zip}}
                     <p>Product: 
                     {{o.product}}
                 </p><p>Order Quantity:
                     {{o.amount}}
                 </p>
+                <label for="yes">Delivered</label>
+                <form action="/mark-delivered/" method="post">
+                    {% csrf_token %}
+                <input type="checkbox" value="yes" name="delivered" id="yes">
+                <input id="setdelivered" type="submit" value="mark" onclick="setDelivered()">
+            
                     {%endfor%}
+                </form>
                  
                 </div>
             </div>
