@@ -121,3 +121,8 @@
 .card-body {
     background-image: url("/static/images/productBG.jpg")
 }
+
+.bannedBody {
+    background-image: url("/static/images/BGPic.jpg");
+
+}

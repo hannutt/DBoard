@@ -33,7 +33,9 @@ You can hide forum texts with administrator credentials. The JavaScript function
 
 IP-ADDRESS BLOCKING
 
-save the IP address you want to block in the database. A Python function checks if the address is in the database. If the address is found, the javaScript function blocks the login option.
+save the IP address you want to block in the database. Initially, the Python function determines the user's IP address using a websocket. Then the function checks if the address is in the database. If the address is found, the javaScript function blocks the login option.
+
+The banned ip addresses are displayed in the table element and the user can show and hide the table using Jquery show/hide methods. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. this is made with JS date objects and getTime methods.
 
 WEBSHOP
 
