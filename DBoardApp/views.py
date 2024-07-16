@@ -113,17 +113,12 @@ def webshopAdmin(request):
 
 
 def productSelection(request,productId):
-    #codeword='xyzzy'
-    #discountCodes = dbname['discount']
+ 
     collection = dbname['products']
     data = collection.find({'productId':productId})
     orders = dbname['order']
     prods = collection.find()
     orderData = orders.find()
-   #isExist = discountCodes.count_documents({"code":codeword})
-    #print(isExist)
-    #if isExist == 1:
-     #   code = {codeword}
    
     #mongodb lauseke jossa kerrotaan amount ja multiply kenttien arvot keskenään
     #total = orders.aggregate([{'$project':{'total':{'$multiply':['$amount','$unitPrice']}}}])
@@ -208,10 +203,9 @@ def AddProducts(request):
     prodStock = request.POST['prodStock']
     addQuery={'productId':prodIdInt,'name':prodName,'price':prodPrice,'instock':prodStock}
     prodCollection.insert_one(addQuery)
-    #prodId = prodId +1
+  
     return render(request,'adminView.html')
        
      
 
 
-# Create your views here.
