@@ -31,6 +31,7 @@ function CheckId()
 
 function showModal() {
     document.getElementById("modalBtn").click()
+    
 
 }
 

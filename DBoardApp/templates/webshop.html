@@ -18,7 +18,7 @@
 
 </head>
 
-<body style="background-image: url(/static/BGPic.jpg);">
+<body onload="showModal()" style="background-image: url(/static/BGPic.jpg);">
   <h2>Webshop</h2>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
@@ -78,11 +78,11 @@
     <div class="card-header"
       style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}</div>
     {%endif%}
-    <div class="card-body" style="background-image: url(/static/productBG.jpg)">
-      <h5 id="Prodcard" class="card-title" style="background-image: url(/static/productBG.jpg) font-size: large
+    <div class="card-body">
+      <h5 id="Prodcard" class="card-title" style="font-size: large
                       font-family: 'Brush Script MT',cursive;">{{p.productId}} Price: {{p.price}} €/can inStock:
         {{p.instock}} pcs</h5>
-      <p class="card-text" style="background-image: url(/static/productBG.jpg)"></p>
+      <p class="card-text"></p>
       <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength(8)">8 MG
       <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength(16)">16 MG
 
@@ -250,66 +250,36 @@
     </div>
 
     <script>
-      var clicks = 0
-      function openForm() {
-        clicks = clicks + 1
-        document.getElementById("formPlace").style.display = "block";
-        //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
-        //on klikattu avauksen jälkeen uudelleen
-        if (clicks % 2 === 0) {
-          document.getElementById("formPlace").style.display = "none";
-
-        }
-      }
-      var clicks = 0
-      var orderTxt = document.getElementById("orderTxt").value
-      function openProductForm() {
-        document.getElementById("orderTxt").value = ''
-        //console.log(orders)
-        clicks = clicks + 1
-        //var lng = orders.length
-        //console.log(lng)
-        document.getElementById("productForm").style.display = "block";
-        for (var i = 0; i < localStorage.length; i++) {
-          //document.getElementById("orderTxt").value+=localStorage.key(i)
-          //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
-          //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
-          //tilausriviä on talletettu)
-
-          console.log(orderTxt)
-          document.getElementById("orderTxt").value += localStorage.getItem(localStorage.key(i))
-
-        }
-
-
-        //order=localStorage.getItem(orders[i])
-        //console.log(order)
-        // var row = localStorage.getItem('orderrow72')
-        //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
-        //on klikattu avauksen jälkeen uudelleen
-        if (clicks % 2 === 0) {
-          document.getElementById("ProductForm").style.display = "none";
-
-        }
-      }
+  
     </script>
 
 
 
     <br>
-    <!--
-              {{forloop.counter}}
-              {% if forloop.counter == 1 %}<br>
-            
-              <input type="text" name="prodName" id="prodName{{forloop.counter}}" value="">
-              <input type="text" name="prodPrice" id="prodPrice{{forloop.counter}}" value="">
-              {%endif%}-->
+ <!-- Button trigger modal -->
+<button type="button" id="modalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
 
-
-
-
-
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Age verify</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ARE YOU 18 OR OLDER?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+        <!--buttoni palauttaa käyttäjän etusivulle--->
+        <a href="/" class="btn btn-primary">No</a>
+      </div>
+    </div>
   </div>
+</div>
 </body>
 
 </html>

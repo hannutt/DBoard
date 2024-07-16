@@ -118,3 +118,40 @@ function Discount() {
     document.getElementById("orderRow").innerHTML=productsFromStorage
   }
 
+  var clicks = 0
+  function openForm() {
+    clicks = clicks + 1
+    document.getElementById("formPlace").style.display = "block";
+    //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
+    //on klikattu avauksen jälkeen uudelleen
+    if (clicks % 2 === 0) {
+      document.getElementById("formPlace").style.display = "none";
+
+    }
+  }
+  var clicks = 0
+  var orderTxt = document.getElementById("orderTxt").value
+  function openProductForm() {
+    document.getElementById("orderTxt").value = ''
+   
+    clicks = clicks + 1
+    
+    document.getElementById("productForm").style.display = "block";
+    for (var i = 0; i < localStorage.length; i++) {
+      //document.getElementById("orderTxt").value+=localStorage.key(i)
+      //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
+      //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
+      //tilausriviä on talletettu)
+
+      console.log(orderTxt)
+      document.getElementById("orderTxt").value += localStorage.getItem(localStorage.key(i))
+
+    }
+
+    //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
+    //on klikattu avauksen jälkeen uudelleen
+    if (clicks % 2 === 0) {
+      document.getElementById("ProductForm").style.display = "none";
+
+    }
+  }

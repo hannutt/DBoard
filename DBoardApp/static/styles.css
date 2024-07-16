@@ -42,7 +42,7 @@
 }
 
 .forum {
-    background-image: url("/static/BGPic.jpg");
+    background-image: url("/static/images/BGPic.jpg");
 }
 
 .accordion-item {
@@ -54,7 +54,7 @@
 .loginHeader {
     text-align: center;
     color: white;
-    background-image: url("/static/headerBG.jpg");
+    background-image: url("/static/images/headerBG.jpg");
 
 }
 .times {
@@ -79,7 +79,7 @@
 
 
 .loginPage {
-    background-image: url("/static/BGPic.jpg");
+    background-image: url("/static/images/BGPic.jpg");
 }
 
 .openBtn {
@@ -116,4 +116,8 @@
 
 .checkerRed {
     background-color: red;
+}
+
+.card-body {
+    background-image: url("/static/images/productBG.jpg")
 }
