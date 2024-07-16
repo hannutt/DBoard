@@ -2,8 +2,9 @@ from django.urls import path
 from django.urls import path
 from DBoardApp import loginViews
 from DBoardApp import messageViews
-from .views import likePost,deletePost,showEdit,saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,showAdminView,AddProducts,webshopAdmin,editProduct,updateProd,\
-BanPage,SaveBannedIp,DeleteFromBan,delivered,updatePost,backToWebShop
+from DBoardApp import BanViews
+from .views import saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,showAdminView,AddProducts,webshopAdmin,editProduct,updateProd,\
+delivered,backToWebShop
 
 
 urlpatterns = [
@@ -11,18 +12,18 @@ urlpatterns = [
     path('login-form/',loginViews.login_user,name='login_user'),
     path('logout/',loginViews.logout_user),
     path("index/",loginViews.FrontPage),
-    path('banIps/',BanPage),
-    path('ban-form/',SaveBannedIp),
-    path('del-ban/',DeleteFromBan),
+    path('banIps/',BanViews.BanPage),
+    path('ban-form/',BanViews.SaveBannedIp),
+    path('del-ban/',BanViews.DeleteFromBan),
     #path('img-form/',DBimages),
     #html-lomake ja funtio yhdistetään toisiinsa näin
     path('post-Reply/',messageViews.postReply),
     path('post-New/',messageViews.postNew),
-    path('post-Like/',likePost),
-    path('post-delete/',deletePost),
+    path('post-Like/',messageViews.likePost),
+    path('post-delete/',messageViews.deletePost),
     #postid-muuttujaan talletetaan index.html sivulla saatu d.postid arvo
-    path('post-edit-send/<int:postid>/',showEdit),
-    path('edit-post/',updatePost),
+    path('post-edit-send/<int:postid>/',messageViews.showEdit),
+    path('edit-post/',messageViews.updatePost),
      #siirtyminen editoinitisivulle, id täytyy myös lähettää sinne
     path('post-edit-product-send/<int:productId>/',editProduct),
     #varsinainen editointi tapahtuu tässä

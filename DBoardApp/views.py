@@ -34,83 +34,6 @@ times = 0
 amount = 0
 
 
-
-
-    
-    
-'''
-     #filtteri eli minkä dokumentin replymsg kenttääm vastaus tallennetaan
-     filter = {'postid':postidInt}
-     #lisätään muuttujan teksti dokumentin replymsg kenttään
-     replydata = {"$set":{"replymsg":msg}}
-   
-     collection.update_one(filter,replydata)
-       # print(postid)
-     #print(isExist)
-    
-     return render(request,'index.html')
-'''
-
-
-
-def likePost(request):
-    collection = dbname['posts']
-    postid = request.POST['postIDval']
-    postidInt = int(postid)
-    filter = {'postid':postidInt}
-     #lisätään muuttujan teksti dokumentin replymsg kenttään
-    likedata = {"$inc":{"likes":+1}}
-    
-     #kokoelman päivitys, insertillä luotaisiin vain uusi dokumentti
-    collection.update_one(filter,likedata)
-  
-   
-    #client = pymongo.MongoClient('mongodb://localhost:27017/')
-    #dbname = client['DBoardDB']
-    '''
-    collection = dbname['likes']
-    isExist = collection.count_documents({"_id":postNumInt})
-    #b.collection.find({myFieldName: {$exists: 1}}).
-    #tarkistus löytyykö id numero ja kannasta, jos on niin päivitetään löydetyn id:n likecount kenttää
-    if isExist==1:
-   
-        #kasvatetaan likecount kentän arvoa yhdellä annetun id:n eli postnumInt perusteella (sql where)
-        collection.update_one({"_id":postNumInt},{'$inc':{"likecount":+1}})
-    #jos id:tä eilöydy niin lisätään tietokantaan käyttäjän syöttämä (postNumInt) id ja likecount kenttää numero 1
-    else:
-         query = {"_id":postNumInt,'likecount':1}
-         collection.insert_one(query)
-    '''
-    print(postid)
-    return render(request,'index.html')
-
-def deletePost(request):
-      
-      deleteId = request.POST['deletePostId']
-      deleteIdInt = int(deleteId)
-      print(deleteIdInt)
-      
-      #options = ['title','body']
-      #selection on index.html checkboksien name ominaisuuden arvo eli merkkijono
-     
-      collection = dbname['posts']
-      updCollection = dbname['deleted']
-      #txt = request.POST['delete']
-      delquery = {"postid":deleteIdInt}
-      postId = 1
-      collection.delete_one(delquery)
-      
-     #päivitetään poistettujen dokumenttien lukumäärä
-      updCollection.update_one({"_id":postId},{'$inc':{"count":+1},'$set':{"deldate":todayStr}})
-      #updCollection.insert_one(delquery)
-      #updCollection.insert_one({"_id":postId},{'$inc':{"count":+1}})
-      #updCollection.update_one({"_id":dateIdStr},{'$set':{'deltime':todayStr}})
-      #if bodychoice == 'body:':   
-        #print('you selected bodyCB')
-     
-    
-      return render(request,'index.html')
-
 def filterPost(request):
     slc = ['title','body']
     collection = dbname['posts']
@@ -135,16 +58,6 @@ def filterPost(request):
          #haetaan vain title kentät
       
     
-        
-    
-
-def showEdit(request,postid):
-    print(postid)
-    collection = dbname['posts']
-    #haku kannasta postid:n arvon perusteella
-    data=collection.find({'postid':postid})
-    return render(request,'edit.html',{'data':data})
-
 def editProduct(request,productId):
     collection = dbname['products']
     prods = collection.find({'productId':productId})
@@ -167,22 +80,6 @@ def updateProd(request):
     collection.update_one(filter,updateData)
 
     return render(request,'editProducts.html')
-
-def updatePost(request):
-    collection = dbname['posts']
-    postId = request.POST['postid']
-    postIdInt = int(postId)
-    body = request.POST['body']
-    title = request.POST['title']
-    #vastaa sql WHERE ID = LAUSETTA
-    filter = {'postid':postIdInt}
-    #päivitys tapahtuu avain-arvo pareina. ensin tulee kentän nimi, sen jälkeen muuttuja jonka
-    #arvo kenttään päivitetäänF
-    updateData = {"$set":{"body":body,"title":title}}
-
-    collection.update_one(filter,updateData)
-
-    return redirect (loginViews.FrontPage)
 
     
 
@@ -300,42 +197,7 @@ def showAdminView(request):
    
      return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal,'Orders':Orders})
 
-def BanPage(request):
 
-    collection = dbname['BannedIps']
-    result= collection.find({},{ "_id": 0, "ip": 1,"BanDate":1})
-    dateInfo = collection.find({},{"_id":0,"ip":0,"BanDate":1})
-    #lasketaan BannedIps kokoelman dokumenttien määrä
-    counter = collection.count_documents({})
-    print(counter)
-    context={'result':result,'counter':counter}
-    dateContext = {'dateInfo':dateInfo}
-    print(dateInfo)
-    
-    return render(request,'banIps.html',context)
-
-
-def SaveBannedIp(request):
-    
-    Dnow = datetime.now()
-    formatted = Dnow.strftime("%d.%m.%Y")
-    #print(formatted)
-    ipCol = dbname['BannedIps']
-    ip = request.POST['ipadd']
-    saveData = {'ip':ip,'BanDate':formatted}
-    ipCol.insert_one(saveData)
-    #palautetaan BanPage näkymä, eli funktio voi palauttaa myös toisessa funktiossa luodun näkymän
-    return BanPage(request)
-
-def DeleteFromBan(request):
-    ipCol = dbname['BannedIps']
-
-    address = request.POST['ip']
-    delData = {'ip':address}
-    ipCol.delete_one(delData)
-    print(address)
-
-    return BanPage(request)
 
 def AddProducts(request):
     prodCollection = dbname['products']

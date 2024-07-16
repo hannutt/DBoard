@@ -81,4 +81,71 @@ def postNew(request):
       #col.insert_one(newQuery)
       #redirectillä palautetaan haluttu näkymä lisäksi html sivun formissa ja urls.pyssä täytyy lisätä / merkki
       return redirect (loginViews.FrontPage)
+
+
+def likePost(request):
+    collection = dbname['posts']
+    postid = request.POST['postIDval']
+    postidInt = int(postid)
+    filter = {'postid':postidInt}
+     #lisätään muuttujan teksti dokumentin replymsg kenttään
+    likedata = {"$inc":{"likes":+1}}
+    
+     #kokoelman päivitys, insertillä luotaisiin vain uusi dokumentti
+    collection.update_one(filter,likedata)
+  
+    return render(request,'index.html')
+
+def updatePost(request):
+    collection = dbname['posts']
+    postId = request.POST['postid']
+    postIdInt = int(postId)
+    body = request.POST['body']
+    title = request.POST['title']
+    #vastaa sql WHERE ID = LAUSETTA
+    filter = {'postid':postIdInt}
+    #päivitys tapahtuu avain-arvo pareina. ensin tulee kentän nimi, sen jälkeen muuttuja jonka
+    #arvo kenttään päivitetäänF
+    updateData = {"$set":{"body":body,"title":title}}
+
+    collection.update_one(filter,updateData)
+
+    return redirect (loginViews.FrontPage)
+
+def showEdit(request,postid):
+    print(postid)
+    collection = dbname['posts']
+    #haku kannasta postid:n arvon perusteella
+    data=collection.find({'postid':postid})
+    return render(request,'edit.html',{'data':data})
+
+
+def deletePost(request):
+      
+      deleteId = request.POST['deletePostId']
+      deleteIdInt = int(deleteId)
+      print(deleteIdInt)
+      
+      #options = ['title','body']
+      #selection on index.html checkboksien name ominaisuuden arvo eli merkkijono
+     
+      collection = dbname['posts']
+      updCollection = dbname['deleted']
+      #txt = request.POST['delete']
+      delquery = {"postid":deleteIdInt}
+      postId = 1
+      collection.delete_one(delquery)
+      
+     #päivitetään poistettujen dokumenttien lukumäärä
+      updCollection.update_one({"_id":postId},{'$inc':{"count":+1},'$set':{"deldate":todayStr}})
+      #updCollection.insert_one(delquery)
+      #updCollection.insert_one({"_id":postId},{'$inc':{"count":+1}})
+      #updCollection.update_one({"_id":dateIdStr},{'$set':{'deltime':todayStr}})
+      #if bodychoice == 'body:':   
+        #print('you selected bodyCB')
+     
+    
+      return render(request,'index.html')
+
+
     

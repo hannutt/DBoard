@@ -1,20 +1,21 @@
 # DBoard
 Python Django and javascript application with Bootstrap and Jquery.
 
-Project keywords: Python, Django, JavaScript, JQuery, NoSQL, Bootstrap.
+Project keywords: Python, Django, JavaScript, JQuery, NoSQL, MongoDB, Bootstrap.
 
 MAIN FEATURES:
 
 CODE SPLIT 
 
-Since the original view.py file became too large, the code has started to be divided into separate .py files. For now, the login/logout and message sending and reply codes are in their own files.
+Since the original view.py file became too large, the code has started to be divided into separate .py files. for now, the login/logout and message sending and reply codes as well as the IP address blocking codes are in their own files. The JavaScritp code is also split into multiple .js files.
 
 USER AUTHENTICATION:
 
 Log-in and Log-out features. Made with Django Authenticate library.
 
-VISITOR COUNTER:
-Visitor counter with Python and javascript. The Python code counts the visits and the javascript code displays the number graphically using the ChartJS library.
+GRAPHIC VISITOR COUNTER:
+
+Visitor counter with Python and javascript. The Python code counts the visits and the javascript code displays the number graphically using the ChartJS library. Visitor counting takes place every time the homepage is reloaded. The LoginView function always updates the variable with +1 when calling the function and sends the value of the variable to the html page. then a javaScript function grabs the variable and passes it to ChartJS, which makes a graph of the number of visits.
 
 DISCUSSION BOARD
 
