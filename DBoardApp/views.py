@@ -19,6 +19,8 @@ from bson.binary import Binary
 from PIL import Image
 import io
 
+from DBoardApp import loginViews
+
 global today
 today = date.today()
 global todayStr
@@ -31,154 +33,9 @@ status = 'True'
 times = 0
 amount = 0
 
-'''
-def DBimages(request):
-    l=[]
-    client=MongoClient()
-    db=client.DBoardDB
-    images=db.images
-    image=images.find_one()
-
-
-    pil_img=Image.open(io.BytesIO(image['data']))
-    pil_img.save('img.png')
-    context={'pil_img':'img.png'}
-    return render(request,'login.html',context)
-'''
-
-
-def loginView(request):
-
-     #myclient = pymongo.MongoClient('mongodb://localhost:27017/')
-     #mydb = myclient['DBoardDB']
-     collection = dbname['BannedIps']
-     result= collection.find({},{ "_id": 0, "ip": 1})
-     for i in result: 
-        print(i)    
-
-    
-     global times
-     times +=1
-     loginfo = "[Not logged in]"
-     hostname = socket.gethostname()
-     ip = socket.gethostbyname(hostname)
-     #ip = '192.90.45.73'
-     #ltarkastetaan onko ip-osoite bannattu, eli löytyykö se kannasta
-     isIpExist = collection.count_documents({"ip":ip})
-     print(isIpExist)
-     #existIp=mycol.find({"ip": ip},{'_id':0}).count()
-     #jos ip-osoite löytyy
-     if isIpExist == 1:
-        result='banned!' 
-        context = {'info':loginfo,'status':status,'times':times,'result':result}
-     else:
-        result=ip
-        context = {'info':loginfo,'status':status,'times':times,'result':result}
-
-    
-   
-   
-     return render(request,'login.html',context)
-
-def login_user(request):
-     username = request.POST["username"]
-     password = request.POST["password"]
-    #authenticate metodi, joka saa parametreina tunnuksen ja salasanan
-     global user
-     user = authenticate(username = username, password = password)
-    #jos tiedot löytyvät/täsmäävät tietokannassa oleviin niin kirjataan käyttäjä sisälle
-     if user:
-        #login metodi käyttöön
-        login(request,user)
-
-        loginfo = "[Logged in]"
-        context = {'name':user,'info':loginfo}
-
-        return render (request,'login.html',context)
-     else:
-         
-         return render(request,'login.html',context)
-     
-         
-#uloskirjaus
-def logout_user(request):
-    
-    logout(request)
-    loginfo = "[Not logged in]"
-    context = {'info':loginfo}
-    return render(request,'login.html',context)
 
 
 
-
-def FrontPage(request):
-     #kirjautumisen tarkastus, jos käyttäjä ei ole kirjautunut näytetään login.html sivu
-     if not request.user.is_authenticated:
-        return render(request,'login.html')
-     else:
-         
-      
-      collection = dbname['posts']
-      col2 = dbname['reply']
- 
-      col4 = dbname['deleted']
-    #talletetaan data muuttujaan DBBoard tietokannan post collectionin kaikki tieto
-      data=collection.find()
-    #satunnaisluku?
-      replydata = col2.find()
-    #näytetään vain ne tietueet, joissa on replymsg kenttä.
-      replymessage = collection.find({'replymsg':{'$exists':'true'}})
-      #isZero = collection.find({"likes":{"$exists":"true"}})
-      
-      deleted = col4.find()
-      posted =  col4.find({'_id':2})
-     
-      return render(request,'index.html',{"data":data,"reply1":replydata,'deleted':deleted,'posted':posted,'replymessage':replymessage,'user':user})
-
-def postReply(request):
-     data = []
-     
-     collection = dbname['posts']
-     postid = request.POST['postIDval']
-     msg = request.POST['reply']
-     #postid tulee merkkijonona joten se täytyy muuntaa kokonaisluvuksi
-     #että se voidaan tallentaa kantaan
-     postidInt = int(postid)
-     '''
-     isEmpty = collection.find({"replymsg":{"$exists":"true","$eq":""}})
-     if isEmpty:
-         filter = {'postid':postidInt}
-         replydata = {"$set":{"replymsg":msg}}
-     else:
-     '''
-      #haetaan postid:llä ja talletetaan muuttujan replymsg kentässä jo oleva data
-     previousData = collection.find({"postid":postidInt},{"_id":0,"replymsg":1})
-     #previousdatan läpikäynti silmukassa että se saadaan lukukelpoiseen muotoon
-     #ja tallennus data listaan
-     for i in previousData:
-         data.append(i)
-         
-     #data.append(previousData)
-     #data.append(query)
-    
-     
-     data.append(msg)
-     
-    
-     #filtteri eli minkä dokumentin replymsg kenttääm vastaus tallennetaan
-     filter = {'postid':postidInt}
-     #datalista sijoitetaan replymsg kenttään
-     replydata = {"$set":{"replymsg":data}}
-   
-     collection.update_one(filter,replydata)
-    
-      
-     print(data)
-
-     return redirect (FrontPage)
-
-
-    
     
     
 '''
@@ -194,35 +51,7 @@ def postReply(request):
      return render(request,'index.html')
 '''
 
-def postNew(request):
-      newPostid =2
-      postId = random.randint(1,500)
-      title = request.POST['postTitle']
-      body = request.POST['bodyText'] 
-      #postid = request.POST['postNumber']
-      deletecol = dbname['deleted']
-      Postcollection = dbname['posts']
-      isPostidExist = Postcollection.count_documents({"postid":postId})
-      if isPostidExist == 1:
 
-        post = {"title":title,"body":body}
-        Postcollection.insert_one(post)
-        deletecol.update_one({"_id":newPostid},{'$inc':{"postCount":+1},'$set':{"postDate":todayStr}})
-
-      elif isPostidExist == 0:
-
-        post = {"title":title,"body":body,'postid':postId}
-        Postcollection.insert_one(post)
-        deletecol.update_one({"_id":newPostid},{'$inc':{"postCount":+1},'$set':{"postDate":todayStr}})        
-    
-      #newQuery = {"_id":newid,"postCount":1,"postDate":todayStr}
-      #client = pymongo.MongoClient('mongodb://localhost:27017/')
-      #dbname = client['DBoardDB']
-     
-      
-      #col.insert_one(newQuery)
-      #redirectillä palautetaan haluttu näkymä lisäksi html sivun formissa ja urls.pyssä täytyy lisätä / merkki
-      return redirect (FrontPage)
 
 def likePost(request):
     collection = dbname['posts']
@@ -353,7 +182,7 @@ def updatePost(request):
 
     collection.update_one(filter,updateData)
 
-    return redirect (FrontPage)
+    return redirect (loginViews.FrontPage)
 
     
 
@@ -364,6 +193,9 @@ def saveCsv(request):
     for i in titles:  
       print (i)
     return render(request,'index.html')
+
+def backToWebShop(request):
+    return redirect (webshop)
 
 def webshop(request):
     collection = dbname['products']
@@ -380,6 +212,8 @@ def webshopAdmin(request):
     prods = collection.find()
     
     return render(request,'adminView.html',{'prods':prods})
+
+
 
 def productSelection(request,productId):
     #codeword='xyzzy'
@@ -506,12 +340,13 @@ def DeleteFromBan(request):
 def AddProducts(request):
     prodCollection = dbname['products']
     prodId = request.POST['prodId']
+    prodIdInt = int(prodId)
     prodName = request.POST['prodName']
     prodPrice = request.POST['prodPrice']
     prodStock = request.POST['prodStock']
-    addQuery={'productId':prodId,'name':prodName,'price':prodPrice,'instock':prodStock}
+    addQuery={'productId':prodIdInt,'name':prodName,'price':prodPrice,'instock':prodStock}
     prodCollection.insert_one(addQuery)
-    prodId = prodId +1
+    #prodId = prodId +1
     return render(request,'adminView.html')
        
      

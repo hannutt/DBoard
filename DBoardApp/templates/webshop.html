@@ -24,6 +24,9 @@
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
   <a class="btn btn-primary" onclick="openProductForm()">Shopping cart (test use only) </a>
+  
+  <a class="btn btn-primary" href="/select-product-send/{{00}}">Return to cart </a>
+
   <div class="form_popup" id="productForm"
     style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid; z-index: 9;">
     <form action="" class="form-container" style="max-width: 300px; padding: 10px;"></form>
@@ -83,7 +86,7 @@
       <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength(8)">8 MG
       <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength(16)">16 MG
 
-    
+
       <!--onchange eli kun joki vaihtoehto on valittu suoritetaan getStrength funktio
                       <select id="amount" name="amount" onchange="getStrength();">
     
@@ -107,7 +110,7 @@
 
       <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
         onchange="setAmountField()">
-      
+
 
     </div>
   </div>
@@ -162,7 +165,7 @@
       }
     </script>
     <button hidden id="setBtn" onclick="setAmount()">set</button>
-  
+
 
     <table border="1px solid black">
 
@@ -182,18 +185,31 @@
         <td id="total"></td>
       </tr>
     </table>
-  
+
     <p id="orderRow"></p>
+    <table id="orderTable">
+      <tr>
+        <td></td>
+      </tr>
+    </table>
+  
     <button id="createorder" onclick="saveOrderRow()">Add to cart</button>
-    <button id="gobackShop" onclick="SaveCart()">Go back to shop</button>
+    <form action="/back-to-shop/" method="post">
+      <button id="gobackShop" onclick="SaveCart()">Go back to shop</button>
+
+      {% csrf_token %}
+    </form>
+
     <button id="earlier" onclick="getEarlierProducts">get products from localc</button>
+    <input type="text" id="removeThis">
+    <button id="removeLast" onclick="removeLatest()">X</button>
     <p id="compare">{{code}}</p>
     <form action="/discount-code/" method="post">
       {% csrf_token %}
       <input type="text" id="code" name="code">
       <button type="submit">Discount</button>
     </form>
-   
+
 
 
     <form action="/save-order/" method="post">
@@ -245,11 +261,11 @@
 
         }
       }
-      var clicks=0
+      var clicks = 0
       var orderTxt = document.getElementById("orderTxt").value
       function openProductForm() {
-        document.getElementById("orderTxt").value=''
-       //console.log(orders)
+        document.getElementById("orderTxt").value = ''
+        //console.log(orders)
         clicks = clicks + 1
         //var lng = orders.length
         //console.log(lng)
@@ -259,12 +275,12 @@
           //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
           //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
           //tilausriviä on talletettu)
-          
+
           console.log(orderTxt)
           document.getElementById("orderTxt").value += localStorage.getItem(localStorage.key(i))
 
         }
-        
+
 
         //order=localStorage.getItem(orders[i])
         //console.log(order)

@@ -67,17 +67,17 @@ var orders = []
 function saveOrderRow() {
     var ordernro = Math.floor(Math.random() * 100);
     console.log(ordernro)
-
+    
     var product = document.getElementById("product").innerHTML
     var price = document.getElementById("price").innerHTML
     var amount = document.getElementById("finalAm").innerHTML
     var strength = document.getElementById("str").innerHTML
     var total = document.getElementById("total").innerHTML
-    document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total
+    document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total+ productsFromStorage
     var row = document.getElementById("orderRow").innerHTML
     console.log(row)
     //localstoragen avaimeen pystyy lisäämään numerotunnisteen
-    localStorage.setItem('orderrow' + ordernro, row)
+    //localStorage.setItem('orderrow' + ordernro, row)
     orders.push('orderrow' + ordernro)
 }
 
@@ -88,8 +88,8 @@ function SaveCart() {
     var amount = document.getElementById("finalAm").innerHTML
     var strength = document.getElementById("str").innerHTML
     var total = document.getElementById("total").innerHTML
-    var row=  document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total + productsFromStorage
-    //localStorage.setItem('orderrow'+ordernro,row)
+    var row=  document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total +' '+ productsFromStorage
+    localStorage.setItem('orderrow'+ordernro,row)
 
 }
 
@@ -109,6 +109,12 @@ function Discount() {
     //haetaan localstoragen arvot ja talletetaan ne listaan,
     //joka näytetään orderrow elementissä
     
+    document.getElementById("orderRow").innerHTML=productsFromStorage
+  }
+
+  function removeLatest() {
+    var deletethis=document.getElementById("removeThis")
+    productsFromStorage.pop(deletethis)
     document.getElementById("orderRow").innerHTML=productsFromStorage
   }
 

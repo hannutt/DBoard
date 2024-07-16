@@ -5,7 +5,12 @@ Project keywords: Python, Django, JavaScript, JQuery, NoSQL, Bootstrap.
 
 MAIN FEATURES:
 
+CODE SPLIT 
+
+Since the original view.py file became too large, the code has started to be divided into separate .py files. For now, the login/logout and message sending and reply codes are in their own files.
+
 USER AUTHENTICATION:
+
 Log-in and Log-out features. Made with Django Authenticate library.
 
 VISITOR COUNTER:
@@ -13,7 +18,9 @@ Visitor counter with Python and javascript. The Python code counts the visits an
 
 DISCUSSION BOARD
 
-Simulates an online discussion board. You can post a new thread, reply to an existing message,delete the messages and like messages. The conversation text can be translated into different languages. this is done using the Google Translate API. Messages are stored to the MongoDB NoSQL database. 
+Simulates an online discussion board. You can post a new thread, reply to an existing message,delete the messages and like messages. The conversation text can be translated into different languages. this is done using the Google Translate API. Messages are stored to the MongoDB NoSQL database.
+
+All posts are wrapped in the Bootstrap 5 accordion/collapse element, so you can close or open posts.
 
 Text filtering, with the html checkboxes you can choose whether only the title or body text of the message is displayed. This works with a Python function that gets the user's selection using the request.post.getlist method and makes a new database query with the selected option.
 
@@ -33,6 +40,8 @@ IN THE USER VIEW:
 
 simulates a purchase transaction in an online store. the user selects the desired products and quantity and fills in the address information. Then the entire order is stored in the database.
 The selected products are stored in the localStorage in case you leave the online store and come back. Your order information can be retrieved easily with the localStorage feature later. This simulates a real-life online shopping experience. LocalStorage values ​​are retrieved using Object.values(localStorage); method
+
+Products can also be deleted before saving by pressing the button. The items are in a JavaScript array, so the pop method removes the items one by one with a click.
 
 IN THE ADMIN VIEW:
 
