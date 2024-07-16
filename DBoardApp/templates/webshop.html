@@ -13,6 +13,7 @@
   <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
   <link rel="stylesheet" type="text/css" href="{%static 'styles.css' %}">
   <script src="{% static 'scripts.js' %}"></script>
+  <script src="{% static 'webshopScripts.js' %}"></script>
   <title>Webshop</title>
 
 </head>
@@ -79,24 +80,10 @@
                       font-family: 'Brush Script MT',cursive;">{{p.productId}} Price: {{p.price}} €/can inStock:
         {{p.instock}} pcs</h5>
       <p class="card-text" style="background-image: url(/static/productBG.jpg)"></p>
-      <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength()">8 MG
-      <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength()">16 MG
+      <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength(8)">8 MG
+      <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength(16)">16 MG
 
-      <script>
-        function setStrength() {
-          var elem = document.getElementsByName("str")
-          //silmukassa käydään läpi str nimiset radiobuttonit
-          for (i = 0; i < elem.length; i++)
-            //jos jokin buttoneista on valittu talletetaan sen value localstorageen
-            if (elem[i].checked) {
-              console.log(elem[i].value)
-              localStorage.setItem('str', elem[i].value)
-
-            }
-
-        }
-
-      </script>
+    
       <!--onchange eli kun joki vaihtoehto on valittu suoritetaan getStrength funktio
                       <select id="amount" name="amount" onchange="getStrength();">
     
@@ -120,36 +107,7 @@
 
       <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
         onchange="setAmountField()">
-      <script>
-        function setAmountField() {
-
-          var quantity = document.getElementsByName("amount")
-          //silmukassa käydään läpi str nimiset radiobuttonit
-          for (i = 0; i < quantity.length; i++)
-            //jos jokin amount nimisen input kentän arvo on suurempi kuin 0 talletetaan arvo am-muuttujaan ja am
-            //muuttuja puolestaan talletetaan localstorageen
-            if (quantity[i].value > 0) {
-
-              var am = quantity[i].value
-              console.log(am)
-              localStorage.setItem("qty", am)
-
-
-            }
-
-        }
-      </script>
-      <script>
-        //amount kentän arvon tallennus localstorageen
-        function getAmount() {
-          var amount = document.getElementById("amount").value;
-          //localStorage.setItem("Amount",amount)
-          document.getElementById("setBtn").click()
-
-
-        }    
-      </script>
-
+      
 
     </div>
   </div>
@@ -204,33 +162,7 @@
       }
     </script>
     <button hidden id="setBtn" onclick="setAmount()">set</button>
-    <script>
-
-      function setAmount() {
-        //muuttujaan talletetaan html tagin sisältö ( tagin id on price)
-        price = document.getElementById("price").innerHTML
-        //korvataan € merkki tyhjällä
-        priceRep = price.replace('€', '')
-        //talletetaan muuttujiin local storagesta haetut arvot.
-        placeAmount = localStorage.getItem("qty")
-        strength = localStorage.getItem("str")
-        //kerrotaan hinta ja kappalemäärä
-        total = priceRep * placeAmount
-        console.log(total)
-        //localstoragen arvojen asetus <td> tageihin
-        document.getElementById("finalAm").innerHTML = placeAmount
-        document.getElementById('total').innerHTML = total
-        document.getElementById("str").innerHTML = strength
-        //asetetaan input kenttiin localstoragen arvo
-        document.getElementById('amountField').value = placeAmount
-        document.getElementById('strengthField').value = strength
-        document.getElementById('totalField').value = total
-        //localStorage.clear()
-
-      }
-
-
-    </script>
+  
 
     <table border="1px solid black">
 
@@ -250,48 +182,18 @@
         <td id="total"></td>
       </tr>
     </table>
-    <script>
-      var orders = []
-
-      //TILAUKSEN TIETOJEN TALLENNUS LOCALSTORAGEEN
-      function saveOrderRow() {
-        var ordernro = Math.floor(Math.random() * 100);
-        console.log(ordernro)
-
-        var product = document.getElementById("product").innerHTML
-        var price = document.getElementById("price").innerHTML
-        var amount = document.getElementById("finalAm").innerHTML
-        var strength = document.getElementById("str").innerHTML
-        var total = document.getElementById("total").innerHTML
-        document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total
-        var row = document.getElementById("orderRow").innerHTML
-        console.log(row)
-        //localstoragen avaimeen pystyy lisäämään numerotunnisteen
-        localStorage.setItem('orderrow' + ordernro, row)
-        orders.push('orderrow' + ordernro)
-      }
-    </script>
+  
     <p id="orderRow"></p>
     <button id="createorder" onclick="saveOrderRow()">Add to cart</button>
+    <button id="gobackShop" onclick="SaveCart()">Go back to shop</button>
+    <button id="earlier" onclick="getEarlierProducts">get products from localc</button>
     <p id="compare">{{code}}</p>
     <form action="/discount-code/" method="post">
       {% csrf_token %}
       <input type="text" id="code" name="code">
       <button type="submit">Discount</button>
     </form>
-    <script>
-      function Discount() {
-        code = document.getElementById('code').value
-        compareCode = document.getElementById("compare").innerHTML
-        if (code === compareCode) {
-
-          totalDiscount = total - 2
-          document.getElementById("total").innerHTML = totalDiscount
-
-        }
-
-      }
-    </script>
+   
 
 
     <form action="/save-order/" method="post">

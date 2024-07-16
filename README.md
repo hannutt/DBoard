@@ -1,5 +1,6 @@
 # DBoard
-Python Django and javascript application with Bootstrap and Jquery effects.
+Python Django and javascript application with Bootstrap and Jquery.
+
 Project keywords: Python, Django, JavaScript, JQuery, NoSQL, Bootstrap.
 
 MAIN FEATURES:
@@ -31,11 +32,11 @@ WEBSHOP
 IN THE USER VIEW:
 
 simulates a purchase transaction in an online store. the user selects the desired products and quantity and fills in the address information. Then the entire order is stored in the database.
+The selected products are stored in the localStorage in case you leave the online store and come back. Your order information can be retrieved easily with the localStorage feature later. This simulates a real-life online shopping experience. LocalStorage values ​​are retrieved using Object.values(localStorage); method
 
 IN THE ADMIN VIEW:
 
-Perform CRUD operations on products. in the admin view you can also use Bootstrap's accordion/collapse features.
-All orders stored in the database are displayed in the administrator's view.
+Perform CRUD operations on products. in the admin view you can also use Bootstrap's accordion/collapse features. All orders saved in the database are automatically displayed in the administrator view.
 Inventory management, from the view you can quickly check which product is the most and which is the least in the database. The total amount of all products is also shown
 
 Attention color for the products that are most and least in stock.
