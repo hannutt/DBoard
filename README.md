@@ -50,6 +50,12 @@ Each product in the Shopping Cart has a delete button, which can be pressed to r
 
 Then, with the settAttribute method, an onclick event and a function that performs the deletion are set for the buttons. The delete function takes a this.value parameter, which in this case is the name of the localStorage key.
 
+User experience is taken into account in the purchase transaction.
+For example, when a product is added to the cart, the cart button gets a red border for a few seconds (JavaScript setTimeout function) and the button also has a span element that contains a JavaScript variable that displays the number of items in the cart.
+The variable is updated every time a new product is added to the shopping cart.
+
+The purpose of these features is to give the user certainty that the product has been successfully added to the shopping cart.
+
 
 IN THE ADMIN VIEW:
 

@@ -76,35 +76,7 @@ function setDelivered() {
   document.getElementById("setdeliv").click()
   document.getElementById("setdeliv").hidden=true
 }
-  function move() {
-    let id = null;
-    const animateDiv = document.getElementById("animate");
-    animateDiv.style.top=250 + "px"
-    animateDiv.style.left= 450 + "px"
-    let pos = 0
-    clearInterval(id)
-    //frame + luku muuttaa neliön liikkumisnopeutta
-    id = setInterval(frame,55);
-    function frame() {
-      //pos on kuvion liikkumismäärä pikseleinä jos container divin mitat on 50x50 niin animatedivin pos ollessa
-      //50 se liikkuu container alareunaan
-      if (pos==50) {
-        clearInterval(id)
-        id = setInterval(frame,55);
-        //neliön palautus divin vasempaan yläosaana
-        animateDiv.style.top = 1 +"px"
-        animateDiv.style.left = 1 + "px"
-        clearInterval(id)
-       
-        
-      } else {
-        pos++
-        animateDiv.style.top = pos +"px"
-        animateDiv.style.left = pos + "px"
-        
-      }
-    }
-  }
+  
 
   function Banned() {
     var add = document.getElementById("ip").innerHTML;

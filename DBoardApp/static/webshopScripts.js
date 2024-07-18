@@ -63,8 +63,10 @@ function setAmount() {
 
 }
   //TILAUKSEN TIETOJEN TALLENNUS LOCALSTORAGEEN
-var orders = []
+var prodCounter=0
 function AddToCart() {
+  //ostoskori painikkeen kulmassa, ilmaisee tuotteiden määrää korissa
+  prodCounter=prodCounter+1
 
   localStorage.removeItem("str");
   localStorage.removeItem("qty");
@@ -80,20 +82,21 @@ function AddToCart() {
 
     //localstoragen avaimeen pystyy lisäämään numerotunnisteen
   localStorage.setItem('orderrow' + ordernro,row )
+
   //css-luokan vaihto
   document.getElementById("shoppingCart").className="shoppingCartBtnEffect";
+  document.getElementById("cartNum").innerHTML=prodCounter
   //5 sekunnin jälkeen vaihdetaan css-luokka takaisin alkuperäiseen
   setTimeout(() => {
     document.getElementById("shoppingCart").className="shoppingCartBtn";
     
   },5000);
-  for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-  console.log( localStorage.getItem( localStorage.key( i ) ) );
-}
+  
 
    
     //orders.push('orderrow' + ordernro)
 }
+
 
 function SaveCart() {
     var ordernro = Math.floor(Math.random() * 100);
@@ -177,8 +180,7 @@ function Discount() {
       //buttoneilla asetetaan onclick tapahtumankäsittelijä, joka lähettää funktiolle
       //parametrina this.valuen eli klikatun buttonin value attribuutin arvon
       btn.setAttribute('onclick',"DelFromCart(this.value)")
-      //"ListValues(localStorage.key(i))"
-      //document.getElementById("orderTxt").value+=localStorage.key(i)
+     
       //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
       //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
       //tilausriviä on talletettu)
@@ -188,7 +190,7 @@ function Discount() {
        //on alkioita.
        list.innerHTML += `<li id=${"li"+i}><br>`+localStorage.getItem(localStorage.key(i))+`<br/></li>`
        list.appendChild(btn)
-       console.log(localStorage.key(i))
+       
 
     }
 

@@ -24,12 +24,13 @@
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
   <form action="/back-to-shop/" method="post">
+    
     <button class="btn btn-primary" id="gobackShop">Go back to shop</button>
 
     {% csrf_token %}
   </form>
   <div class="shoppingCartBtn" id="shoppingCart">
-  <a class="btn btn-primary" onclick="ShoppingCart()">Show shopping cart </a>
+  <a class="btn btn-primary btn-lg" onclick="ShoppingCart()">Show shopping cart<span id="cartNum" class="cartNum"></span></a>
 </div>
   
   <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
@@ -305,6 +306,7 @@
     </div>
   </div>
 </div>
+
 </body>
 
 </html>
