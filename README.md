@@ -46,6 +46,10 @@ The selected products are stored in the localStorage in case you leave the onlin
 
 The webshop has a shopping cart made with HTML form. The user can open and close it with buttons. when the shopping cart is open, all products stored in localStorage are displayed in the organized list element of the Shopping Cart.
 
+Each product in the Shopping Cart has a delete button, which can be pressed to remove the desired product from the shopping cart and local Storage. Buttons are created inside a for loop and each value attribute of the button gets the value of the corresponding local storage key.
+
+Then, with the settAttribute method, an onclick event and a function that performs the deletion are set for the buttons. The delete function takes a this.value parameter, which in this case is the name of the localStorage key.
+
 
 IN THE ADMIN VIEW:
 
@@ -54,3 +58,7 @@ Inventory management, from the view you can quickly check which product is the m
 
 Attention color for the products that are most and least in stock.
 the name of the product that is in short supply is shown in red and the name of the product with the most stock is shown in green.
+
+ID CHECK in ADMIN VIEW
+
+When the admin page is loaded, the python function also gets the values ​​from the used Id sql table. the id number of each added product is always stored in this table. When adding a new product to the id value input field, there is an onchange Hadler that checks the ids used with a javaScript function, which are imported to the html page with a Python function. If the ID given by the user already exists, the program displays a notification.

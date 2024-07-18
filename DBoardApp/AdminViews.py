@@ -18,7 +18,7 @@ def showAdminView(request):
      for used in rows: 
         numbers.append(used[0])
      collection = dbname['products']
-     print(numbers)
+     connection.close()
      
      #haetaan kannasta tuote, jota on eniten varastossa, eli instock arvo on suurin
      maxInstock = collection.find().sort('instock',-1).limit(1)
@@ -39,13 +39,17 @@ def showAdminView(request):
 def AddProducts(request):
     prodCollection = dbname['products']
     prodId = request.POST['prodId']
+    connection = sqlite3.connect('db.sqlite3')
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO usedId (used) VALUES(?)",prodId)
+    connection.commit()
     prodIdInt = int(prodId)
     prodName = request.POST['prodName']
     prodPrice = request.POST['prodPrice']
     prodStock = request.POST['prodStock']
     addQuery={'productId':prodIdInt,'name':prodName,'price':prodPrice,'instock':prodStock}
     prodCollection.insert_one(addQuery)
-  
+    connection.close()
     return redirect(showAdminView)
 
 def deleteProduct(request,productId):

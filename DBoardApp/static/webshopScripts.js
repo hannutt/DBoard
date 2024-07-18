@@ -87,6 +87,10 @@ function AddToCart() {
     document.getElementById("shoppingCart").className="shoppingCartBtn";
     
   },5000);
+  for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+  console.log( localStorage.getItem( localStorage.key( i ) ) );
+}
+
    
     //orders.push('orderrow' + ordernro)
 }
@@ -103,6 +107,7 @@ function SaveCart() {
     document.getElementById('product').innerHTML=""
     document.getElementById('price').innerHTML=""
     document.getElementById('total').innerHTML=""
+   
 
 }
 
@@ -147,17 +152,32 @@ function Discount() {
 
     }
   }
-  var clicks = 0
-  var orderTxt = document.getElementById("orderTxt").value
+  
+
+  function DelFromCart(lsItem) {
+   console.log(lsItem)
+   localStorage.removeItem(lsItem)
+    
+    
+  }
   function ShoppingCart() {
-   // document.getElementById("orderTxt").value = ''
-   
-    clicks = clicks + 1
     
     document.getElementById("productForm").style.display = "block";
     var list =document.getElementById("list")
+    var btn = document.createElement("BUTTON")
+    btn.textContent="X"
+   
+    
     
     for (var i = 0; i < localStorage.length; i++) {
+      btn.id=i
+      //jokainen buttoni saa value attribuutiksi localstorageen tallannetun orderrow+numero avaimen
+      btn.value=localStorage.key(i)
+      
+      //buttoneilla asetetaan onclick tapahtumankäsittelijä, joka lähettää funktiolle
+      //parametrina this.valuen eli klikatun buttonin value attribuutin arvon
+      btn.setAttribute('onclick',"DelFromCart(this.value)")
+      //"ListValues(localStorage.key(i))"
       //document.getElementById("orderTxt").value+=localStorage.key(i)
       //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
       //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
@@ -166,15 +186,13 @@ function Discount() {
        //näytetään tuotteet <li> elementissä ja rivinvaihdolla eri id saadaan lisättyä jokaiseen
        //elementtiin ${i} paraetrilla eli id on aina kierrosmuuttujan luku. 0-> niin kauan kuin listassa
        //on alkioita.
-       list.innerHTML += `<li id=${i} class=p><br>`+localStorage.getItem(localStorage.key(i))+"<br/></li>"
-     
-     
-    
-     
-      
-
+       list.innerHTML += `<li id=${"li"+i}><br>`+localStorage.getItem(localStorage.key(i))+`<br/></li>`
+       list.appendChild(btn)
+       console.log(localStorage.key(i))
 
     }
+
+   
 
    
   }
@@ -195,9 +213,4 @@ function Discount() {
 
 
 
-var area = document.getElementById('orderTxt');
-area.addEventListener('change',cartChanged)
 
-function cartChanged() {
-  alert("new product in cart")
-}
