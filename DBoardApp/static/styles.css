@@ -46,7 +46,7 @@
 }
 
 .accordion-item {
-    background-image: url("/static/BGPic.jpg");
+    background-image: url("/static/images/BGPic.jpg");
 }
 
 
@@ -93,23 +93,26 @@
 }
 
 .primaryTable {
-    color: white;
-    background-image: url("/static/BGimg.jpg");
+    color: black;
+    font-weight: bold;
+    background-image: url("/static/images/BGimg.jpg");
 }
 .tableDays {
+    color: black;
+    font-weight: bold;
     
     position: relative;
     left: 260px;
     top:-327px;
     
     line-height: 45px;
-    color: white;
     background-image: url("/static/BGimg.jpg");
     
 
 }
 
 .bannedDays {
+    
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
 }
@@ -161,6 +164,9 @@
     bottom:31px;
     color: red;
     font-weight: bold;
-    
+}
 
+.form-check-input {
+
+    background-color: lightblue;
 }

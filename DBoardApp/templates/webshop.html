@@ -18,7 +18,7 @@
 
 </head>
 
-<body style="background-image: url(/static/BGPic.jpg);">
+<body onload="getProductCounter()" style="background-image: url(/static/BGPic.jpg);">
   <h2>Webshop</h2>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
@@ -29,6 +29,7 @@
 
     {% csrf_token %}
   </form>
+  <!--span elementissä on tuotelaskuri-->
   <div class="shoppingCartBtn" id="shoppingCart">
   <a class="btn btn-primary btn-lg" onclick="ShoppingCart()">Show shopping cart<span id="cartNum" class="cartNum"></span></a>
 </div>
@@ -43,21 +44,13 @@
     
   </ol>
  
-    <!--
-    <textarea id="orderTxt" name="orderTxt" class="orderTxt" rows="10" cols="50"></textarea>-->
     <script>
     
     </script>
     <button onclick="closeShoppingCart()">Close</button>
   </form>
   </div>
-  <script>
-    jQuery(".p").click(function () {
-   event.preventDefault();
-   var text = jQuery(this).text();
-   console.log(text);
-    });
- </script>
+
 
   <div class="ourProducts" id="ourProducts">
 
@@ -68,23 +61,10 @@
     <p><--Large font Medium font--></p>
     <div class="form-check form-switch" style="width: 25px; height: 25px;">
 
-      <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange()">
-      <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+      <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange(document.getElementById('Prodcard'),document.getElementById('toggleSwitch'))">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Change font size</label>
     </div>
-    <script>
-      //funktiolla muutetaan tuotekortin fontin sisältöä medium-large välillä
-      function fontChange() {
-        var switchVar = document.getElementById('toggleSwitch')
-        var prodCard = document.getElementById('Prodcard')
-        if (switchVar.checked == true) {
-          prodCard.style.fontSize = "medium";
-        }
-        else {
-          prodCard.style.fontSize = "large";
-        }
-
-      }
-    </script>
+   
 
 
     {%for p in prods %}

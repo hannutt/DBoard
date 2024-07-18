@@ -1,13 +1,13 @@
 # DBoard
 Python Django and javascript application with Bootstrap and Jquery.
 
-Project keywords: Python, Django, JavaScript, JQuery, NoSQL, MongoDB, Bootstrap.
+Project keywords: Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
 
 MAIN FEATURES:
 
 CODE SPLIT 
 
-Since the original view.py file became too large, the code has started to be divided into separate .py files. for now, the login/logout and message sending and reply codes as well as the IP address blocking codes are in their own files. The JavaScritp code is also split into multiple .js files.
+All Python view codes are in their own .py files and are imported as modules in the original view.py file. The JavaScript code is also split into multiple .js files.
 
 USER AUTHENTICATION:
 
@@ -51,9 +51,11 @@ Each product in the Shopping Cart has a delete button, which can be pressed to r
 Then, with the settAttribute method, an onclick event and a function that performs the deletion are set for the buttons. The delete function takes a this.value parameter, which in this case is the name of the localStorage key.
 
 User experience is taken into account in the purchase transaction.
-For example, when a product is added to the cart, the cart button gets a red border for a few seconds (JavaScript setTimeout function) and the button also has a span element that contains a JavaScript variable that displays the number of items in the cart.
-The variable is updated every time a new product is added to the shopping cart.
+For example, when a product is added to the cart, the cart button gets a red border for a few seconds (Using the JavaScript setTimeout function and the style.className change) and the button also has a span element that contains a JavaScript variable that displays the number of items in the cart.
 
+The variable is updated every time a new product is added to the shopping cart or a product is removed from the shopping cart.
+
+The variable is also stored in localStorage, so the program remembers the number of products if the user leaves the page and returns later.
 The purpose of these features is to give the user certainty that the product has been successfully added to the shopping cart.
 
 
