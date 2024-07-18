@@ -64,21 +64,31 @@ function setAmount() {
 }
   //TILAUKSEN TIETOJEN TALLENNUS LOCALSTORAGEEN
 var orders = []
-function saveOrderRow() {
-    var ordernro = Math.floor(Math.random() * 100);
-    console.log(ordernro)
+function AddToCart() {
+
+  localStorage.removeItem("str");
+  localStorage.removeItem("qty");
+  var ordernro = Math.floor(Math.random() * 100);
     
-    var product = document.getElementById("product").innerHTML
-    var price = document.getElementById("price").innerHTML
-    var amount = document.getElementById("finalAm").innerHTML
-    var strength = document.getElementById("str").innerHTML
-    var total = document.getElementById("total").innerHTML
-    document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total+ productsFromStorage
-    var row = document.getElementById("orderRow").innerHTML
-    console.log(row)
+  var product = document.getElementById("product").innerHTML
+  var price = document.getElementById("price").innerHTML
+  var amount = document.getElementById("finalAm").innerHTML
+  var strength = document.getElementById("str").innerHTML
+  var total = document.getElementById("total").innerHTML
+  document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total
+  var row = document.getElementById("orderRow").innerHTML
+
     //localstoragen avaimeen pystyy lisäämään numerotunnisteen
-    //localStorage.setItem('orderrow' + ordernro, row)
-    orders.push('orderrow' + ordernro)
+  localStorage.setItem('orderrow' + ordernro,row )
+  //css-luokan vaihto
+  document.getElementById("shoppingCart").className="shoppingCartBtnEffect";
+  //5 sekunnin jälkeen vaihdetaan css-luokka takaisin alkuperäiseen
+  setTimeout(() => {
+    document.getElementById("shoppingCart").className="shoppingCartBtn";
+    
+  },5000);
+   
+    //orders.push('orderrow' + ordernro)
 }
 
 function SaveCart() {
@@ -90,6 +100,9 @@ function SaveCart() {
     var total = document.getElementById("total").innerHTML
     var row=  document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total +' '+ productsFromStorage
     localStorage.setItem('orderrow'+ordernro,row)
+    document.getElementById('product').innerHTML=""
+    document.getElementById('price').innerHTML=""
+    document.getElementById('total').innerHTML=""
 
 }
 
@@ -109,7 +122,12 @@ function Discount() {
     //haetaan localstoragen arvot ja talletetaan ne listaan,
     //joka näytetään orderrow elementissä
     
-    document.getElementById("orderRow").innerHTML=productsFromStorage
+    for (var i=0;i<productsFromStorage.length;i++)
+    {
+      document.getElementById("ordersFromList").innerHTML=productsFromStorage[i].split(",").join("<br>")
+
+    }
+    
   }
 
   function removeLatest() {
@@ -131,27 +149,55 @@ function Discount() {
   }
   var clicks = 0
   var orderTxt = document.getElementById("orderTxt").value
-  function openProductForm() {
-    document.getElementById("orderTxt").value = ''
+  function ShoppingCart() {
+   // document.getElementById("orderTxt").value = ''
    
     clicks = clicks + 1
     
     document.getElementById("productForm").style.display = "block";
+    var list =document.getElementById("list")
+    
     for (var i = 0; i < localStorage.length; i++) {
       //document.getElementById("orderTxt").value+=localStorage.key(i)
       //kaikki localstoragen sisältö saadaan silmukana avulla näkyviin. kierrosmuuttuja
       //i lähtee luvusta 0 ja kasvaa siihen asti kuin localstoragen pituus on (eli montako
       //tilausriviä on talletettu)
+      
+       //näytetään tuotteet <li> elementissä ja rivinvaihdolla eri id saadaan lisättyä jokaiseen
+       //elementtiin ${i} paraetrilla eli id on aina kierrosmuuttujan luku. 0-> niin kauan kuin listassa
+       //on alkioita.
+       list.innerHTML += `<li id=${i} class=p><br>`+localStorage.getItem(localStorage.key(i))+"<br/></li>"
+     
+     
+    
+     
+      
 
-      console.log(orderTxt)
-      document.getElementById("orderTxt").value += localStorage.getItem(localStorage.key(i))
 
     }
 
-    //jos clicks on jaollinen kahdella niin suljetaan lomake eli jos buttonia
-    //on klikattu avauksen jälkeen uudelleen
-    if (clicks % 2 === 0) {
-      document.getElementById("ProductForm").style.display = "none";
-
-    }
+   
   }
+
+  function closeShoppingCart() {
+    document.getElementById("productForm").style.display = "none";
+    clearOrderTable()
+  }
+
+  function clearOrderTable() {
+
+    document.getElementById('product').innerHTML=""
+    document.getElementById('price').innerHTML=""
+    document.getElementById('total').innerHTML=""
+    document.getElementById('finalAm').innerHTML=""
+    document.getElementById('str').innerHTML=""
+  }
+
+
+
+var area = document.getElementById('orderTxt');
+area.addEventListener('change',cartChanged)
+
+function cartChanged() {
+  alert("new product in cart")
+}

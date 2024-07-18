@@ -96,14 +96,12 @@ def likePost(request):
   
     return render(request,'index.html')
 
-def updatePost(request):
+def updatePost(request,postid):
     collection = dbname['posts']
-    postId = request.POST['postid']
-    postIdInt = int(postId)
     body = request.POST['body']
     title = request.POST['title']
     #vastaa sql WHERE ID = LAUSETTA
-    filter = {'postid':postIdInt}
+    filter = {'postid':postid}
     #päivitys tapahtuu avain-arvo pareina. ensin tulee kentän nimi, sen jälkeen muuttuja jonka
     #arvo kenttään päivitetäänF
     updateData = {"$set":{"body":body,"title":title}}
@@ -120,29 +118,20 @@ def showEdit(request,postid):
     return render(request,'edit.html',{'data':data})
 
 
-def deletePost(request):
-      
-      deleteId = request.POST['deletePostId']
-      deleteIdInt = int(deleteId)
-      print(deleteIdInt)
+def deletePost(request,postid):
       
       #options = ['title','body']
       #selection on index.html checkboksien name ominaisuuden arvo eli merkkijono
      
       collection = dbname['posts']
       updCollection = dbname['deleted']
-      #txt = request.POST['delete']
-      delquery = {"postid":deleteIdInt}
+    
+      delquery = {"postid":postid}
       postId = 1
       collection.delete_one(delquery)
       
      #päivitetään poistettujen dokumenttien lukumäärä
       updCollection.update_one({"_id":postId},{'$inc':{"count":+1},'$set':{"deldate":todayStr}})
-      #updCollection.insert_one(delquery)
-      #updCollection.insert_one({"_id":postId},{'$inc':{"count":+1}})
-      #updCollection.update_one({"_id":dateIdStr},{'$set':{'deltime':todayStr}})
-      #if bodychoice == 'body:':   
-        #print('you selected bodyCB')
      
     
       return render(request,'index.html')

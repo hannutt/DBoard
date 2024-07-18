@@ -3,8 +3,9 @@ from django.urls import path
 from DBoardApp import loginViews
 from DBoardApp import messageViews
 from DBoardApp import BanViews
-from .views import saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,showAdminView,AddProducts,webshopAdmin,editProduct,updateProd,\
-delivered,backToWebShop
+from DBoardApp import AdminViews
+from .views import saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,webshopAdmin,editProduct,updateProd,\
+backToWebShop
 
 
 urlpatterns = [
@@ -20,10 +21,10 @@ urlpatterns = [
     path('post-Reply/',messageViews.postReply),
     path('post-New/',messageViews.postNew),
     path('post-Like/',messageViews.likePost),
-    path('post-delete/',messageViews.deletePost),
+    path('post-delete/<int:postid>/',messageViews.deletePost),
     #postid-muuttujaan talletetaan index.html sivulla saatu d.postid arvo
-    path('post-edit-send/<int:postid>/',messageViews.showEdit),
-    path('edit-post/',messageViews.updatePost),
+    path('post-edit/<int:postid>/',messageViews.showEdit),
+    path('edit-post-send/<int:postid>/',messageViews.updatePost),
      #siirtyminen editoinitisivulle, id täytyy myös lähettää sinne
     path('post-edit-product-send/<int:productId>/',editProduct),
     #varsinainen editointi tapahtuu tässä
@@ -34,11 +35,12 @@ urlpatterns = [
     
     path('select-product-send/<int:productId>/',productSelection),
     path('save-order/',saveOrderToDb),
-    path('adminView/',showAdminView),
-    path('add-product/',AddProducts),
-    path('mark-delivered/',delivered),
+    path('adminView/',AdminViews.showAdminView),
+    path('add-product/',AdminViews.AddProducts),
+    #path('mark-delivered/',delivered),
     #path('adminView/',webshopAdmin),
     #path('edit-product/<int:productId>/',editProduct)
     path('back-to-shop/',backToWebShop),
+    path('post-delete-product-send/<int:productId>/',AdminViews.deleteProduct)
    
 ]

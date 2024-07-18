@@ -126,3 +126,32 @@
     background-image: url("/static/images/BGPic.jpg");
 
 }
+.form_popup {
+    display: none; 
+    position: fixed; 
+    bottom: 0; right: 15px; 
+    border: 3px solid;
+    z-index: 9;
+}
+.form-container {
+    max-width: 400px; 
+    padding: 10px;
+}
+
+.shoppingCartBtn {
+    position: fixed;
+    bottom:10px;
+    right:20px;
+}
+
+.clearOrder {
+    position: fixed;
+    left: 454px;
+    top:290px;
+}
+.shoppingCartBtnEffect {
+    position: fixed;
+    bottom:10px;
+    right:20px;
+    border: 5px solid red;
+}

@@ -84,7 +84,8 @@
           {% for l in context %}
           <p>{{ l }}</p>
           {%endfor%}-->
-          <form action="/post-delete/" method="post">
+          <form action="/post-delete/{{d.postid}}/" method="post">
+            <p class="postid">Post ID: {{d.postid}}</p>
             {% csrf_token %}<button>X</button>
             <input hidden name="deletePostId" value="{{d.postid}}">
           </form>
@@ -151,7 +152,7 @@
           {%endif%}
 
 
-          <p class="postid">Post ID: {{d.postid}}</p>
+         
           <!--
           <input type="text" name="postIDval" value="{{d.postid}}">-->
 
@@ -209,10 +210,10 @@
           <i id="copy" class="fa-solid fa-copy fa-lg" onclick="copyText()"></i>-->
           <!--lomake saa parametrina mongodb:n postid:n eli d.postid joka käydään html:ssä for silmukalla
         läpi näin post-edit lomake saa id numeron tietoon ja osaa välittää sen edit.html sivulle-->
-          <form action="/post-edit-send/{{d.postid}}/">
+          <form action="/post-edit/{{d.postid}}/">
             <!--button sisään on kääritty fontawesome kuvake, eli kuvake näkyy button-->
             <button>
-              <a href="/post-edit-send/{{d.postid}}/">
+              <a href="/post-edit/{{d.postid}}/">
                 <i class="fa-solid fa-pen-to-square"></i>
               </a>
             </button>

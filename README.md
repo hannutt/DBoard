@@ -44,7 +44,8 @@ IN THE USER VIEW:
 simulates a purchase transaction in an online store. the user selects the desired products and quantity and fills in the address information. Then the entire order is stored in the database.
 The selected products are stored in the localStorage in case you leave the online store and come back. Your order information can be retrieved easily with the localStorage feature later. This simulates a real-life online shopping experience. LocalStorage values ​​are retrieved using Object.values(localStorage); method
 
-Products can also be deleted before saving by pressing the button. The items are in a JavaScript array, so the pop method removes the items one by one with a click.
+The webshop has a shopping cart made with HTML form. The user can open and close it with buttons. when the shopping cart is open, all products stored in localStorage are displayed in the organized list element of the Shopping Cart.
+
 
 IN THE ADMIN VIEW:
 
