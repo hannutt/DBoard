@@ -34,11 +34,13 @@
  
     
    
-
-    <div id="Plot" style="width:25%;max-width:400px; height:150px;">Hide by doubleclick</div>
+    <label for="verticalBar">Vertical bar</label>
+    <input id="verticalBar" type="checkbox"onclick="verticalBar()">
+    <div id="Plot" style="width:25%;max-width:400px; height:250px;">Hide by doubleclick</div>
   </center>
   <div id="showDiv" style="display: none;">
     <button id="showBtn">Show chart</button>
+    
   </div>
 
   <script>
@@ -145,25 +147,6 @@
   
   <script>
 
-    var imgVariable = null;
-
-    //funktio tallentaa img id tagin eli kuvan muuttujaan ja antaa alkuarvo sijainnille
-    function initImage() {
-      imgVariable = document.getElementById("imgPlace");
-      imgVariable.style.position = 'relative';
-      imgVariable.style.left = '450px';
-      imgVariable.style.top = '-125px';
-    }
-
-    /*funktio siirtää kuvan 20 pikseliä ylöspäin.
-    function moveImage() {
-      imgVariable.style.top = parseInt(imgVariable.style.top) - 20 + 'px';
-      //imgVariable.style="transform: rotate(5deg)"
-      
-    }
-    
-    //initimage funktio suoritetaan aina kun sivu ladataan
-    window.onload = initImage; */
     window.onload = Banned;
 
   </script>

@@ -32,7 +32,7 @@ urlpatterns = [
     path('save-to-csv/',saveCsv),
     path('post-filter/',filterPost),
     path('webshop/',webshop),
-    
+    path('discount-code/',discount),
     path('select-product-send/<int:productId>/',productSelection),
     path('save-order/',saveOrderToDb),
     path('adminView/',AdminViews.showAdminView),

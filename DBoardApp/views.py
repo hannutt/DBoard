@@ -126,7 +126,7 @@ def productSelection(request,productId):
     return render(request,'webshop.html',{'data':data,'orderData':orderData,'prods':prods})
 
 def saveOrderToDb(request):
-    order=request.GET.get('orderTxt','orderTxt')
+    order=request.POST['orderDetails']
     
     '''
     orderId = random.randint(1,1500)

@@ -1,3 +1,4 @@
+
 function setStrength(strength) {
   console.log(strength)
   var elem = document.getElementsByName("str")
@@ -68,6 +69,7 @@ function AddToCart() {
   //ostoskori painikkeen kulmassa, ilmaisee tuotteiden määrää korissa
   prodCounter +=1
 
+  //poistetaan määrä ja vahvuus tässä kohtaa, että ne eivät tule lopulliselle tilausriville.
   localStorage.removeItem("str");
   localStorage.removeItem("qty");
   var ordernro = Math.floor(Math.random() * 100);
@@ -80,15 +82,19 @@ function AddToCart() {
   document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total
   var row = document.getElementById("orderRow").innerHTML
 
-  //localstoragen avaimeen pystyy lisäämään numerotunnisteen
+  //tuoterivin tallennus local storageen satunnaisnumerolla.
   localStorage.setItem('orderrow' + ordernro, row)
-  localStorage.setItem("counter",prodCounter)
+  localStorage.setItem("counter",parseInt(prodCounter))
 
   //css-luokan vaihto
   document.getElementById("shoppingCart").className = "shoppingCartBtnEffect";
-  parseInt(prodCounter)
+  //parseInt(prodCounter)
   //prodcounter täytyy muuntaa parseintillä, että luku kasvaa tuotteita lisätetssä.
+  
   document.getElementById("cartNum").innerHTML =  parseInt(prodCounter)
+  var productsFromStorage = Object.values(localStorage);
+  document.getElementById("orderDetails").innerText=productsFromStorage
+
   //5 sekunnin jälkeen vaihdetaan css-luokka takaisin alkuperäiseen
   setTimeout(() => {
     document.getElementById("shoppingCart").className = "shoppingCartBtn";
@@ -128,17 +134,7 @@ function Discount() {
   }
 
 }
-var productsFromStorage = Object.values(localStorage);
-function getEarlierProducts() {
-  //haetaan localstoragen arvot ja talletetaan ne listaan,
-  //joka näytetään orderrow elementissä
 
-  for (var i = 0; i < productsFromStorage.length; i++) {
-    document.getElementById("ordersFromList").innerHTML = productsFromStorage[i].split(",").join("<br>")
-
-  }
-
-}
 
 
 var clicks = 0
@@ -155,14 +151,20 @@ function openForm() {
 
 
 function DelFromCart(lsItem) {
+  
+  prodCounter=localStorage.getItem("counter")
   prodCounter=prodCounter-1
-  document.getElementById("cartNum").innerHTML=prodCounter
+  localStorage.setItem("counter",prodCounter)
+  document.getElementById("cartNum").innerHTML=parseInt(prodCounter)
 
-  console.log(lsItem)
+  
   localStorage.removeItem(lsItem)
+  console.log(lsItem)
 
 
 }
+
+
 function ShoppingCart() {
 
   document.getElementById("productForm").style.display = "block";
@@ -173,10 +175,16 @@ function ShoppingCart() {
 
 
   for (var i = 0; i < localStorage.length; i++) {
-    btn.id = i
-    //jokainen buttoni saa value attribuutiksi localstorageen tallannetun orderrow+numero avaimen
-    btn.value = localStorage.key(i)
+    //tarkistus, että avain sisältää orderrow, muuten yksi painikkeista saa arvokseen counterin
+    if (localStorage.key(i).includes("orderrow"))
+    {
+      btn.id = i
+      //jokainen buttoni saa value attribuutiksi localstorageen tallannetun orderrow+numero avaimen
+      btn.value = localStorage.key(i)
+  
 
+    }
+   
     //buttoneilla asetetaan onclick tapahtumankäsittelijä, joka lähettää funktiolle
     //parametrina this.valuen eli klikatun buttonin value attribuutin arvon
     btn.setAttribute('onclick', "DelFromCart(this.value)")
@@ -187,11 +195,15 @@ function ShoppingCart() {
 
     //näytetään tuotteet <li> elementissä ja rivinvaihdolla eri id saadaan lisättyä jokaiseen
     //elementtiin ${i} paraetrilla eli id on aina kierrosmuuttujan luku. 0-> niin kauan kuin listassa
-    //on alkioita.
-    list.innerHTML += `<li id=${"li" + i}><br>` + localStorage.getItem(localStorage.key(i)) + `<br/></li>`
-    list.appendChild(btn)
-
-
+    //on alkioita. includes metodilla tarkistetaan, että localstoragen avain sisältää sanan orderrow
+    //muuteen ostoskoriin tulisi kaikki localstoragen sisältö, kuten tuotteiden määrän laskeva muuttuja
+      if (localStorage.key(i).includes("orderrow"))
+      {
+        list.innerHTML += `<li id=${"li" + i}><br>` + localStorage.getItem(localStorage.key(i)) + `<br/></li>`
+        list.appendChild(btn)
+       
+      
+      }
   }
 
 
@@ -227,7 +239,7 @@ function fontChange(productCard,switchVar) {
 
 function getProductCounter() {
   prodCounter=localStorage.getItem("counter")
-  document.getElementById("cartNum").innerHTML=prodCounter
+  document.getElementById("cartNum").innerHTML=parseInt(prodCounter)
 }
 
 

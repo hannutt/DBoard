@@ -129,6 +129,10 @@
     background-image: url("/static/images/BGPic.jpg");
 
 }
+.adminBody {
+    background-image: url("/static/images/BGPic.jpg");
+
+}
 .form_popup {
     display: none; 
     position: fixed; 
@@ -150,7 +154,7 @@
 .clearOrder {
     position: fixed;
     left: 454px;
-    top:290px;
+    top:250px;
 }
 .shoppingCartBtnEffect {
     position: fixed;
@@ -169,4 +173,9 @@
 .form-check-input {
 
     background-color: lightblue;
+}
+
+.reply {
+    background-color: aliceblue;
+    border-radius: 5px;
 }

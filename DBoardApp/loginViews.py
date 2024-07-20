@@ -64,9 +64,9 @@ def login_user(request):
         context = {'name':user,'info':loginfo}
 
         return render (request,'login.html',context)
-     else:
-         
-         return render(request,'login.html',context)
+     if not user:
+         print("error")
+         return render(request,'loginerror.html')
 
 #uloskirjaus
 def logout_user(request):

@@ -1,3 +1,28 @@
+function verticalBar() {
+  var visits = document.getElementById('times').innerHTML;
+    //muunto kokonaisluvuksi
+    parseInt(visits)
+    const xArray = [""];
+    const yArray = [visits];
+
+    const data = [{
+      x: xArray,
+      y: yArray,
+      //numeroväli 1, eli desimaaleja ei näytetä
+      dtick:1,
+      //kaavion tyyppi
+      type: "bar",
+      //kaavion piirtosuunta
+      orientation: "v",
+      marker: { color: "rgba(50, 168, 145)" }
+    }];
+
+    const layout = { title: "Visits on page" };
+
+    Plotly.newPlot("Plot", data, layout);
+
+}
+
 function CheckId()
 {   //haetaan käyttäjän syöttämä arvo
     var userInput = document.getElementById("prodIdVal").value;
@@ -143,13 +168,25 @@ function setDelivered() {
           
       
       }
-  
-     
-     
-     
-     
-      
-     
-      
   }
+
+//jokainen reply on yksilöity id:llä reply+forloop.counterin numero näin for silmukan avulla
+//saadaan käytyä kaikki reply elementin läpi ja poistettua replacen avulla ylim. merkit.
+
+function prettyText() {
+  var prettytextCB = document.getElementById("prettyTextCB").value
+  console.log(prettytextCB)
+  if(prettytextCB=='on')
+  {
+    for (var i=1;i<5;i++)
+  {
+    var reply = document.getElementById("reply"+i).innerHTML
+    document.getElementById("reply"+i).innerHTML=reply.replace("{","").replace("]","").replace("'}","").replace("[","").replace("]}","").replace("[{","").replace(" },","").replace("[{","").replace("'}","")
+    
+    
+  }
+
+  }
+  
+}
 

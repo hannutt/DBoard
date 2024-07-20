@@ -40,7 +40,7 @@
 <h3>DISCUSSION BOARD</h3>
 </center>
 <div id="google_translate_element"></div>
-<body class="forum" onload="fixReplyMsg()">
+<body class="forum">
   <form action="/post-filter/" method="post">
     {% csrf_token %}
     <div class="form-check">
@@ -58,7 +58,11 @@
         Show bodytext
       </label>
     </div>
+    <div class="form-check">
+    <label class="form-check-label" for="prettyTextCB">Remove the extra marks from the answers</label>
+    <input class="form-check-input" type="checkbox" id="prettyTextCB" onchange="prettyText()">
     <input hidden type="submit" value="set" id="setBtn">
+    </div>
   </form>
  
 
@@ -111,33 +115,13 @@
           </p>
          
 
-          <p id="reply" class="reply">
-            Reply: {{d.replymsg}} </p>
-
-
-          <p id="fixedReply" hidden style="background-color: lightblue;">{{d.replymsg}}</p>
-          <script>
-            function fixReplyMsg() {
-              var paragraphs = document.getElementsByClassName("reply");
+          <p id="reply{{forloop.counter}}" class="reply">
+            Reply: {{d.replymsg}} 
             
-            
-
-              var replyList = []
-
-              var reply = document.getElementById("reply").innerHTML
+          </p>
 
 
-
-              var replied = reply.replace('[{', '').replace('}]', '').replace('replymsg', '').replace('{', '').replace('}', '').replace().replace('{},', '')
-
-              document.getElementById("fixedReply").innerHTML = replied
-              console.log(reply)
-
-
-
-
-            }
-          </script>
+        
 
           <br>
 
@@ -230,17 +214,6 @@
                 <input id="reply" name="reply" placeholder="Your reply">
                 <input type="submit" value="Reply to message">
               </form>
-              <!--
-              <form action="/post-Reply-Old/" method="post">
-                {% csrf_token %}
-                <input type="number" name="postIDval" value="{{d.postid}}">
-                <input id="reply" name="reply" placeholder="Your reply">
-                <input type="submit" value="Reply and keep old data">
-              </form>-->
-
-
-
-
 
             </div>
           </div>

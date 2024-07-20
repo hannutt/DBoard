@@ -18,8 +18,9 @@
 
 </head>
 
-<body onload="getProductCounter()" style="background-image: url(/static/BGPic.jpg);">
+<body onload="getProductCounter();DoBtnClick()" style="background-image: url(/static/BGPic.jpg);">
   <h2>Webshop</h2>
+  <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
@@ -34,7 +35,7 @@
   <a class="btn btn-primary btn-lg" onclick="ShoppingCart()">Show shopping cart<span id="cartNum" class="cartNum"></span></a>
 </div>
   
-  <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
+  
 
 <!--ostoskori-->
   <div class="form_popup" id="productForm">
@@ -73,8 +74,8 @@
 
     {% csrf_token %}
 
-
-    <div class="card text-bg-primary mb-3" style="max-width: 18rem; background-image: url(/static/productBG.jpg)">
+    
+    <div class="card text-bg-primary mb-4" style="max-width: 18rem; background-image: url(/static/productBG.jpg)">
       <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
       {% if p.instock < 5 %} <div class="card-header"
         style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}
@@ -85,7 +86,7 @@
     {%endif%}
     <div class="card-body">
       <h5 id="Prodcard" class="card-title" style="font-size: large;
-                      font-family: 'Brush Script MT',cursive;">{{p.productId}} Price: {{p.price}} €/can inStock:
+                      font-family: 'Brush Script MT',cursive;"><p hidden>{{p.productId}}</p> Price: {{p.price}} €/can inStock:
         {{p.instock}} pcs</h5>
       <p class="card-text"></p>
       <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength(8)">8 MG
@@ -169,7 +170,7 @@
         document.getElementById("setBtn").click()
       }
     </script>
-    <button hidden id="setBtn" onclick="setAmount()">set</button>
+    <button id="setBtn" onclick="setAmount()">set</button>
 
 
     <table border="1px solid black">
@@ -204,15 +205,11 @@
   
     <button id="createorder" onclick="AddToCart()">Add to cart</button>
   
-
-    <button id="earlier" onclick="getEarlierProducts()">get products from localc</button>
-    <input type="text" id="removeThis">
-    <button id="removeLast" onclick="removeLatest()">X</button>
     <p id="compare">{{code}}</p>
     <form action="/discount-code/" method="post">
       {% csrf_token %}
       <input type="text" id="code" name="code">
-      <button type="submit">Discount</button>
+      <button class="btn btn-primary" type="submit">Discount code</button>
     </form>
 
 
@@ -220,16 +217,13 @@
     <form action="/save-order/" method="post">
       {% csrf_token %}
       
-      <!--arvot input kenttiin, että ne voidan view.py:ssä tallettaa muuttujiin ja tietokantaan-->
-      <input hidden type="text" name="prod" value="{{d.name}}"> <input hidden type="number" name="price"
-        value="{{d.price}}">
-      <input hidden type="number" id="amountField" name="amount"><input hidden type="text" id="strengthField"
-        name="strength">
-      <input hidden type="number" id="totalField" name="total">
+     
       <input type="text" name="flname" placeholder="First and lastname">
       <input type="text" name="address" placeholder="Address">
       <input type="text" name="city" placeholder="City">
       <input type="text" name="zip" placeholder="Zip code">
+      <br>
+      <textarea id="orderDetails" name="orderDetails"></textarea>
 
       <input type="submit" value="Send order">
     </form>
