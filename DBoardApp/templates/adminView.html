@@ -13,6 +13,7 @@
         crossorigin="anonymous"></script>
     <script src="{% static 'adminScripts.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{%static 'styles.css' %}">
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
 
     <title>Admin View</title>
@@ -56,7 +57,7 @@
                     <p>Order:
                         {{o.orderedOrod}}
                     </p>
-                    <p>Order date: {{o.orderDate}}</p>
+                    <p><b>Order date: {{o.orderDate}}</b></p>
                     <p id="delivered{{forloop.counter}}" class="delivered">Delivered:
                         {{o.delivered}}
                     </p>
@@ -65,8 +66,9 @@
                         {% csrf_token %}
                         <input hidden type="text" name="orderid" value="{{o.orderId}}">
                         
-                        <input id="setdelivered{{forloop.counter}}" type="submit" value="Mark delivered">
-                       <!--JOS KYSEESSÄ ON FORLOOP VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
+                        <button id="setdelivered{{forloop.counter}}" type="submit"><i class="fa-solid fa-truck"></i></button>
+                        <br>
+                       <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
                         {% if forloop.last %}
                             <p id="last">{{forloop.counter}}</p>
                             {%endif%}
@@ -161,7 +163,7 @@
                                                         {% csrf_token %}
 
                                                         <button type="submit"
-                                                            class="btn btn-outline-primary">Edit</button>
+                                                            class="btn btn-primary">Edit</button>
 
                                                         
                                                     </form>
@@ -200,7 +202,7 @@
                                                         {% csrf_token %}
 
                                                         <button type="submit"
-                                                            class="btn btn-outline-primary">Delete</button>
+                                                            class="btn btn-primary">Delete</button>
 
                                                         <br>
                                                     </form>

@@ -18,13 +18,17 @@ from datetime import datetime
 from bson.binary import Binary
 from PIL import Image
 import io
-
+import time
 from DBoardApp import loginViews
 
 global today
 today = date.today()
 global todayStr
+global curTime
+curTime =  time.strftime("%H:%M:%S", time.localtime())
 todayStr =today.strftime('%d.%m.%y')
+global dateNtime
+dateNtime = todayStr+' '+curTime
 global client
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 global dbname
@@ -41,6 +45,7 @@ def filterPost(request):
     body = collection.find({},{'body':1,'postid':1})
     sel = request.POST.getlist('selection')
     print(sel)
+    
     
     #checkboksien valinnat, jos valittu cb jonka value on title haetaan otsikot 
     if sel == ['title']:
@@ -123,21 +128,30 @@ def productSelection(request,productId):
     #mongodb lauseke jossa kerrotaan amount ja multiply kenttien arvot keskenään
     #total = orders.aggregate([{'$project':{'total':{'$multiply':['$amount','$unitPrice']}}}])
     data = collection.find({'productId':productId})
-    return render(request,'webshop.html',{'data':data,'orderData':orderData,'prods':prods})
+    return render(request,'webshop.html',{'data':data,'orderData':orderData,'prods':prods,'productId':productId})
 
 def saveOrderToDb(request):
     order=request.POST['orderDetails']
-    
+    qty=request.POST['qty']
+    prodid=request.POST['prodid']
+    prodidInt =int(prodid)
+    qtyInt=int(qty)
     orderId = random.randint(1,1500)
     collection = dbname['orders']
+    prodCol = dbname['products']
+    filter={'productId':prodidInt}
     name = request.POST['flname']
     address = request.POST['address']
     city = request.POST['city']
     zip = request.POST['zip']
   
-    orderQuery = {'orderId':orderId,'orderedOrod':order,'orderDate':todayStr,'name':name,'address':address,'city':city,'zip':zip,'delivered':'no'}
+    orderQuery = {'orderId':orderId,'orderedOrod':order,'orderDate':dateNtime,'name':name,'address':address,'city':city,'zip':zip,'delivered':'no'}
     collection.insert_one(orderQuery)
-    
+    #vähennetään varastosaldon käyttäjän tilaaman määrän verran, huomaa että $inc metodia voi käyttää
+    #myös väentämiseen kun lisää miinus merkin eteen.
+    delQuery={'$inc':{'instock':-qtyInt}}
+    prodCol.update_one(filter,delQuery)
+   
     
     
     return render (request,'webshop.html')

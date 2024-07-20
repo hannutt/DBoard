@@ -1,5 +1,5 @@
 # DBoard
-Python Django and javascript application with Bootstrap and Jquery.
+Python Django and JavaScript Webshop & Discussion Board application with Bootstrap and Jquery.
 
 Project keywords: Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
 
@@ -63,7 +63,7 @@ The purpose of these features is to give the user certainty that the product has
 IN THE ADMIN VIEW:
 
 Perform CRUD operations on products. in the admin view you can also use Bootstrap's accordion/collapse features. All orders saved in the database are automatically displayed in the administrator view.
-Inventory management, from the view you can quickly check which product is the most and which is the least in the database. The total amount of all products is also shown
+Inventory management, from the view you can quickly check which product is the most and which is the least in the database. The total amount of all products is also shown.
 
 Attention color for the products that are most and least in stock.
 the name of the product that is in short supply is shown in red and the name of the product with the most stock is shown in green.
@@ -77,9 +77,17 @@ MARK DELIVERED IN ADMIN VIEW
 The admin can change the delivery status by clicking the button. the order collection has a field name whose default value is no. On clicking the button, the Python function gets the subscription ID and changes the delivered status of the subscription to yes using the MongoDB update_one method.
 The purpose of this feature is to facilitate the maintenance of order delivery information.
 
-The delivered feature also uses Python and JavaScript functions to disable "Mark delivered" buttons whose order is already marked as delivered.
+The delivered feature also uses Python and JavaScript functions to disable "delivered" buttons whose order is already marked as delivered. The supplied buttons appear as button elements that contain the Font Awesome Truck icon.
+
 In Python code, this is done using the Django forloop.counter and forloop.last methods.
 Initially, the program counts all the orders and uses the forloop.last command to get the final order count. 
 
 Then the final amount is sent to the javascript function as a parameter and the javascript function uses a for loop to find where the entered text is yes. then set the Attribute to change the button's disbaled value to true.
+
+REAL-TIME INVERTORY BALANCE UPDATING
+
+Like real-world online stores, this app reduces inventory of ordered products in real-time.
+When the user clicks the submit order button, the Python function receives the product ID and order quantity along with the order information. then the function decrements the value of the order collection's inventory field using the $inc method by converting the user-supplied number to a negative number and updates it using the update_one method.
+
+
 

@@ -60,7 +60,7 @@
     </div>
     <div class="form-check">
     <label class="form-check-label" for="prettyTextCB">Remove the extra marks from the answers</label>
-    <input class="form-check-input" type="checkbox" id="prettyTextCB" onchange="prettyText()">
+    <input class="form-check-input" type="checkbox" id="prettyTextCB" onchange="prettyText(document.getElementById('lastReply').innerHTML)">
     <input hidden type="submit" value="set" id="setBtn">
     </div>
   </form>
@@ -116,7 +116,12 @@
          
 
           <p id="reply{{forloop.counter}}" class="reply">
-            Reply: {{d.replymsg}} 
+            Reply: {{d.replymsg}}
+            <!--jos viimeinen forloopin luku, asetetan se lastreply p-tagiin-->
+            {% if forloop.last %}
+            <p id="lastReply">{{forloop.counter}}</p>
+            {%endif%}
+
             
           </p>
 

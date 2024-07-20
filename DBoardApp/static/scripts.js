@@ -172,13 +172,17 @@ function setDelivered() {
 
 //jokainen reply on yksilöity id:llä reply+forloop.counterin numero näin for silmukan avulla
 //saadaan käytyä kaikki reply elementin läpi ja poistettua replacen avulla ylim. merkit.
+//lastreply eli vastauksien kokonaismäärä saadaan lastreply parametrina, joka annetaann
+//index.html:ssä funktion kutsun yhteydessä.
 
-function prettyText() {
+function prettyText(lastreply) {
+  console.log("last reply ",lastreply)
+  var lastInt = parseInt(lastreply)
   var prettytextCB = document.getElementById("prettyTextCB").value
   console.log(prettytextCB)
   if(prettytextCB=='on')
   {
-    for (var i=1;i<5;i++)
+    for (var i=1;i<=lastInt;i++)
   {
     var reply = document.getElementById("reply"+i).innerHTML
     document.getElementById("reply"+i).innerHTML=reply.replace("{","").replace("]","").replace("'}","").replace("[","").replace("]}","").replace("[{","").replace(" },","").replace("[{","").replace("'}","")

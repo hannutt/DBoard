@@ -1,3 +1,8 @@
+function getQty() {
+  var qty = localStorage.getItem("qty")
+  document.getElementById("qty").value=qty
+}
+
 
 function setStrength(strength) {
   console.log(strength)
@@ -68,6 +73,7 @@ var prodCounter = 0
 function AddToCart() {
   //ostoskori painikkeen kulmassa, ilmaisee tuotteiden määrää korissa
   prodCounter +=1
+  localStorage.setItem("counter",parseInt(prodCounter))
 
   //poistetaan määrä ja vahvuus tässä kohtaa, että ne eivät tule lopulliselle tilausriville.
   localStorage.removeItem("str");
@@ -84,7 +90,9 @@ function AddToCart() {
 
   //tuoterivin tallennus local storageen satunnaisnumerolla.
   localStorage.setItem('orderrow' + ordernro, row)
-  localStorage.setItem("counter",parseInt(prodCounter))
+  //jos counter avaimella ei löydy mitää local storagesta, lisätään prodcounter
+ 
+  
 
   //css-luokan vaihto
   document.getElementById("shoppingCart").className = "shoppingCartBtnEffect";
@@ -92,8 +100,18 @@ function AddToCart() {
   //prodcounter täytyy muuntaa parseintillä, että luku kasvaa tuotteita lisätetssä.
   
   document.getElementById("cartNum").innerHTML =  parseInt(prodCounter)
+  for (var i=0;i<localStorage.length;i++)
+  {
+    //tarkistus että localstoragen avain sisältää sanan orderrow, näin ainoastaan
+    //sillä alkavat arvot lisätään tilaus laatikkoon.
+    if (localStorage.key(i).includes("orderrow"))
+    {
+      document.getElementById("orderDetails").innerText=localStorage.getItem(localStorage.key(i)) 
+    }
+  }
+  /*
   var productsFromStorage = Object.values(localStorage);
-  document.getElementById("orderDetails").innerText=productsFromStorage
+  document.getElementById("orderDetails").innerText=productsFromStorage*/
 
   //5 sekunnin jälkeen vaihdetaan css-luokka takaisin alkuperäiseen
   setTimeout(() => {
@@ -153,8 +171,8 @@ function openForm() {
 function DelFromCart(lsItem) {
   
   prodCounter=localStorage.getItem("counter")
-  prodCounter=prodCounter-1
-  localStorage.setItem("counter",prodCounter)
+  //prodCounter=prodCounter-1
+  localStorage.setItem("counter",parseInt(prodCounter)-1)
   document.getElementById("cartNum").innerHTML=parseInt(prodCounter)
 
   

@@ -191,6 +191,7 @@
         <td id="total"></td>
       </tr>
     </table>
+    
 
     <div id="orderRow"></div>
     <p id="ordersFromList"></p>
@@ -211,10 +212,16 @@
       <input type="text" id="code" name="code">
       <button class="btn btn-primary" type="submit">Discount code</button>
     </form>
+    
 
 
 
     <form action="/save-order/" method="post">
+      <input hidden type="text" name="prodid" value="{{productId}}">
+      <input hidden id="qty" type="text" name="qty" value="">
+      <script>
+        getQty()
+      </script>
       {% csrf_token %}
       
      
@@ -225,7 +232,7 @@
       <br>
       <textarea id="orderDetails" name="orderDetails"></textarea>
 
-      <input type="submit" value="Send order">
+      <input class="btn btn-primary" type="submit" value="Send order">
     </form>
 
     </table>
