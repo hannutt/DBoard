@@ -41,6 +41,7 @@ urlpatterns = [
     #path('adminView/',webshopAdmin),
     #path('edit-product/<int:productId>/',editProduct)
     path('back-to-shop/',backToWebShop),
-    path('post-delete-product-send/<int:productId>/',AdminViews.deleteProduct)
+    path('post-delete-product-send/<int:productId>/',AdminViews.deleteProduct),
+    path('mark-delivered/',AdminViews.delivered)
    
 ]

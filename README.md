@@ -71,3 +71,15 @@ the name of the product that is in short supply is shown in red and the name of 
 ID CHECK in ADMIN VIEW
 
 When the admin page is loaded, the python function also gets the values ​​from the used Id sql table. the id number of each added product is always stored in this table. When adding a new product to the id value input field, there is an onchange Hadler that checks the ids used with a javaScript function, which are imported to the html page with a Python function. If the ID given by the user already exists, the program displays a notification.
+
+MARK DELIVERED IN ADMIN VIEW
+
+The admin can change the delivery status by clicking the button. the order collection has a field name whose default value is no. On clicking the button, the Python function gets the subscription ID and changes the delivered status of the subscription to yes using the MongoDB update_one method.
+The purpose of this feature is to facilitate the maintenance of order delivery information.
+
+The delivered feature also uses Python and JavaScript functions to disable "Mark delivered" buttons whose order is already marked as delivered.
+In Python code, this is done using the Django forloop.counter and forloop.last methods.
+Initially, the program counts all the orders and uses the forloop.last command to get the final order count. 
+
+Then the final amount is sent to the javascript function as a parameter and the javascript function uses a for loop to find where the entered text is yes. then set the Attribute to change the button's disbaled value to true.
+

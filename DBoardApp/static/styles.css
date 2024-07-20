@@ -179,3 +179,7 @@
     background-color: aliceblue;
     border-radius: 5px;
 }
+.delivered {
+    color: red;
+    font-weight: bold;
+}

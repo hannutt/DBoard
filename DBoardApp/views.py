@@ -128,23 +128,17 @@ def productSelection(request,productId):
 def saveOrderToDb(request):
     order=request.POST['orderDetails']
     
-    '''
     orderId = random.randint(1,1500)
-    collection = dbname['order']
-    prodCollection = dbname['products']
+    collection = dbname['orders']
     name = request.POST['flname']
     address = request.POST['address']
     city = request.POST['city']
     zip = request.POST['zip']
-    prod = request.POST['prod']
-    Unitprice = request.POST['price']
-    amount = request.POST['amount']
-    str = request.POST['strength']
-    total = request.POST['total']
-    orderQuery = {'orderId':orderId,'product':prod,'unitPrice':Unitprice,'amount':amount,'total':total,'strength':str,'orderDate':todayStr,'name':name,'address':address,'city':city,'zip':zip}
+  
+    orderQuery = {'orderId':orderId,'orderedOrod':order,'orderDate':todayStr,'name':name,'address':address,'city':city,'zip':zip,'delivered':'no'}
     collection.insert_one(orderQuery)
-    '''
-    print("order: ",order)
+    
+    
     
     return render (request,'webshop.html')
 
@@ -161,13 +155,7 @@ def discount(request):
   
   
     return render(request,'webshop.html')
-'''
-def delivered(request):
-    isDelivered = request.POST.getlist('delivered')
-    print(isDelivered)
 
-    return redirect(showAdminView)
-'''
 
 
 

@@ -6,7 +6,7 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 dbname = client['DBoardDB']
 
 def showAdminView(request):
-     col = dbname['order']
+     col = dbname['orders']
      Orders = col.find()
     
      numbers = []
@@ -57,5 +57,21 @@ def deleteProduct(request,productId):
     delQuery={'productId':productId}
     prodCollection.delete_one(delQuery)
     
+
+    return redirect(showAdminView)
+
+
+def delivered(request):
+    orders = dbname['orders']
+    orderid = request.POST['orderid']
+    orderIdInt = int(orderid)
+    #vastaa sql WHERE ID = LAUSETTA
+    filter = {'orderId':orderIdInt}
+    #päivitys tapahtuu avain-arvo pareina. ensin tulee kentän nimi, sen jälkeen muuttuja jonka
+    #arvo kenttään päivitetäänF
+    updateData = {"$set":{"delivered":"yes"}}
+    orders.update_one(filter,updateData)
+
+    print(orderid)
 
     return redirect(showAdminView)

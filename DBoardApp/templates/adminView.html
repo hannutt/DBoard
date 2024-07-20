@@ -18,7 +18,7 @@
     <title>Admin View</title>
 </head>
 
-<body class="adminBody" onload="countItems()">
+<body class="adminBody" onload="countItems();">
     <h3>Admin view</h3>
 
 
@@ -48,27 +48,38 @@
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
                 <div class="accordion-body">
                     {% for o in Orders %}
+                    {{o.orderId}}
                     {{o.name}}
                     {{o.address}}
                     {{o.city}}
                     {{o.zip}}
-                    <p>Product:
-                        {{o.product}}
+                    <p>Order:
+                        {{o.orderedOrod}}
                     </p>
-                    <p>Order Quantity:
-                        {{o.amount}}
+                    <p>Order date: {{o.orderDate}}</p>
+                    <p id="delivered{{forloop.counter}}" class="delivered">Delivered:
+                        {{o.delivered}}
                     </p>
-                    <label for="yes">Delivered</label>
+                   
                     <form action="/mark-delivered/" method="post">
                         {% csrf_token %}
-                        <input type="checkbox" value="yes" name="delivered" id="yes">
-                        <input id="setdelivered" type="submit" value="mark" onclick="setDelivered()">
-
-                        {%endfor%}
+                        <input hidden type="text" name="orderid" value="{{o.orderId}}">
+                        
+                        <input id="setdelivered{{forloop.counter}}" type="submit" value="Mark delivered">
+                       <!--JOS KYSEESSÄ ON FORLOOP VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
+                        {% if forloop.last %}
+                            <p id="last">{{forloop.counter}}</p>
+                            {%endif%}
+                        {%endfor%}  
                     </form>
+                    
+                    
 
                 </div>
             </div>
+            <script>
+                delivered(document.getElementById("last").innerHTML)
+            </script>
             <div class="accordion-item">
                 <!--accordion divin pituus 250 pikseliin-->
                 <div class="accordion" id="accordionExample1" style="width: 250px;">

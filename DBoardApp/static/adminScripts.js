@@ -1,3 +1,25 @@
+ function delivered(total) {
+   
+    console.log(total)
+    
+    var totalInt = parseInt(total)
+    
+    for (var i=1;i<=totalInt;i++)
+    {
+        var d = document.getElementById("delivered"+i).innerHTML
+        console.log(d)
+        if (d.includes("yes"))
+        {
+            var btn=document.getElementById("setdelivered"+i)
+            btn.setAttribute('disabled','true')
+            
+        }
+       
+
+    }
+  
+ }
+ 
  //lasketaan varastomäärä kaikkien tuotteiden osalta
  function countItems() {
     var items = []
