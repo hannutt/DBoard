@@ -17,13 +17,6 @@
     z-index: 9;
   }
 
-.tab {
- 
-    border: 2px solid black;
-    font-size: x-large;
-    border-color: #7b9db3;
-    background-color: azure;
-}
 
 
 .container {
@@ -183,3 +176,5 @@
     color: red;
     font-weight: bold;
 }
+
+

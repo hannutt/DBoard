@@ -38,14 +38,17 @@ save the IP address you want to block in the database. Initially, the Python fun
 
 The banned ip addresses are displayed in the table element and the user can show and hide the table using Jquery show/hide methods. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. this is made with JS date objects and getTime methods.
 
-When you enter an IP address to block, you can add points automatically using the Jquery Mask feature. The feature is intended for addresses in the format 000.000.00.00
-The feature can be activated by clicking on the checkbox. the checkbox uses an onchange method that calls a standard JavaScript function that contains a Jquery mask method and a definition of the input field where the property is applied.
+When you enter an IP address to block, you can add dots automatically using the Jquery Mask plugin.
+The feature is for addresses in the format 000.000.00.00 and 000.00.00.000, which are two common formats for IP addresses.
+
+The feature can be activated by clicking on the checkbox. the checkbox uses the onchange method, which calls a standard JavaScript function that receives the selected format as a parameter.
+The function contains the Jquery mask plugin and the definition of the input field where the property is used. Disable the feature by unchecking the box.
 
 WEBSHOP
 
 IN THE USER VIEW:
 
-simulates a purchase transaction in an online store. the user selects the desired products and quantity and fills in the address information. Then the entire order is stored in the database.
+Simulates a purchase transaction in an online store. the user selects the desired products and quantity and fills in the address information. Then the entire order is stored in the database.
 The selected products are stored in the localStorage in case you leave the online store and come back. Your order information can be retrieved easily with the localStorage feature later. This simulates a real-life online shopping experience. LocalStorage values ​​are retrieved using Object.values(localStorage); method
 
 The webshop has a shopping cart made with HTML form. The user can open and close it with buttons. when the shopping cart is open, all products stored in localStorage are displayed in the organized list element of the Shopping Cart.

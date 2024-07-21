@@ -5,19 +5,39 @@
     <title>Titles</title>
     {% load static %}
     <link rel="stylesheet" href="{%static 'styles.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body style="background-image: url(/static/BGPic.jpg);">
     <div>
         <h3>Filtered results</h3>
         <p>{{option}}</p>
-        <table class="tab">
+        <style>
+            table, th, td {
+              border:1px solid black;
+            }
+            /*muutetaan parillisten sarakkeiden taustaväri*/
+            tr:nth-child(even) {
+                background-color: #dddddd;
+
+            }
+            /*parittomien sarakkeiden taustaväri*/
+            tr:nth-child(odd) {
+                background-color:white
+
+            }
+            </style>
+        <table width="100%">
             <!--jos option on 1 näytetään allaolevat td:t muussa tapauksessa mennään else haaran mukaisesti
             option on määritelty views.py filterpost funktiossa-->
             {%if option == '1' %}
             <tr>
                 <th>Post-ID</th>
                 <th>Titles</th>
+            </tr>
+            <tr>
+                <td>{{t.postid}}</td>
+                <td>{{t.title}}</td>
             </tr>
             {%else%}
             <tr>
@@ -34,19 +54,18 @@
                  
             </tr>
             {%endfor%}
-
         </table>
 
-        <table class="tab">
+        <table width="100%">
         {% for b in body %}
         <tr>
             <td>{{b.postid}}</td>
-            <td>{{b.body}}</td>
+            <td id="text" class="text">{{b.body}}</td>
         </tr>
         
         {%endfor%}
     </table>
-
+   
 
 
 

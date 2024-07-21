@@ -35,8 +35,9 @@
     
    
     <label for="verticalBar">Vertical bar</label>
-    <input id="verticalBar" type="checkbox"onclick="verticalBar()">
-    <div id="Plot" style="width:25%;max-width:400px; height:250px;">Hide by doubleclick</div>
+    <input id="verticalBar" type="checkbox" onclick="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
+
+    <div id="Plot" style="width:25%;max-width:400px; height:250px;">Double-click this text to hide the chart</div>
   </center>
   <div id="showDiv" style="display: none;">
     <button id="showBtn">Show chart</button>

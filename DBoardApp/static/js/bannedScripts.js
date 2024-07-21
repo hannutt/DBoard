@@ -1,3 +1,26 @@
+function masking(mask)
+{
+  var cb=document.getElementById("useMasking")
+  var cb2=document.getElementById("useMasking2")
+  console.log(cb.checked)
+  if (cb.checked===true || cb2.checked===true)
+  {
+    /*jquery masking, alla oleva lisää pisten 2 ensimmäisen osalta 3 merkin jälkeen ja
+    2 viimeisen osalta 2 merkin jälkeen*/
+    $('input[name="ipadd"]').mask(mask);
+
+  }
+  else {
+    //unmask poistaa input kentästä mask kaavan, eli pistettä ei tule enää automaattisesti
+    $('input[name="ipadd"]').unmask()
+
+  }
+ 
+
+}
+
+
+
 function getBanDate() {
     var Primarytable = document.getElementById("table")
     var sencondaryTable = document.getElementById("tableDays")
