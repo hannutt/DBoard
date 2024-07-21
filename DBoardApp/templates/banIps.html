@@ -8,6 +8,7 @@
       <script src="{% static 'bannedScripts.js' %}"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
       
       
       {% endblock %}
@@ -76,7 +77,19 @@
         </table>
         <form action="/ban-form/" method="post">
             {% csrf_token %}
+            <label for="useMasking">Use Jquery masking</label>
+            <input type="checkbox" id="useMasking" onchange="masking()">
             <input type="text" name="ipadd" id="ipadd" placeholder="Ip-address" onchange="checkIp()">
+            <!--jquery masking, alla oleva lisää pisten 2 ensimmäisen osalta 3 merkin jälkeen ja
+            2 viimeisen osalta 2 merkin jälkeen-->
+            <script>
+               function masking()
+               {
+                $('input[name="ipadd"]').mask('000.000.00.00');
+
+               }
+               
+            </script>
             <br><br>
            
             <Button type="submit">Ban

@@ -1,3 +1,5 @@
+ //tarkistetaan onko tuote toimitettu, eli delivered sisältä sanan yes
+ //jos on, disabloidaan painike
  function delivered(total) {
    
     console.log(total)

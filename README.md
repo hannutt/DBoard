@@ -38,6 +38,9 @@ save the IP address you want to block in the database. Initially, the Python fun
 
 The banned ip addresses are displayed in the table element and the user can show and hide the table using Jquery show/hide methods. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. this is made with JS date objects and getTime methods.
 
+When you enter an IP address to block, you can add points automatically using the Jquery Mask feature. The feature is intended for addresses in the format 000.000.00.00
+The feature can be activated by clicking on the checkbox. the checkbox uses an onchange method that calls a standard JavaScript function that contains a Jquery mask method and a definition of the input field where the property is applied.
+
 WEBSHOP
 
 IN THE USER VIEW:

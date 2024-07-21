@@ -75,7 +75,7 @@ function getBanDate() {
             }
             console.log(count)
             
-            if (count == 3)
+            if (count == 4)
             {
                 //var checkelem =  document.getElementById("checker")
                 checkelem.innerHTML="Correct address"
