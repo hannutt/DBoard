@@ -65,7 +65,7 @@
     </div>
     <div class="form-check">
     <label class="form-check-label" for="prettyTextCB">Remove the extra marks from the answers</label>
-    <input class="form-check-input" type="checkbox" id="prettyTextCB" onchange="prettyText(document.getElementById('lastReply').innerHTML)">
+    <input class="form-check-input" type="checkbox" id="prettyTextCB" onchange="prettyText(document.getElementById('prettyTextCB'),document.getElementById('lastReply').innerHTML)">
     <input hidden type="submit" value="set" id="setBtn">
     </div>
   </form>
@@ -88,16 +88,15 @@
 
           
           <strong>Subject: </strong> {{d.title}}
+          <p class="postid">Post ID: {{d.postid}}</p>
 
-          <!--
-          {% for l in context %}
-          <p>{{ l }}</p>
-          {%endfor%}-->
+          
           <form action="/post-delete/{{d.postid}}/" method="post">
-            <p class="postid">Post ID: {{d.postid}}</p>
+            
             {% csrf_token %}<button>X</button>
             <input hidden name="deletePostId" value="{{d.postid}}">
           </form>
+         
           <!--font awesome ikoni + tykkäysten määrä-->
 
 
@@ -112,6 +111,7 @@
       <div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse show"
         data-bs-parent="#accordionExample{{forloop.counter}}">
         <div class="accordion-body">
+          <p class="postDate"><strong>{{d.postDate}}</strong></p>
 
 
 

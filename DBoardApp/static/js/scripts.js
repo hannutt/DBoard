@@ -100,20 +100,21 @@ function Banned() {
 //lastreply eli vastauksien kokonaismäärä saadaan lastreply parametrina, joka annetaann
 //index.html:ssä funktion kutsun yhteydessä.
 
-function prettyText(lastreply) {
+function prettyText(prettyTextCB,lastreply) {
   console.log("last reply ", lastreply)
   var lastInt = parseInt(lastreply)
-  var prettytextCB = document.getElementById("prettyTextCB").value
-  console.log(prettytextCB)
-  if (prettytextCB == 'on') {
+
+  if (prettyTextCB.checked == true) {
     for (var i = 1; i <= lastInt; i++) {
+      var original = document.getElementById("reply"+i).innerHTML
       var reply = document.getElementById("reply" + i).innerHTML
-      document.getElementById("reply" + i).innerHTML = reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "")
+      document.getElementById("reply" + i).innerHTML = reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "").replace('replymsg','').replace('replymsg','')
 
 
     }
 
   }
+
 
 }
 
@@ -122,7 +123,7 @@ function filterClear(total) {
   for (var j = 1; j<totalInt;j++)
   {
     var reply=document.getElementById("reply"+j).innerHTML
-    document.getElementById("reply"+j).innerHTML=reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "").replace("}","")
+    document.getElementById("reply"+j).innerHTML=reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "").replace("}","").replace("]","").replace('replymsg',"").replace('replymsg',"").replace(':',"").replace(':',"")
   }
 
 }

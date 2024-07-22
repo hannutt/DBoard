@@ -2,13 +2,19 @@ from datetime import date
 import random
 import pymongo
 from django.shortcuts import render,redirect
-
+import time
 from DBoardApp import loginViews
 
 global today
 today = date.today()
 global todayStr
 todayStr =today.strftime('%d.%m.%y')
+
+global curTime
+curTime =  time.strftime("%H:%M:%S", time.localtime())
+todayStr =today.strftime('%d.%m.%y')
+global dateNtime
+dateNtime = todayStr+' '+curTime
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 dbname = client['DBoardDB']
 
@@ -63,13 +69,13 @@ def postNew(request):
       isPostidExist = Postcollection.count_documents({"postid":postId})
       if isPostidExist == 1:
 
-        post = {"title":title,"body":body}
+        post = {"title":title,"body":body,"postDate":dateNtime}
         Postcollection.insert_one(post)
         deletecol.update_one({"_id":newPostid},{'$inc':{"postCount":+1},'$set':{"postDate":todayStr}})
 
       elif isPostidExist == 0:
 
-        post = {"title":title,"body":body,'postid':postId}
+        post = {"title":title,"body":body,'postid':postId,"postDate":dateNtime}
         Postcollection.insert_one(post)
         deletecol.update_one({"_id":newPostid},{'$inc':{"postCount":+1},'$set':{"postDate":todayStr}})        
     

@@ -20,7 +20,8 @@ The direction of the bar chart can be changed between horizontal and vertical us
 
 DISCUSSION BOARD
 
-Simulates an online discussion board. You can post a new thread, reply to an existing message,delete the messages and like messages. The conversation text can be translated into different languages. this is done using the Google Translate API. Messages are stored to the MongoDB NoSQL database.
+Simulates an online discussion board. You can post a new thread, reply to an existing message,delete the messages and like messages. Each message sent has a Mongo table in the collection where the responses are stored. This way, the topic and its answers can be clearly seen.
+The conversation text can be translated into different languages. this is done using the Google Translate API. Messages are stored to the MongoDB NoSQL database.
 
 All posts are wrapped in the Bootstrap 5 accordion/collapse element, so you can close or open posts.
 
@@ -31,7 +32,9 @@ Checkboxes have an onclick method, which calls a JavaScript function that receiv
 
 The Python function retrieves the user's selection using the request.post.getlist method and makes a new database query with the selected option. The search results are displayed in the html table element.
 
+
 In the show reply message option, extra characters are automatically cleaned up by a JavaScript function that includes a replace method. The function is called in the body tag of the html page with the load event.
+the extra characters are because the response messages are stored in a MongoDB array, they show the extra characters when you fetch the results to see them.
 
 MESSAGE STATISTICS
 
