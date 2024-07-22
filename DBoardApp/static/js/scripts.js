@@ -117,3 +117,13 @@ function prettyText(lastreply) {
 
 }
 
+function filterClear(total) {
+  var totalInt=parseInt(total)
+  for (var j = 1; j<totalInt;j++)
+  {
+    var reply=document.getElementById("reply"+j).innerHTML
+    document.getElementById("reply"+j).innerHTML=reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "").replace("}","")
+  }
+
+}
+

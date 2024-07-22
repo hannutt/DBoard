@@ -29,7 +29,9 @@ TEXT FILTERING IN DISCUSSION BOARD
 Bootstrap 5's html checkboxes allow you to choose whether to display only the message title, body, or message replies This works with Python and JavaScript functions. 
 Checkboxes have an onclick method, which calls a JavaScript function that receives information about the option selected by the user as a parameter.
 
-The Python function retrieves the user's selection using the request.post.getlist method and makes a new database query with the selected option. The search results are displayed in the html table element
+The Python function retrieves the user's selection using the request.post.getlist method and makes a new database query with the selected option. The search results are displayed in the html table element.
+
+In the show reply message option, extra characters are automatically cleaned up by a JavaScript function that includes a replace method. The function is called in the body tag of the html page with the load event.
 
 MESSAGE STATISTICS
 

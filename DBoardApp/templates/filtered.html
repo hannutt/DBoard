@@ -6,9 +6,10 @@
     {% load static %}
     <link rel="stylesheet" href="{%static 'styles.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 </head>
 
-<body style="background-image: url(/static/BGPic.jpg);">
+<body onload="filterClear(document.getElementById('total').innerHTML)">
     <div>
         <h3>Filtered results</h3>
         <p>{{option}}</p>
@@ -65,7 +66,11 @@
             {% for r in replymsg %}
             <tr>
                 <td>{{r.postid}}</td>
-                <td>{{r.replymsg}}</td>
+                
+                <td id="reply{{forloop.counter}}">{{r.replymsg}}</td>
+                {% if forloop.last %}
+                <p id="total">{{forloop.counter}}</p>
+                {%endif%}
             </tr>
             {%endfor%}
         </table>
