@@ -39,10 +39,12 @@ amount = 0
 
 
 def filterPost(request):
-    slc = ['title','body']
+    #html-checkboksien value attribuuttien arvot
+    slc = ['title','body','reply']
     collection = dbname['posts']
     titles = collection.find({},{'title':1,'postid':1})
     body = collection.find({},{'body':1,'postid':1})
+    replymsg = collection.find({},{'replymsg':1,'postid':1})
     sel = request.POST.getlist('selection')
     print(sel)
     
@@ -55,7 +57,10 @@ def filterPost(request):
         return render (request,'filtered.html',{'titles':titles,'option':'1'})
     #jos valittu cb jonka value on body haetaan bodytext
     elif sel == ['body']:
-        return render (request,'filtered.html',{'body':body})
+        return render (request,'filtered.html',{'body':body,'option':'2'})
+    elif sel == ['reply']:
+        return render (request,'filtered.html',{'replymsg':replymsg,"option":'3'})
+
     else:
         
       return render(request,'filtered.html')

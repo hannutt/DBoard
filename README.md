@@ -24,9 +24,17 @@ Simulates an online discussion board. You can post a new thread, reply to an exi
 
 All posts are wrapped in the Bootstrap 5 accordion/collapse element, so you can close or open posts.
 
-Text filtering, with the html checkboxes you can choose whether only the title or body text of the message is displayed. This works with a Python function that gets the user's selection using the request.post.getlist method and makes a new database query with the selected option.
+TEXT FILTERING IN DISCUSSION BOARD
 
-Message statistics. See the number of deleted and new messages, as well as the date of the last deletion and the date of the most recent message.
+Bootstrap 5's html checkboxes allow you to choose whether to display only the message title, body, or message replies This works with Python and JavaScript functions. 
+Checkboxes have an onclick method, which calls a JavaScript function that receives information about the option selected by the user as a parameter.
+
+The Python function retrieves the user's selection using the request.post.getlist method and makes a new database query with the selected option. The search results are displayed in the html table element
+
+MESSAGE STATISTICS
+
+See the number of deleted and posted messages, as well as the date of the last deletion and the date of the most recent message. The number of sent and deleted messages is also shown in the bar graphs.
+values ​​are stored in own Mongo collections from which they are retrieved with Python code.
 
 TEXT CENSORSHIP ON THE DISCUSSION BOARD
 

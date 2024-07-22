@@ -177,4 +177,9 @@
     font-weight: bold;
 }
 
+.card card-body-statistics {
+    background-image: url("/static/images/BGPic.jpg");
+}
+
+
 

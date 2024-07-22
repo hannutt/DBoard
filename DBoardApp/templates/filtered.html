@@ -32,6 +32,7 @@
             option on määritelty views.py filterpost funktiossa-->
             {%if option == '1' %}
             <tr>
+                <!--th on taulukon otsikot-->
                 <th>Post-ID</th>
                 <th>Titles</th>
             </tr>
@@ -39,11 +40,17 @@
                 <td>{{t.postid}}</td>
                 <td>{{t.title}}</td>
             </tr>
-            {%else%}
+            {%elif option == '2' %}
             <tr>
                 <th>Post-ID</th>
                 <th>Bodytext</th>
             </tr>
+            {%elif option == '3' %}
+            <tr>
+                <th>Post-ID</th>
+                <th>Reply</th>
+            </tr>
+
             {%endif%}
 
             
@@ -51,7 +58,14 @@
             <tr>
                 <td>{{t.postid}}</td>
                 <td>{{t.title}}</td>
-                 
+            </tr>
+            {%endfor%}
+          
+          
+            {% for r in replymsg %}
+            <tr>
+                <td>{{r.postid}}</td>
+                <td>{{r.replymsg}}</td>
             </tr>
             {%endfor%}
         </table>
@@ -60,7 +74,7 @@
         {% for b in body %}
         <tr>
             <td>{{b.postid}}</td>
-            <td id="text" class="text">{{b.body}}</td>
+            <td>{{b.body}}</td>
         </tr>
         
         {%endfor%}

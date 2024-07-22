@@ -48,14 +48,20 @@
     ERILLISTÄ PAINIKKEEN KLIKKAUSTA-->
       <input class="form-check-input" type="checkbox" value="title" id="titleCB" name="selection" onclick="setFilter(document.getElementById('titleCB'))">
       <label class="form-check-label" for="titleCB">
-        Show titles
+        Show titles only
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="body" id="bodyCB" name="selection" onclick="setFilter(document.getElementById('bodyCB'))">
       <label class="form-check-label" for="bodyCB">
-        Show bodytext
+        Show bodytext only
       </label>
+    </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="reply" id="replyCB" name="selection" onclick="setFilter(document.getElementById('replyCB'))">
+        <label class="form-check-label" for="replyCB">
+          Show replys only
+        </label>
     </div>
     <div class="form-check">
     <label class="form-check-label" for="prettyTextCB">Remove the extra marks from the answers</label>
@@ -267,25 +273,6 @@
 
   </div>
   </div>
-  <!--
-  <p class="d-inline-flex gap-1">
-    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-      aria-controls="collapseExample">
-      See Likes
-    </a>
-
-  </p>
-
-  <div class="collapse" id="collapseExample">
-
-    <div class="card card-body">
-      {%for i in likedata%}
-      <p>Post: {{forloop.counter}} has {{i.likecount}} <i class="fa-solid fa-thumbs-up"></i></p>
-      {%endfor%}
-
-    </div>
-
-  </div>-->
 
 
 
@@ -305,14 +292,16 @@
 
   <div class="collapse" id="collapseExample">
 
-    <div class="card card-body">
+    <div class="card card-body" style="background-image: url('/static/images/BGPic.jpg')"
       {% for de in deleted%}
+      
       <p id="del">Deleted posts: <b>{{de.count}}</p></b> Latest delete: <b>{{de.deldate}}</b>
       <br>
       <p id="posted">New posts: {{de.postCount}} since {{de.postDate}}</p>
       <!--tietokanta arvojen tallennus input kenttin, josta ne talletetaan javascript muuttujiin
       ja käytetään muuttujia js koodissa-->
       <input hidden id="delinput" type="number" value="{{de.count}}">
+    
 
       <br>
 
