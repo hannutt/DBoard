@@ -183,5 +183,8 @@
 .postDate {
     font-size: medium;
 }
-
+.LogoutBtn{
+    position: fixed;
+    left:1200px;
+}
 

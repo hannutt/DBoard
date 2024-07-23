@@ -54,8 +54,8 @@ The banned ip addresses are displayed in the table element and the user can show
 When you enter an IP address to block, you can add dots automatically using the Jquery Mask plugin.
 The feature is for addresses in the format 000.000.00.00 and 000.00.00.000, which are two common formats for IP addresses.
 
-The feature can be activated by clicking on the checkbox. the checkbox uses the onchange method, which calls a standard JavaScript function that receives the selected format as a parameter.
-The function contains the Jquery mask plugin and the definition of the input field where the property is used. Disable the feature by unchecking the box.
+The feature can be activated by selecting the desired format from the drop-down menu. 
+the menu uses the onchange and this methods, which call a standard JavaScript function that receives the selected format as a parameter. The function contains the Jquery mask plugin and the definition of the input field where the property is used.
 
 WEBSHOP
 

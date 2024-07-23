@@ -63,7 +63,8 @@ def login_user(request):
         loginfo = "[Logged in]"
         context = {'name':user,'info':loginfo}
 
-        return render (request,'login.html',context)
+        #return render (request,'login.html',context)
+        return redirect(FrontPage)
      if not user:
          print("error")
          return render(request,'loginerror.html')
@@ -74,7 +75,7 @@ def logout_user(request):
     logout(request)
     loginfo = "[Not logged in]"
     context = {'info':loginfo}
-    return render(request,'login.html',context)
+    return redirect (loginView)
 
 
 

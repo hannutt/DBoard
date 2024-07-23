@@ -1,23 +1,21 @@
-function masking(mask)
+function masking(maskFormat)
 {
-  var cb=document.getElementById("useMasking")
-  var cb2=document.getElementById("useMasking2")
-  console.log(cb.checked)
-  if (cb.checked===true || cb2.checked===true)
-  {
+  console.log(maskFormat)
+
     /*jquery masking, alla oleva lisää pisten 2 ensimmäisen osalta 3 merkin jälkeen ja
     2 viimeisen osalta 2 merkin jälkeen*/
-    $('input[name="ipadd"]').mask(mask);
+    $('input[name="ipadd"]').mask(maskFormat);
 
-  }
-  else {
+    if (maskFormat=="Select format")
+    {
+      $('input[name="ipadd"]').unmask()
+
+    }
     //unmask poistaa input kentästä mask kaavan, eli pistettä ei tule enää automaattisesti
-    $('input[name="ipadd"]').unmask()
-
-  }
- 
-
+   // 
 }
+   
+
 
 
 
@@ -118,4 +116,8 @@ function getBanDate() {
 
             }
         }
+
+      function maskingTest(val) {
+        console.log(val)
+      }
         

@@ -69,7 +69,7 @@
 
 
     {%for p in prods %}
-    <form action="/select-product-send/{{p.productId}}/" method="post"></form>
+    <form action="/select-product-send/{{p.productId}}/" method="post">
     <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
 
     {% csrf_token %}
@@ -93,29 +93,10 @@
       <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength(16)">16 MG
 
 
-      <!--onchange eli kun joki vaihtoehto on valittu suoritetaan getStrength funktio
-                      <select id="amount" name="amount" onchange="getStrength();">
-    
-                        
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
-                      <script>
-                        //funktio tallentaa output muuttujaan select elementistä valitun vaihtoehdon
-                        function getStrength() {
-                          
-      
-                          selected = document.querySelector('#amount')
-                          selectedStrength = selected.value;
-                          localStorage.setItem('qty',selectedStrength)
-                      
-                          console.log(selectedStrength)
-                        }
-                      </script>-->
 
       <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
         onchange="setAmountField()">
+      
 
 
     </div>
@@ -135,7 +116,7 @@
       <i class="fa-solid fa-cart-plus"></i></a>
 
   </button>
-
+</form>
   {%endfor%}
 
 
@@ -205,6 +186,7 @@
   </div>
   
     <button id="createorder" onclick="AddToCart()">Add to cart</button>
+    <p id="qtyList"></p>
   
     <p id="compare">{{code}}</p>
     <form action="/discount-code/" method="post">
@@ -218,7 +200,7 @@
 
     <form action="/save-order/" method="post">
       <input hidden type="text" name="prodid" value="{{productId}}">
-      <input hidden id="qty" type="text" name="qty" value="">
+      <input  id="qty" type="text" name="qty" value="">
       <script>
         getQty()
       </script>

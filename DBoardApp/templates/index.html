@@ -35,6 +35,14 @@
 </head>
 
 <p id="user">{{user}}</p>
+<form action="/logout/" method="post">
+  {% csrf_token %}
+  <div class="LogoutBtn">
+    <button class="btn btn-primary">Logout</button>
+  </div>
+ 
+</form>
+
 <center>
 <h3>DISCUSSION BOARD</h3>
 </center>
@@ -69,6 +77,7 @@
     <input hidden type="submit" value="set" id="setBtn">
     </div>
   </form>
+ 
  
 
 

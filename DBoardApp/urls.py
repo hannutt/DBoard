@@ -4,7 +4,7 @@ from DBoardApp import loginViews
 from DBoardApp import messageViews
 from DBoardApp import BanViews
 from DBoardApp import AdminViews
-from .views import saveCsv,filterPost,webshop,productSelection,saveOrderToDb,discount,webshopAdmin,editProduct,updateProd,\
+from .views import saveCsv,webshop,productSelection,saveOrderToDb,discount,webshopAdmin,editProduct,updateProd,\
 backToWebShop
 
 
@@ -30,7 +30,7 @@ urlpatterns = [
     #varsinainen editointi tapahtuu tässä
     path('edit-product/',updateProd),
     path('save-to-csv/',saveCsv),
-    path('post-filter/',filterPost),
+    path('post-filter/',messageViews.filterPost),
     path('webshop/',webshop),
     path('discount-code/',discount),
     path('select-product-send/<int:productId>/',productSelection),

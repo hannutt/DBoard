@@ -1,6 +1,7 @@
 
 function verticalBar(visits, cb) {
   if (cb.checked == true) {
+    console.log(cb.checked)
     //muunto kokonaisluvuksi
     parseInt(visits)
     const xArray = [""];
@@ -23,18 +24,42 @@ function verticalBar(visits, cb) {
     Plotly.newPlot("Plot", data, layout);
 
   }
-  else {
-    resetBar()
+  else if (cb.checked==false) {
+    horizontalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))
 
 
   }
 }
 
+function horizontalBar(visits,cb) {
+  
+  console.log(cb.checked)
+  console.log(visits)
+  
+  parseInt(visits)
+  const xArray = [visits];
+  const yArray = [""];
 
+  const data = [{
+    x: xArray,
+    y: yArray,
+    //numeroväli 1, eli desimaaleja ei näytetä
+    dtick: 1,
+    //kaavion tyyppi
+    type: "bar",
+    //kaavion piirtosuunta
+    orientation: "h",
+    marker: { color: "rgba(50, 168, 145)" }
+  }];
 
-function resetBar() {
-  location.reload()
+  const layout = { title: "Visits on page" };
+
+  Plotly.newPlot("Plot", data, layout);
+
 }
+
+
+
 
 function CheckId() {   //haetaan käyttäjän syöttämä arvo
   var userInput = document.getElementById("prodIdVal").value;
@@ -119,11 +144,24 @@ function prettyText(prettyTextCB,lastreply) {
 }
 
 function filterClear(total) {
+
   var totalInt=parseInt(total)
-  for (var j = 1; j<totalInt;j++)
+  //chars on sanakirjamuodossa, eli jokaiselle korvattavalle merkille täytyy kertoa että millä se korvataan
+  //tässä tapauksessa kaikki korvataan tyhjällä
+ // var chars={"{":"","}":"","[":"","]":"","[{":"","},":"","[]":""}
+  for (var j = 1; j<=totalInt;j++)
   {
     var reply=document.getElementById("reply"+j).innerHTML
-    document.getElementById("reply"+j).innerHTML=reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "").replace("}","").replace("]","").replace('replymsg',"").replace('replymsg',"").replace(':',"").replace(':',"")
+    //replace metodilla voidaan antaa lista merkeistä, jotka korvataa tyhjällä, g tarkoittaa globaalia hakua
+    reply = reply.replace(/[{}[][{}[,]/g,"");
+    document.getElementById("reply"+j).innerHTML=reply
+    //jos tyhjiä kohtia, lisätään niihen teksti
+    if ( document.getElementById("reply"+j).innerHTML=='')
+    {
+      document.getElementById("reply"+j).textContent="No reply yet"
+
+    }
+    
   }
 
 }

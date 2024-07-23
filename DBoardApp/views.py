@@ -21,6 +21,10 @@ import io
 import time
 from DBoardApp import loginViews
 
+global prodIdList
+prodIdList=[]
+global qtyList
+qtyList=[]
 global today
 today = date.today()
 global todayStr
@@ -37,35 +41,6 @@ status = 'True'
 times = 0
 amount = 0
 
-
-def filterPost(request):
-    #html-checkboksien value attribuuttien arvot
-    slc = ['title','body','reply']
-    collection = dbname['posts']
-    titles = collection.find({},{'title':1,'postid':1})
-    body = collection.find({},{'body':1,'postid':1})
-    replymsg = collection.find({},{'replymsg':1,'postid':1})
-    sel = request.POST.getlist('selection')
-    print(sel)
-    
-    
-    #checkboksien valinnat, jos valittu cb jonka value on title haetaan otsikot 
-    if sel == ['title']:
-        print('title select')
-        #optionin avulla toteutetaan if/else filtered.html sivulla. sen avulla
-        #näytetään hausta riippuen joko title tai bodytext otsikko
-        return render (request,'filtered.html',{'titles':titles,'option':'1'})
-    #jos valittu cb jonka value on body haetaan bodytext
-    elif sel == ['body']:
-        return render (request,'filtered.html',{'body':body,'option':'2'})
-    elif sel == ['reply']:
-        return render (request,'filtered.html',{'replymsg':replymsg,"option":'3'})
-
-    else:
-        
-      return render(request,'filtered.html')
-    
-         #haetaan vain title kentät
       
     
 def editProduct(request,productId):
@@ -123,39 +98,54 @@ def webshopAdmin(request):
 
 
 def productSelection(request,productId):
- 
+    qty=request.POST['amount']
+    qtyList.append(qty)
+    prodIdList.append(productId)
     collection = dbname['products']
     data = collection.find({'productId':productId})
     orders = dbname['order']
     prods = collection.find()
     orderData = orders.find()
-   
+    print(qty)
+    
     #mongodb lauseke jossa kerrotaan amount ja multiply kenttien arvot keskenään
     #total = orders.aggregate([{'$project':{'total':{'$multiply':['$amount','$unitPrice']}}}])
     data = collection.find({'productId':productId})
     return render(request,'webshop.html',{'data':data,'orderData':orderData,'prods':prods,'productId':productId})
 
 def saveOrderToDb(request):
+    print(prodIdList)
     order=request.POST['orderDetails']
-    qty=request.POST['qty']
-    prodid=request.POST['prodid']
-    prodidInt =int(prodid)
-    qtyInt=int(qty)
+    #qty=request.POST['qty']
+    #qtyList.append(qty)
+    #prodid=request.POST['prodid']
+    #prodidInt =int(prodid)
+    #qtyInt=int(qty)
     orderId = random.randint(1,1500)
-    collection = dbname['orders']
+    orderCol = dbname['orders']
     prodCol = dbname['products']
-    filter={'productId':prodidInt}
+    #kahdella sisäkkäisellä for silmukalla käydään läpi ensin prodidlist jonne on tallenettu
+    #ostettavien tuotteiden id numero sitten qtylista, jossa on ostettavien tuotteiden kappalemäärä
+    #saadaan id ja kappalemäärä
+    #vastaamaan toisiaan ja pystytään tekemään automaattinen kappalevähennys valittujen tuotteiden
+    #varastomäärästä.
+    for i in prodIdList:
+        int(i)
+        filter={'productId':i}
+        for j in qtyList:
+            Jint=int(j)
+            delQuery={'$inc':{'instock':-Jint}}
+            prodCol.update_one(filter,delQuery)
     name = request.POST['flname']
     address = request.POST['address']
     city = request.POST['city']
     zip = request.POST['zip']
   
     orderQuery = {'orderId':orderId,'orderedOrod':order,'orderDate':dateNtime,'name':name,'address':address,'city':city,'zip':zip,'delivered':'no'}
-    collection.insert_one(orderQuery)
+    orderCol.insert_one(orderQuery)
     #vähennetään varastosaldon käyttäjän tilaaman määrän verran, huomaa että $inc metodia voi käyttää
     #myös väentämiseen kun lisää miinus merkin eteen.
-    delQuery={'$inc':{'instock':-qtyInt}}
-    prodCol.update_one(filter,delQuery)
+   
    
     
     

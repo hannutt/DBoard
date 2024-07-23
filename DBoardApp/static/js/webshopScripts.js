@@ -19,7 +19,7 @@ function setStrength(strength) {
 }
 
 function setAmountField() {
-
+  
   var quantity = document.getElementsByName("amount")
   //silmukassa käydään läpi str nimiset radiobuttonit
   for (i = 0; i < quantity.length; i++)
@@ -70,7 +70,9 @@ function setAmount() {
 }
 //TILAUKSEN TIETOJEN TALLENNUS LOCALSTORAGEEN
 var prodCounter = 0
+
 function AddToCart() {
+  
   //ostoskori painikkeen kulmassa, ilmaisee tuotteiden määrää korissa
   prodCounter +=1
   localStorage.setItem("counter",parseInt(prodCounter))
@@ -83,6 +85,7 @@ function AddToCart() {
   var product = document.getElementById("product").innerHTML
   var price = document.getElementById("price").innerHTML
   var amount = document.getElementById("finalAm").innerHTML
+ 
   var strength = document.getElementById("str").innerHTML
   var total = document.getElementById("total").innerHTML
   document.getElementById("orderRow").innerHTML = product + ' ' + price + ' ' + amount + ' ' + strength + ' ' + total
@@ -98,7 +101,7 @@ function AddToCart() {
   document.getElementById("shoppingCart").className = "shoppingCartBtnEffect";
   //parseInt(prodCounter)
   //prodcounter täytyy muuntaa parseintillä, että luku kasvaa tuotteita lisätetssä.
-  
+  var prod=[]
   document.getElementById("cartNum").innerHTML =  parseInt(prodCounter)
   for (var i=0;i<localStorage.length;i++)
   {
@@ -106,9 +109,12 @@ function AddToCart() {
     //sillä alkavat arvot lisätään tilaus laatikkoon.
     if (localStorage.key(i).includes("orderrow"))
     {
-      document.getElementById("orderDetails").innerText=localStorage.getItem(localStorage.key(i)) 
+      prod.push(localStorage.getItem(localStorage.key(i)))
+      document.getElementById("orderDetails").innerText+=prod
+      console.log(prod)
     }
   }
+
   /*
   var productsFromStorage = Object.values(localStorage);
   document.getElementById("orderDetails").innerText=productsFromStorage*/

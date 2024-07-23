@@ -78,11 +78,12 @@
         </table>
         <form action="/ban-form/" method="post">
             {% csrf_token %}
-            <label for="useMasking">Use Jquery masking in format 000.000.00.00</label>
-            <input type="checkbox" id="useMasking" onchange="masking('000.000.00.00')"><br>
-            <label for="useMasking2">Use Jquery masking in format 000.00.00.000</label>
-            <input type="checkbox" id="useMasking2" onchange="masking('000.00.00.000')"><br>
-            <br>
+            <select name="format" id="format" onchange="masking(this.value)">
+              <option default>Select format</option>
+              <option value="000.000.00.00">000.000.00.00</option>
+              <option value="000.00.00.000">000.00.00.000</option>
+            </select>
+           
             <input type="text" name="ipadd" id="ipadd" placeholder="Ip-address" onchange="checkIp()">
           
          

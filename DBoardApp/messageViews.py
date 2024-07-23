@@ -143,4 +143,34 @@ def deletePost(request,postid):
       return render(request,'index.html')
 
 
+def filterPost(request):
+    #html-checkboksien value attribuuttien arvot
+    slc = ['title','body','reply']
+    collection = dbname['posts']
+    titles = collection.find({},{'title':1,'postid':1})
+    body = collection.find({},{'body':1,'postid':1})
+    replymsg = collection.find({},{'replymsg':1,'postid':1})
+    sel = request.POST.getlist('selection')
+    print(sel)
+    
+    
+    #checkboksien valinnat, jos valittu cb jonka value on title haetaan otsikot 
+    if sel == ['title']:
+        print('title select')
+        #optionin avulla toteutetaan if/else filtered.html sivulla. sen avulla
+        #näytetään hausta riippuen joko title tai bodytext otsikko
+        return render (request,'filtered.html',{'titles':titles,'option':'1'})
+    #jos valittu cb jonka value on body haetaan bodytext
+    elif sel == ['body']:
+        return render (request,'filtered.html',{'body':body,'option':'2'})
+    elif sel == ['reply']:
+        return render (request,'filtered.html',{'replymsg':replymsg,"option":'3'})
+
+    else:
+        
+      return render(request,'filtered.html')
+    
+         #haetaan vain title kentät
+
+
     
