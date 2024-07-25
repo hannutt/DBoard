@@ -22,12 +22,12 @@
 <body class="loginPage" onload="Check();">
   <h3 class="loginHeader">Log-in Page</h3>
   <center>
-    <p>Visitor count:</p>
-    <p id="times">{{times}}</p>
+    <p hidden>Visitor count:</p>
+    <p hidden id="times">{{times}}</p>
     <br>
-    <p>Ip Address</p>
+    <p hidden>Ip Address</p>
    
-    <p id="ip">{{result}}</p>
+    <p hidden id="ip">{{result}}</p>
     {% for i in result %}
     <p>{{i.ip}}</p>
     {%endfor%}
@@ -84,7 +84,8 @@
       marker: { color: "rgba(50, 168, 145)" }
     }];
 
-    const layout = { title: "Visits on page" };
+    const layout = { title: "Visits on page", plot_bgcolor:"lightblue",
+    paper_bgcolor:"lightblue"};
 
     Plotly.newPlot("Plot", data, layout);
 
@@ -98,10 +99,10 @@
     <img id="lock" src="/static/lock.png" width="40" height="40"><br>-->
 
 
-    <br>
+    <br><br>
     <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
   </form>
-  <button id="showpsw" onclick="showPsw()" style=" position:relative; left:390px; top:-61px;"><i
+  <button id="showpsw" class="showpsw" onclick="showPsw()"><i
       class="fa-solid fa-eye"></i></button>
       <script>
         //banned funktion kutsu rivillä 156, funktio suoritetaan aina sivun latautuessa (window.onload = Banned;)

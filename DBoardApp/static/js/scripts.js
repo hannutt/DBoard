@@ -19,7 +19,8 @@ function verticalBar(visits, cb) {
       marker: { color: "rgba(50, 168, 145)" }
     }];
 
-    const layout = { title: "Visits on page" };
+    const layout = { title: "Visits on page",plot_bgcolor:"lightblue",
+      paper_bgcolor:"lightblue"}; 
 
     Plotly.newPlot("Plot", data, layout);
 
@@ -31,7 +32,7 @@ function verticalBar(visits, cb) {
   }
 }
 
-function horizontalBar(visits,cb) {
+function horizontalBar(visits) {
   
   console.log(cb.checked)
   console.log(visits)
@@ -52,7 +53,8 @@ function horizontalBar(visits,cb) {
     marker: { color: "rgba(50, 168, 145)" }
   }];
 
-  const layout = { title: "Visits on page" };
+  const layout = { title: "Visits on page" ,plot_bgcolor:"lightblue",
+    paper_bgcolor:"lightblue"};
 
   Plotly.newPlot("Plot", data, layout);
 
