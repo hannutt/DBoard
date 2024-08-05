@@ -3,7 +3,12 @@ Python Django and JavaScript Webshop & Discussion Board application with Bootstr
 
 Project keywords: Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
 
+Start view
 ![alt text](DBoard.png)
+
+
+Overview of the discussion board and its user interface.
+![alt text](DboardUI.png)
 
 MAIN FEATURES:
 
