@@ -19,15 +19,17 @@
 
 </head>
 
-<body onload="getProductCounter();DoBtnClick()" style="background-image: url(/static/BGPic.jpg);">
+<body onload="getProductCounter();DoBtnClick();" style="background-image: url(/static/images/BGPic.jpg);">
   <h2>Webshop</h2>
   <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
+ 
   <form action="/back-to-shop/" method="post">
     
-    <button class="btn btn-primary" id="gobackShop">Go back to shop</button>
+    <button class="btn btn-info" id="gobackShop">Go back to shop</button>
+    
 
     {% csrf_token %}
   </form>
@@ -53,19 +55,20 @@
   </form>
   </div>
 
-
+<br>
   <div class="ourProducts" id="ourProducts">
 
     <p id="prodCheck" class="prodCheck"><i class="fa-solid fa-hand-point-right"></i>Check our products <i
         class="fa-solid fa-hand-point-left"></i></p>
   </div>
   <div class="prods" id="prods" style="display: none" ;>
-    <p><--Large font Medium font--></p>
+    <p>Change the font size of the product card with the switch below</p>
     <div class="form-check form-switch" style="width: 25px; height: 25px;">
 
-      <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange(document.getElementById('Prodcard'),document.getElementById('toggleSwitch'))">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Change font size</label>
+      <input class="form-check-input" style="background-color: #1ddecb;" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange(document.getElementById('Prodcard'),document.getElementById('toggleSwitch'))">
+      <label class="form-check-label" for="flexSwitchCheckDefault"> Medium </label>
     </div>
+    <br>
    
 
   
@@ -102,14 +105,17 @@
     </div>
   </div>
   <div class="ask">
+    <textarea hidden id="ta{{forloop.counter}}"></textarea>
     <!--forloop counterin lisäys id:hin yksilöi jokaisen prodname inputin, joten
     jokaisella klikkauksella saadaan oikea tuotenimi, event parametri surorittaa preventDefaultin
-    js-funktiossa eli tässä tapauksessa estää formin post metodin suorituksen -->
-<button onclick="ask(document.getElementById(`prodName{{forloop.counter}}`).value,event)" class="btn btn-info">?</button>
+    js-funktiossa eli tässä tapauksessa estää formin post metodin suorituksen
+    pid on textarea elementin id-arvo -->
+<button onclick="ask(document.getElementById(`prodName{{forloop.counter}}`).value,document.getElementById(`pID{{forloop.counter}}`).value,event)" class="btn btn-info">?</button>
   </div>
   <input hidden type="text" value="{{p.name}}" id="prodName{{forloop.counter}}" name="prodName">
 
   <input hidden type="text" value="{{p.price}}" id="unitPrice">
+  <input hidden itype="text" value="{{p.productId}}" id="pID{{forloop.counter}}">
 
   <!--for silmukaan sisältyy linkki joissa on jokaisen tuotteen productid parametrina-->
   <button id="sendOrder">
@@ -119,7 +125,6 @@
 
   </button>
 </form>
-</div>
   {%endfor%}
 
 

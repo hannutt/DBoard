@@ -58,9 +58,11 @@
     background-color: aqua;
 }
 .prodCheck {
+    
     font-size: x-large;
     font-family: 'Brush Script MT',cursive;
-    background: gray;
+    background: #14dbdb;
+    
 }
 
 .card-body {

@@ -4,6 +4,8 @@ Project keywords: AI, Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite
 
 This Python Django and JavaScript application simulates two things. An online store that uses artificial intelligence. OpenAI GPT 3.5 chatbot is integrated into the online store, where you can ask for more information about the products.
 
+For security reasons, the chatbot's API key is stored in a local text file and retrieved from there using the JS fetch method.
+
 Another thing that can be simulated is a discussion board that has similar functions to regular Internet discussion boards.
 
 Start view
@@ -12,6 +14,9 @@ Start view
 
 Overview of the discussion board and its user interface.
 ![alt text](DboardUI.png)
+
+Example image of a dynamically created text area element, the content of which is the chatbot's answer to the question, what is killa cold mint extreme?
+![alt text](chatb.png)
 
 MAIN FEATURES:
 
@@ -72,10 +77,11 @@ When the user clicks the submit order button, the Python function receives the p
 
 CHATBOT IN ONLINE STORE
 
-The chatbot uses the GPT 3.5 turbo API provided by OpenAI when answering questions. The code that implements the chatbot's operation is written in JavaScript. Questions are sent to the API as a dictionary object containing the API key, the API URL, and the question asked.
-the answer is retrieved using JavaScript's Fetch method.
+The chatbot uses the GPT 3.5 turbo API provided by OpenAI when answering questions. The code that implements the chatbot's operation is written in JavaScript. Questions are sent to the API as a dictionary object containing the API key, the API URL, and the question asked. The answer is retrieved using JavaScript's Fetch method.
 
-The chatbot feature is still under development, so at the moment the chatbot tells you general information about the product when you click on the question mark next to the product.
+
+The chatbot feature is still under development, so at the moment the chatbot tells you general information about the product when you click on the question mark button next to the product card.
+When the question mark button is pressed, the program creates an html text area element next to the button, where the chatbot's answer is printed
 
 USER AUTHENTICATION:
 
