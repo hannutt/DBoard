@@ -204,3 +204,8 @@
 .userInfo {
     white-space: nowrap;
 }
+
+.ask {
+    position: relative;
+    left:290px;
+}

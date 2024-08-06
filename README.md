@@ -1,7 +1,10 @@
 # DBoard
-Python Django and JavaScript Webshop & Discussion Board application with Bootstrap and Jquery.
 
-Project keywords: Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
+Project keywords: AI, Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
+
+This Python Django and JavaScript application simulates two things. An online store that uses artificial intelligence. OpenAI GPT 3.5 chatbot is integrated into the online store, where you can ask for more information about the products.
+
+Another thing that can be simulated is a discussion board that has similar functions to regular Internet discussion boards.
 
 Start view
 ![alt text](DBoard.png)
@@ -15,54 +18,6 @@ MAIN FEATURES:
 CODE SPLIT 
 
 All Python view codes are in their own .py files and are imported as modules in the original view.py file. The JavaScript code is also split into multiple .js files.
-
-USER AUTHENTICATION:
-
-Log-in and Log-out features. Made with Django Authenticate library.
-
-GRAPHIC VISITOR COUNTER:
-
-Visitor counter with Python and javascript. The Python code counts the visits and the javascript code displays the number graphically using the PlotlyJS library. Visitor counting takes place every time the homepage is reloaded. The LoginView function always updates the variable with +1 when calling the function and sends the value of the variable to the html page. then a javaScript function grabs the variable and passes it to PlotlyJS, which makes a graph of the number of visits.
-The direction of the bar chart can be changed between horizontal and vertical using the check box
-
-DISCUSSION BOARD
-
-Simulates an online discussion board. You can post a new thread, reply to an existing message,delete the messages and like messages. Each message sent has a Mongo table in the collection where the responses are stored. This way, the topic and its answers can be clearly seen.
-The conversation text can be translated into different languages. this is done using the Google Translate API. Messages are stored to the MongoDB NoSQL database.
-
-All posts are wrapped in the Bootstrap 5 accordion/collapse element, so you can close or open posts.
-
-TEXT FILTERING IN DISCUSSION BOARD
-
-Bootstrap 5's html checkboxes allow you to choose whether to display only the message title, body, or message replies This works with Python and JavaScript functions. 
-Checkboxes have an onclick method, which calls a JavaScript function that receives information about the option selected by the user as a parameter.
-
-The Python function retrieves the user's selection using the request.post.getlist method and makes a new database query with the selected option. The search results are displayed in the html table element.
-
-
-In the show reply message option, extra characters are automatically cleaned up by a JavaScript function that includes a replace method. The function is called in the body tag of the html page with the load event.
-the extra characters are because the response messages are stored in a MongoDB array, they show the extra characters when you fetch the results to see them.
-
-MESSAGE STATISTICS
-
-See the number of deleted and posted messages, as well as the date of the last deletion and the date of the most recent message. The number of sent and deleted messages is also shown in the bar graphs.
-values ​​are stored in own Mongo collections from which they are retrieved with Python code.
-
-TEXT CENSORSHIP ON THE DISCUSSION BOARD
-
-You can hide forum texts with administrator credentials. The JavaScript function runs automatically and checks if an administrator is logged in. if so, the jQuery function becomes available. With the jquery function, you can hide the texts by double-clicking
-
-IP-ADDRESS BLOCKING
-
-save the IP address you want to block in the database. Initially, the Python function determines the user's IP address using a websocket. Then the function checks if the address is in the database. If the address is found, the javaScript function blocks the login option.
-
-The banned ip addresses are displayed in the table element and the user can show and hide the table using Jquery show/hide methods. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. this is made with JS date objects and getTime methods.
-
-When you enter an IP address to block, you can add dots automatically using the Jquery Mask plugin.
-The feature is for addresses in the format 000.000.00.00 and 000.00.00.000, which are two common formats for IP addresses.
-
-The feature can be activated by selecting the desired format from the drop-down menu. 
-the menu uses the onchange and this methods, which call a standard JavaScript function that receives the selected format as a parameter. The function contains the Jquery mask plugin and the definition of the input field where the property is used.
 
 WEBSHOP
 
@@ -114,6 +69,62 @@ REAL-TIME INVERTORY BALANCE UPDATING
 
 Like real-world online stores, this app reduces inventory of ordered products in real-time.
 When the user clicks the submit order button, the Python function receives the product ID and order quantity along with the order information. then the function decrements the value of the order collection's inventory field using the $inc method by converting the user-supplied number to a negative number and updates it using the update_one method.
+
+CHATBOT IN ONLINE STORE
+
+The chatbot uses the GPT 3.5 turbo API provided by OpenAI when answering questions. The code that implements the chatbot's operation is written in JavaScript. Questions are sent to the API as a dictionary object containing the API key, the API URL, and the question asked.
+the answer is retrieved using JavaScript's Fetch method.
+
+The chatbot feature is still under development, so at the moment the chatbot tells you general information about the product when you click on the question mark next to the product.
+
+USER AUTHENTICATION:
+
+Log-in and Log-out features. Made with Django Authenticate library.
+
+GRAPHIC VISITOR COUNTER:
+
+Visitor counter with Python and javascript. The Python code counts the visits and the javascript code displays the number graphically using the PlotlyJS library. Visitor counting takes place every time the homepage is reloaded. The LoginView function always updates the variable with +1 when calling the function and sends the value of the variable to the html page. then a javaScript function grabs the variable and passes it to PlotlyJS, which makes a graph of the number of visits.
+The direction of the bar chart can be changed between horizontal and vertical using the check box
+
+DISCUSSION BOARD
+
+Simulates an online discussion board. You can post a new thread, reply to an existing message,delete the messages and like messages. Each message sent has a Mongo table in the collection where the responses are stored. This way, the topic and its answers can be clearly seen.
+The conversation text can be translated into different languages. this is done using the Google Translate API. Messages are stored to the MongoDB NoSQL database.
+
+All posts are wrapped in the Bootstrap 5 accordion/collapse element, so you can close or open posts.
+
+TEXT FILTERING IN DISCUSSION BOARD
+
+Bootstrap 5's html checkboxes allow you to choose whether to display only the message title, body, or message replies This works with Python and JavaScript functions. 
+Checkboxes have an onclick method, which calls a JavaScript function that receives information about the option selected by the user as a parameter.
+
+The Python function retrieves the user's selection using the request.post.getlist method and makes a new database query with the selected option. The search results are displayed in the html table element.
+
+
+In the show reply message option, extra characters are automatically cleaned up by a JavaScript function that includes a replace method. The function is called in the body tag of the html page with the load event.
+the extra characters are because the response messages are stored in a MongoDB array, they show the extra characters when you fetch the results to see them.
+
+MESSAGE STATISTICS
+
+See the number of deleted and posted messages, as well as the date of the last deletion and the date of the most recent message. The number of sent and deleted messages is also shown in the bar graphs.
+values ​​are stored in own Mongo collections from which they are retrieved with Python code.
+
+TEXT CENSORSHIP ON THE DISCUSSION BOARD
+
+You can hide forum texts with administrator credentials. The JavaScript function runs automatically and checks if an administrator is logged in. if so, the jQuery function becomes available. With the jquery function, you can hide the texts by double-clicking
+
+IP-ADDRESS BLOCKING
+
+save the IP address you want to block in the database. Initially, the Python function determines the user's IP address using a websocket. Then the function checks if the address is in the database. If the address is found, the javaScript function blocks the login option.
+
+The banned ip addresses are displayed in the table element and the user can show and hide the table using Jquery show/hide methods. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. The page also has a JavaScript function that automatically counts how many days each IP address in the list has been blocked. this is made with JS date objects and getTime methods.
+
+When you enter an IP address to block, you can add dots automatically using the Jquery Mask plugin.
+The feature is for addresses in the format 000.000.00.00 and 000.00.00.000, which are two common formats for IP addresses.
+
+The feature can be activated by selecting the desired format from the drop-down menu. 
+the menu uses the onchange and this methods, which call a standard JavaScript function that receives the selected format as a parameter. The function contains the Jquery mask plugin and the definition of the input field where the property is used.
+
 
 
 
