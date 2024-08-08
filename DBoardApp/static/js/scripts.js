@@ -90,6 +90,13 @@ function CheckId() {   //haetaan käyttäjän syöttämä arvo
     alert("id already used")
   }
 }
+function visitors() {
+  var visits = document.getElementById("webshopvisitor").innerHTML
+  var visitrep = visits.replace("{","").replace("}","")
+  var visitInt = parseInt(visitrep)
+  console.log(visits)
+  
+}
 
 function showModal() {
   document.getElementById("modalBtn").click()

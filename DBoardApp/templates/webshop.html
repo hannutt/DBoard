@@ -21,6 +21,8 @@
 
 <body onload="getProductCounter();DoBtnClick();" style="background-image: url(/static/images/BGPic.jpg);">
   <h2>Webshop</h2>
+   <p id= "webshopvisitor">{{count}}</p>
+  
   <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
@@ -256,7 +258,7 @@
 
     <br>
  <!-- Button trigger modal -->
-<button hidden type="button" id="modalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button  type="button" id="modalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Launch static backdrop modal
 </button>
 
@@ -272,7 +274,7 @@
         ARE YOU 18 OR OLDER?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-secondary" onclick="ageVerified()" data-bs-dismiss="modal">Yes</button>
         <!--buttoni palauttaa käyttäjän etusivulle--->
         <a href="/" class="btn btn-primary">No</a>
       </div>

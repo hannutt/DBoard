@@ -41,6 +41,8 @@ status = 'True'
 times = 0
 amount = 0
 
+webshopCount=0
+
       
     
 def editProduct(request,productId):
@@ -80,13 +82,17 @@ def backToWebShop(request):
     return redirect (webshop)
 
 def webshop(request):
+    global webshopCount
+    webshopCount=webshopCount+1
     collection = dbname['products']
+    count={webshopCount}
+
     
     
     #maxId = collection.find().sort({'productId':-1}).limit(1)
     prods = collection.find()
     #print(maxId)
-    return render(request,'webshop.html',{'prods':prods})
+    return render(request,'webshop.html',{'prods':prods,'count':count})
 
 def webshopAdmin(request):
    
@@ -98,15 +104,26 @@ def webshopAdmin(request):
 
 
 def productSelection(request,productId):
-    qty=request.POST['amount']
-    qtyList.append(qty)
-    prodIdList.append(productId)
-    collection = dbname['products']
-    data = collection.find({'productId':productId})
-    orders = dbname['order']
-    prods = collection.find()
-    orderData = orders.find()
-    print(qty)
+    if productId==0:
+
+        #qty=request.POST['amount']
+        #qtyList.append(qty)
+        prodIdList.append(productId)
+        collection = dbname['products']
+        data = collection.find({'productId':productId})
+        orders = dbname['order']
+        prods = collection.find()
+        orderData = orders.find()
+    else:
+        qty=request.POST['amount']
+        qtyList.append(qty)
+        prodIdList.append(productId)
+        collection = dbname['products']
+        data = collection.find({'productId':productId})
+        orders = dbname['order']
+        prods = collection.find()
+        orderData = orders.find()
+
     
     #mongodb lauseke jossa kerrotaan amount ja multiply kenttien arvot keskenään
     #total = orders.aggregate([{'$project':{'total':{'$multiply':['$amount','$unitPrice']}}}])

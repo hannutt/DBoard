@@ -1,3 +1,4 @@
+
 function getQty() {
   var qty = localStorage.getItem("qty")
   document.getElementById("qty").value=qty
