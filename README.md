@@ -116,6 +116,8 @@ Only an administrator can delete messages. when the forum page is loaded, the Ja
 
 The total value of the for loop is used in the javascript function to tell how many buttons to hide. below is a screenshot to clarify the idea.
 
+The buttons are hidden if the logged in user is someone other than the system administrator. the username of the logged in user is sent to the top of the page using a Python function and the javaScript function retrieves this value.
+
 ![alt text](forloop.png)
 
 
