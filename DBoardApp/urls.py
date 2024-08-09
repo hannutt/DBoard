@@ -12,6 +12,7 @@ urlpatterns = [
     path("",loginViews.loginView,name='loginView'),
     path('login-form/',loginViews.login_user,name='login_user'),
     path('logout/',loginViews.logout_user),
+    path('',loginViews.loginView),
     path("index/",loginViews.FrontPage),
     path('banIps/',BanViews.BanPage),
     path('ban-form/',BanViews.SaveBannedIp),

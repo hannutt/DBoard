@@ -110,6 +110,16 @@ The Python function retrieves the user's selection using the request.post.getlis
 In the show reply message option, extra characters are automatically cleaned up by a JavaScript function that includes a replace method. The function is called in the body tag of the html page with the load event.
 the extra characters are because the response messages are stored in a MongoDB array, they show the extra characters when you fetch the results to see them.
 
+USER RESTRICTIONS
+
+Only an administrator can delete messages. when the forum page is loaded, the JavaScript function gets the Django forloop.counter.last value. This is because delete buttons are created for a loop and each button's ID is deleteBtn and the current value of forloop.counter.
+
+The total value of the for loop is used in the javascript function to tell how many buttons to hide. below is a screenshot to clarify the idea.
+
+![alt text](forloop.png)
+
+
+
 MESSAGE STATISTICS
 
 See the number of deleted and posted messages, as well as the date of the last deletion and the date of the most recent message. The number of sent and deleted messages is also shown in the bar graphs.

@@ -100,6 +100,9 @@
     <br><br>
     <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
   </form>
+  <span class="regbtn">
+  <button class="btn btn-warning" id="loginBtn" type="submit" value="Login">Register</button>
+</span>
   <button id="showpsw" class="showpsw" onclick="showPsw()"><i
       class="fa-solid fa-eye"></i></button>
       <script>
@@ -136,7 +139,7 @@
 
 
   
-  <p>Login status: {{user}} {{info}}</p>
+  <p><b>Login status: {{info}}</b></p>
   <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
   <br><br>
   <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
@@ -155,7 +158,9 @@
 
   <form action="/logout/" method="post">
     {% csrf_token %}
-    <input type="submit" value="Logout">
+    <span class="logout">
+    <button class="btn btn-danger">Logout</button>
+  </span>
   </form>
   <script>
 

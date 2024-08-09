@@ -43,6 +43,14 @@
  
 </form>
 
+<form action="/" method="post">
+  {% csrf_token %}
+  <div class="toIndexPageBtn">
+    <button class="btn btn-primary">Front page (stay log-in)</button>
+  </div>
+ 
+</form>
+
 <center>
 <h3>DISCUSSION BOARD</h3>
 </center>
@@ -106,18 +114,11 @@
             {% csrf_token %}
             
             <input hidden name="deletePostId" value="{{d.postid}}">
-            <button class="btn btn-danger">X</button>
+            <button id="deleteBtn{{forloop.counter}}" class="btn btn-danger">X</button>
           </form>
          
           <!--font awesome ikoni + tykkäysten määrä-->
-
-
-
-
         </button>
-
-
-
       </h2>
 
       <div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse show"
@@ -131,13 +132,17 @@
             <strong>{{d.body}}<br>
           </p>
          
-
+            
           <p id="reply{{forloop.counter}}" class="reply">
-            Reply: {{d.replymsg}}
+            Reply: {{d.replymsg}} 
+            
             <!--jos viimeinen forloopin luku, asetetan se lastreply p-tagiin-->
             {% if forloop.last %}
             <p id="lastReply">{{forloop.counter}}</p>
             {%endif%}
+            <script>
+            isAdmin(document.getElementById("lastReply").innerHTML)
+          </script>
 
             
           </p>
@@ -246,15 +251,6 @@
     </div>
   </div>
   {%endfor%}
-
-  <script>
-  
-    isAdmin()
-
-
-
-  </script>
-  
 
   <p class="d-inline-flex gap-1">
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#NewPost" role="button" aria-expanded="false"

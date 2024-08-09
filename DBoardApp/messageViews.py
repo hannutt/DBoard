@@ -165,12 +165,11 @@ def filterPost(request):
         return render (request,'filtered.html',{'body':body,'option':'2'})
     elif sel == ['reply']:
         return render (request,'filtered.html',{'replymsg':replymsg,"option":'3'})
-
     else:
-        
       return render(request,'filtered.html')
     
          #haetaan vain title kentät
+
 
 
     

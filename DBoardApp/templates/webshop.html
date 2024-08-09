@@ -163,7 +163,7 @@
         document.getElementById("setBtn").click()
       }
     </script>
-    <button id="setBtn" onclick="setAmount()">set</button>
+    <button hidden id="setBtn" onclick="setAmount()">set</button>
 
 
     <table border="1px solid black">
@@ -212,7 +212,7 @@
 
     <form action="/save-order/" method="post">
       <input hidden type="text" name="prodid" value="{{productId}}">
-      <input  id="qty" type="text" name="qty" value="">
+      <input hidden  id="qty" type="text" name="qty" value="">
       <script>
         getQty()
       </script>

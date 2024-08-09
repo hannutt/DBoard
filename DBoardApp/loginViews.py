@@ -66,7 +66,6 @@ def login_user(request):
         #return render (request,'login.html',context)
         return redirect(FrontPage)
      if not user:
-         print("error")
          return render(request,'loginerror.html')
 
 #uloskirjaus
@@ -78,29 +77,40 @@ def logout_user(request):
     return redirect (loginView)
 
 
+def goToFrontPage(request):
+    loginfo = "[logged in]"
+    context = {'info':loginfo}
+    #tämän avulla pysytään kirjautuneena.
+    login(request,user)
+    return render(request,'login.html',context)
+
+
 
 
 def FrontPage(request):
+   
      #kirjautumisen tarkastus, jos käyttäjä ei ole kirjautunut näytetään login.html sivu
      if not request.user.is_authenticated:
-        return render(request,'login.html')
+        return redirect(loginView)
      else:
-         
-      
-      collection = dbname['posts']
-      col2 = dbname['reply']
- 
+
+      postCollection = dbname['posts']
+      #replyCol = dbname['reply']
+
+     
       col4 = dbname['deleted']
     #talletetaan data muuttujaan DBBoard tietokannan post collectionin kaikki tieto
-      data=collection.find()
+      data=postCollection.find()
     #satunnaisluku?
-      replydata = col2.find()
+      #replydata = replyCol.find()
     #näytetään vain ne tietueet, joissa on replymsg kenttä.
-      replymessage = collection.find({'replymsg':{'$exists':'true'}})
+      replymessage = postCollection.find({'replymsg':{'$exists':'true'}})
+      replies = postCollection.find({},{'replymsg':1,'_id':0})
+      for r in replies:
+          print(len(r))
       #isZero = collection.find({"likes":{"$exists":"true"}})
-      
       deleted = col4.find()
       posted =  col4.find({'_id':2})
      
-      return render(request,'index.html',{"data":data,"reply1":replydata,'deleted':deleted,'posted':posted,'replymessage':replymessage,'user':user})
+      return render(request,'index.html',{"data":data,'deleted':deleted,'posted':posted,'user':user})
 

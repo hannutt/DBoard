@@ -211,3 +211,14 @@
     position: relative;
     left:290px;
 }
+
+.regbtn {
+    position: absolute;
+    left: 1230px;
+    top:40px;
+}
+.logout {
+    position: absolute;
+    left: 1130px;
+    top:40px;
+}

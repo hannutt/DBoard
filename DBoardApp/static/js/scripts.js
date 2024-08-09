@@ -142,7 +142,7 @@ function prettyText(prettyTextCB,lastreply) {
     for (var i = 1; i <= lastInt; i++) {
       var original = document.getElementById("reply"+i).innerHTML
       var reply = document.getElementById("reply" + i).innerHTML
-      document.getElementById("reply" + i).innerHTML = reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace(" },", "").replace("[{", "").replace("'}", "").replace('replymsg','').replace('replymsg','')
+      document.getElementById("reply" + i).innerHTML = reply.replace("{", "").replace("]", "").replace("'}", "").replace("[", "").replace("]}", "").replace("[{", "").replace("},", "").replace("[{", "").replace("'}", "").replace('replymsg','').replace('replymsg','').replace(":","").replace(":","")
 
 
     }
