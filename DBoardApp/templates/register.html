@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="{%static 'styles.css' %}">
+        <title>Register</title>
+    </head>
+    <body>
+        <h4>Register as a user</h4>
+        <p>Send a registration request using this form to the administrator.</p>
+        <form action="/send-mail/" method="post">
+          {% csrf_token %}
+          <!--
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" placeholder="Username"><br>-->
+            <label for="password">Email:</label><br>
+            <input type="text" id="email" name="email" onchange="checkEmails()" placeholder="email"><br><br>
+            <label for="password">Email again:</label><br>
+            <input type="text" id="emailAgain" name="emailAgain" onchange="checkEmails()" placeholder="email again"><br><br>
+            <textarea name="reason" id="reason" placeholder="why you want to become a user?" onchange="checkEmails()"></textarea>
+            <input type="submit" name="sendBtn" id="sendBtn" value="Submit" disabled>
+          </form>
+          <script>
+            //checkemails on onchange eventinä 3 input kentässä, eli se tarkistaa että emailit täsmää
+            //eikä textarea ole tyhjä. jos nämä ehdot täyttyy, niin sendbtn disablointi poistuu
+            function checkEmails() {
+                var reason=document.getElementById("reason").value
+                console.log(reason)
+                var email=document.getElementById("email").value
+                var emailAgain = document.getElementById("emailAgain").value
+                if (email===emailAgain && reason !='')
+                {   document.getElementById("sendBtn").disabled=false
+                    document.getElementById("okText").hidden=false
+                    $("div").animate({left: '250px'});
+        
+                }
+            }
+          </script>
+       
+          <div style="position: absolute;">
+            <p id="okText" class="okText" hidden>Emails OK!</p>
+          </div>
+
+    </body>
+</html>

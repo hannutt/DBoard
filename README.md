@@ -87,6 +87,17 @@ USER AUTHENTICATION:
 
 Log-in and Log-out features. Made with Django Authenticate library.
 
+NEW USER REGISTRATION 
+
+Unlike normal registration on most sites, in this program the user enters the email address in the html input field and clicks the submit button.
+
+when the button is pressed, two python functions are executed. the first function retrieves the admin's email address from the sqlite 3 database and returns it to the second function, which in turn sends an email to the administrator informing them of the new user's willingness to register.
+
+The idea is that the administrator can control the number of new users and, if desired, create a username and password and send them to the e-mail address provided by the user.
+
+Email is sent using Python smtplib, mime libraries and Yahoo Mail mail server.
+The identification information needed by Yahoo email is stored in a local environment variable for security reasons and delivered to the Python function using the os.getenv method.
+
 GRAPHIC VISITOR COUNTER:
 
 Visitor counter with Python and javascript. The Python code counts the visits and the javascript code displays the number graphically using the PlotlyJS library. Visitor counting takes place every time the homepage is reloaded. The LoginView function always updates the variable with +1 when calling the function and sends the value of the variable to the html page. then a javaScript function grabs the variable and passes it to PlotlyJS, which makes a graph of the number of visits.

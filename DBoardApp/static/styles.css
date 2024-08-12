@@ -222,3 +222,8 @@
     left: 1130px;
     top:40px;
 }
+
+.okText {
+    font-weight: bold;
+    background-color: green;
+}

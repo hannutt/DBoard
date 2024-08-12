@@ -4,6 +4,7 @@ from DBoardApp import loginViews
 from DBoardApp import messageViews
 from DBoardApp import BanViews
 from DBoardApp import AdminViews
+from DBoardApp import registerViews
 from .views import saveCsv,webshop,productSelection,saveOrderToDb,discount,webshopAdmin,editProduct,updateProd,\
 backToWebShop
 
@@ -43,6 +44,8 @@ urlpatterns = [
     #path('edit-product/<int:productId>/',editProduct)
     path('back-to-shop/',backToWebShop),
     path('post-delete-product-send/<int:productId>/',AdminViews.deleteProduct),
-    path('mark-delivered/',AdminViews.delivered)
+    path('mark-delivered/',AdminViews.delivered),
+    path('register/',registerViews.showRegisteringPage),
+    path("send-mail/",registerViews.sendEmail)
    
 ]

@@ -100,9 +100,12 @@
     <br><br>
     <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
   </form>
+  <form action="/register/" method="post">
+    {% csrf_token %}
   <span class="regbtn">
   <button class="btn btn-warning" id="loginBtn" type="submit" value="Login">Register</button>
 </span>
+</form>
   <button id="showpsw" class="showpsw" onclick="showPsw()"><i
       class="fa-solid fa-eye"></i></button>
       <script>
