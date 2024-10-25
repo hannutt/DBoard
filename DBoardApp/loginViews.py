@@ -29,16 +29,19 @@ def loginView(request):
      global times
      times +=1
      loginfo = "[Not logged in]"
+     #laitenimi
      hostname = socket.gethostname()
+     #ip-osoite
      ip = socket.gethostbyname(hostname)
      #ip = '192.90.45.73'
      #ltarkastetaan onko ip-osoite bannattu, eli löytyykö se kannasta
      isIpExist = collection.count_documents({"ip":ip})
+     isDeviceExist=collection.count_documents({"deviceName":hostname})
      print(isIpExist)
      print(hostname)
      #existIp=mycol.find({"ip": ip},{'_id':0}).count()
      #jos ip-osoite löytyy
-     if isIpExist == 1:
+     if isIpExist == 1 or isDeviceExist==1:
         result='banned!' 
         context = {'info':loginfo,'status':status,'times':times,'result':result}
      else:

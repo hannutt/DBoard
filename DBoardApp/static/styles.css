@@ -239,3 +239,13 @@
     width: 25%;
     border-radius: 10px;
 }
+.deviceNameDiv {
+    position:absolute;
+    left:410px;
+    top:60px;
+}
+.deviceInput {
+    position: relative;
+    left:450px;
+    top:-380px;
+}

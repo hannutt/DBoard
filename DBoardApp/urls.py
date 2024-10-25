@@ -18,7 +18,7 @@ urlpatterns = [
     path('banIps/',BanViews.BanPage),
     path('ban-form/',BanViews.SaveBannedIp),
     path('del-ban/',BanViews.DeleteFromBan),
-    #path('img-form/',DBimages),
+    path('ban-device/',BanViews.saveDeviceName),
     #html-lomake ja funtio yhdistetään toisiinsa näin
     path('post-Reply/',messageViews.postReply),
     path('post-New/',messageViews.postNew),

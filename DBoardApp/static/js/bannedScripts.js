@@ -14,11 +14,6 @@ function masking(maskFormat)
     //unmask poistaa input kentästä mask kaavan, eli pistettä ei tule enää automaattisesti
    // 
 }
-   
-
-
-
-
 function getBanDate() {
     var Primarytable = document.getElementById("table")
     var sencondaryTable = document.getElementById("tableDays")
@@ -117,7 +112,20 @@ function getBanDate() {
             }
         }
 
-      function maskingTest(val) {
-        console.log(val)
+
+      function createInputs() {
+        var cb = document.getElementById("deviceName")
+       // const deviceinput = document.createElement("INPUT")
+       // deviceinput.id="device"
+        if (cb.checked==true)
+        {
+          document.getElementById("deviceInput").hidden=false
+       
+        }
+        else {
+          //remove metodi tarvii id:n että se toimii.
+          document.getElementById("deviceInput").hidden=true
+        }
+
       }
         

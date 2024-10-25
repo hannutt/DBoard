@@ -12,6 +12,7 @@
       
       
       
+      
       {% endblock %}
         <title>
 
@@ -23,22 +24,22 @@
               border:1px solid black;
             }
             </style>
-        <h2>Ban Ip-address</h2>
-        <!--counter arvo tuoaan views.py funktiosta ja näytetään tässä-->
+        <h2>Ban Ip-address or Devices</h2>
+        <!--counter arvo tuoaan views.py funktiosta ja näytetään tässä
         <p>Addressed total:</p>
-        <p id="counter">{{counter}}</p>
+        <p id="counter">{{counter}}</p>-->
         <p id="checker"></p>
         <p id="days"></p>
         {%for r in result%}
         <table id="table" class="primaryTable">
-            <tr>
-              <th>IP-address</th>
+            <tr> 
+              <th>IP-address or Device name</th>
               <th>Banned since</th>
               
               
             </tr>
             <tr>
-              <td>{{r.ip}}</td>
+              <td>{{r.ip}} {{r.deviceName}}</td>
               <form action="/del-ban/" method="post">
               <input hidden type="text" name="ip" value="{{r.ip}}">
               {%if r.BanDate == None %}
@@ -50,15 +51,24 @@
                 {% csrf_token %}
               <td><button type="submit">X</button></td>
             </form>
-            
-              
-             
             </tr>
          
           </table>
         
         {%endfor%}
-      
+
+        <div class="deviceNameDiv">
+          <form action="/ban-device/" method="post">
+            {% csrf_token %}
+        <label for="deviceName"><b>Ban using Device Name</b></label>
+        
+        <input type="checkbox" id="deviceName" onchange="createInputs()">
+        <br><br>
+        <input type="text" id="deviceInput" name="deviceInput" hidden>
+        <br><br>
+        <button type="submit" class="btn btn-warning">Ban Device  <i class="fa-solid fa-ban"></i></button>
+      </form>
+      </div>      
         <p id="bannedDays" class="bannedDays">Double-click this to see Banned days</p>
         <script>
           //jquery taulukon näyttöön,piilottamiseen ja teksti vaihtoon
@@ -89,7 +99,7 @@
          
             <br><br>
            
-            <Button type="submit">Ban
+            <Button type="submit">Ban IP
               <i class="fa-solid fa-ban"></i>
             </Button>
           </form>

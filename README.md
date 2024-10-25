@@ -26,6 +26,10 @@ Example picture where the user has clicked on the first question. clicking on th
 
 ![alt text](DBoardApp/static/images/webshopAI.png)
 
+An example picture of the banning page, where the user can view banned addresses and devices, add new ones or delete banned addresses and devices. If a prohibited address or device is found in the data, the user cannot log in to the service.
+
+![alt text](DBoardApp/static/images/banned.png)
+
 MAIN FEATURES:
 
 CODE SPLIT 
@@ -160,6 +164,12 @@ The feature is for addresses in the format 000.000.00.00 and 000.00.00.000, whic
 
 The feature can be activated by selecting the desired format from the drop-down menu. 
 the menu uses the onchange and this methods, which call a standard JavaScript function that receives the selected format as a parameter. The function contains the Jquery mask plugin and the definition of the input field where the property is used.
+
+BAN BY DEVICE NAME
+
+The ban can also be made with the name of the device. It works almost the same as denying an IP address. After the home page is loaded, the Python function uses the socket.gethostname method to get the device name. Then the function checks the database and if the device name is found in the database, the login button is disabled.
+
+
 
 
 
