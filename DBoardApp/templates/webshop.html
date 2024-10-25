@@ -83,17 +83,20 @@
     <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">
       <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
       {% if p.instock < 5 %} <div class="card-header"
-        style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}
+        style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img class="productPicture" src="/static/images/box50px.png" height="30">
     </div>
     {%else%}
     <div class="card-header"
-      style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}</div>
+      style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img class="productPicture" src="/static/images/box50px.png" height="30">
+    </div>
     {%endif%}
     <div class="card-body">
       <h5 id="Prodcard" class="card-title" style="font-size: large;
                       font-family: 'Brush Script MT',cursive;"><p hidden>{{p.productId}}</p> Price: {{p.price}} €/can inStock:
         {{p.instock}} pcs</h5>
+        
       <p class="card-text"></p>
+     
       <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength(8)">8 MG
       <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength(16)">16 MG
 
@@ -107,12 +110,29 @@
     </div>
   </div>
   <div class="ask">
-    <textarea hidden id="ta{{forloop.counter}}"></textarea>
+    <div class="questions" id="questions{{forloop.counter}}" hidden>
+      <h4>Ask an AI</h4>
+      <p id="question{{forloop.counter}}">What is this product?</p>
+      <p id="question{{forloop.counter}}">Is this product unhealthy?</p>
+    </div>
+    <script>
+      //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
+      jQuery("#question{{forloop.counter}}").click(function () {
+        event.preventDefault();
+        var text = jQuery(this).text();
+        askFromBot(text)
+      });
+    
+    </script>
+    
     <!--forloop counterin lisäys id:hin yksilöi jokaisen prodname inputin, joten
-    jokaisella klikkauksella saadaan oikea tuotenimi, event parametri surorittaa preventDefaultin
+    jokaisella klikkauksella saadaan oikea tuotenimi, event parametri suorittaa preventDefaultin
     js-funktiossa eli tässä tapauksessa estää formin post metodin suorituksen
     pid on textarea elementin id-arvo -->
+    <button onclick="showQuestions(document.getElementById(`pID{{forloop.counter}}`).value,event)"class="btn btn-info">?</button>
+    <!--
 <button onclick="ask(document.getElementById(`prodName{{forloop.counter}}`).value,document.getElementById(`pID{{forloop.counter}}`).value,event)" class="btn btn-info">?</button>
+  -->
   </div>
   <input hidden type="text" value="{{p.name}}" id="prodName{{forloop.counter}}" name="prodName">
 
@@ -257,30 +277,6 @@
 
 
     <br>
- <!-- Button trigger modal -->
-<button  type="button" id="modalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Age verify</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ARE YOU 18 OR OLDER?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="ageVerified()" data-bs-dismiss="modal">Yes</button>
-        <!--buttoni palauttaa käyttäjän etusivulle--->
-        <a href="/" class="btn btn-primary">No</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 </body>
 

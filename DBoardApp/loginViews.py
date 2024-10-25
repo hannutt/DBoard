@@ -35,6 +35,7 @@ def loginView(request):
      #ltarkastetaan onko ip-osoite bannattu, eli löytyykö se kannasta
      isIpExist = collection.count_documents({"ip":ip})
      print(isIpExist)
+     print(hostname)
      #existIp=mycol.find({"ip": ip},{'_id':0}).count()
      #jos ip-osoite löytyy
      if isIpExist == 1:

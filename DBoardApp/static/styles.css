@@ -186,8 +186,9 @@
     font-size: medium;
 }
 .LogoutBtn{
-    position: fixed;
+    position: absolute;
     left:1200px;
+    top:50px;
 }
 .showpsw {
     position:relative; 
@@ -226,4 +227,15 @@
 .okText {
     font-weight: bold;
     background-color: green;
+}
+
+.productPicture{
+   position: absolute;
+   left:253px;
+}
+
+.questions {
+    background-color: lightgray;
+    width: 25%;
+    border-radius: 10px;
 }
