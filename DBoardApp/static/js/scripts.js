@@ -174,5 +174,32 @@ function filterClear(total) {
   }
 
 }
+function voiceLogin() {
+  const recognitionSvc = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+// Instantiate it
+const recognition = new recognitionSvc();
+/* Set the speech recognition to continuous so it keeps listening to whatever you say. This way you can record long texts, conversations and so on. */
+recognition.continuous = true;
+/* Sets the language for speech recognition. It uses IETF tags, ISO 639-1 like en-GB, en-US, es-ES and so on */
+recognition.lang = 'en-GB';
+// Start the speech recognition
+recognition.start();
+recognition.onresult = (event) => { 
+  // iterate through speech recognition results
+  for (const result of event.results) {
+    // Print the transcription to the console
+    console.log(`${result[0].transcript}`);
+    document.getElementById("username").value=`${result[0].transcript}`
+   
+}
+setTimeout(() => {
+  recognition.stop();
+  console.log("stopped")
+  
+}, 10000);  
+}
+}
+
 
 

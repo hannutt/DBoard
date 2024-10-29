@@ -98,6 +98,13 @@ USER AUTHENTICATION:
 
 Log-in and Log-out features. Made with Django Authenticate library.
 
+VOICE-ASSISTED LOGIN (EXPIREMENTAL)
+
+The user can also log in using the computer's microphone. Voice-assisted login is started by clicking the "voice login" button. after clicking, the user has 10 seconds to enter a username. After 10 seconds, the JavaScript timeout function stops speech recognition and adds the recognized phrase to the username input field on the login page. The voice-assisted login feature is made with the JavaScript Web Speech API speech recognition library.
+
+
+
+
 NEW USER REGISTRATION 
 
 Unlike normal registration on most sites, in this program the user enters the email address in the html input field and clicks the submit button.

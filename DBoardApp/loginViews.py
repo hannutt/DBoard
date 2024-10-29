@@ -3,6 +3,8 @@ import socket
 import pymongo
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
+import speech_recognition as sr
+
 global today
 today = date.today()
 global todayStr
