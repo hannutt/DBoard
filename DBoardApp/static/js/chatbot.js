@@ -1,18 +1,7 @@
 
 var API_KEY="";
 // fetch the txt file
-function getApiKey() {
-    fetch("/static/js/apikey.txt")
 
-    .then( r => r.text() )
-    .then( t => {
-
-        API_KEY = t;
-        console.log(API_KEY);
-       
-  } )
-    
-}
 
 //pid saadaan webshop.html kautta, jossa se annetaan parametrina
 //sen avulla avataan klikatun tuotteen kohdassa questions div. divit on nimettu questions + forloopin
@@ -40,10 +29,7 @@ function showQuestions(pid,event) {
 function askFromBot(text)
 {
 
-    if (text==="What is this product?")
-    {
-        var question = 'what are nicotine pouches?'
-    }
+
     const API_URL="https://api.openai.com/v1/chat/completions"
     
 
@@ -55,7 +41,7 @@ function askFromBot(text)
         },
         body:JSON.stringify({
             model:"gpt-3.5-turbo",
-            messages:[{role: "user", content: question}]
+            messages:[{role: "user", content: text}]
         })
 
 
