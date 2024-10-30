@@ -91,7 +91,7 @@
     <p>Currently in discussions</p>
   <p id="changingSubjects"></p>
   <label for="stop">Stop changing</label>
-  <input type="checkbox" id="stop" onclick="stopChanging()">
+  <input type="checkbox" id="stop" onchange="stopChanging()">
 </div>
 </center>
   <br>
@@ -157,15 +157,8 @@
                 empty reply teksti-->
 
           <p>{{postId}}</p>
-
-
         </div>
-
-
-
         <br>
-
-
         <br>
         <p class="d-inline-flex gap-1">
           <a id="" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseReply{{forloop.counter}}"

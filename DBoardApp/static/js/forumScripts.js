@@ -43,6 +43,7 @@ function DoClick() {
 var data=''
 var subjects=[]
 
+//haetaan kaikki otsikot, eli ne joissa id=subject+numero
 function getHeaders() {
   var lastReply = document.getElementById("lastReply").innerHTML
   var lastReplyInt = Number(lastReply) 
@@ -53,12 +54,13 @@ function getHeaders() {
     
   }
   console.log(subjects)
+ 
   return lastReplyInt
 }
 
 //kutsutaan subjectChange funkiota joka 5 sekunti, setinterval talletetaan muuttujaan,
 //että voidaan clearInterval funktiota, joka pysäyttää toiston.
-const interval = setInterval(subjectChange, 5000);
+var interval = setInterval(subjectChange, 5000);
 var j = 0;
 //subject change kasvattaa j:n arvoa yhdellä eli subjects listalta näytetään aina seuraava arvo
 function subjectChange() {
@@ -75,6 +77,23 @@ function subjectChange() {
 
   
 }
+var changeClicks=0
 function stopChanging() {
-  clearInterval(interval);  
+  changeClicks+=1
+  console.log(changeClicks)
+  //cb.checked ei toimi tässä tapauksessa
+  if (changeClicks % 1 == 0)
+  {
+
+    clearInterval(interval);  
+  }
+  if(changeClicks % 2 == 0) {
+    interval=setInterval(subjectChange, 5000);
+
+  }
+  
+  
+
+ 
+  
 }

@@ -12,7 +12,6 @@ Start view
 
 ![alt text](DBoardApp/static/images/dboard.png)
 
-
 Overview of the discussion board and its user interface. By default, the accordion/collapse divs are closed and only the topic of the conversation is shown. you can see the answer of those who entered the conversation by clicking on the arrow on the right when the div is open.
 
 ![alt text](DBoardApp/static/images/DboardUI.png)
@@ -77,6 +76,10 @@ Inventory management, from the view you can quickly check which product is the m
 
 Attention color for the products that are most and least in stock.
 the name of the product that is in short supply is shown in red and the name of the product with the most stock is shown in green.
+
+Example view of admin dashboard made with Bootstrap accordion/collapse dive. Icons are Fontawesome icons.
+
+![alt text](DBoardApp/static/images/adminPanel.png)
 
 ID CHECK in ADMIN VIEW
 

@@ -193,7 +193,7 @@
 .showpsw {
     position:relative; 
     left:390px;
-    top:-178px;
+    top:-116px;
     
 }
 
@@ -264,4 +264,23 @@
 .changing {
     font-weight: bold;
     
+}
+.order-span, .add-span,.edit-span,.span-delete,.span-minmax,.span-discount {
+    position: absolute;
+    left: 270px;
+}
+.voice-login-span {
+    position: absolute;
+    left:80px;
+    top:410px;
+}
+.board-span {
+    position: absolute;
+    left:140px;
+    top:542px;
+}
+.shop-span {
+    position: absolute;
+    left:294px;
+    top:542px;
 }

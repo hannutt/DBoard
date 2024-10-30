@@ -26,22 +26,23 @@
     <p hidden id="times">{{times}}</p>
     <br>
     <p hidden>Ip Address</p>
-   
+
     <p hidden id="ip">{{result}}</p>
     {% for i in result %}
     <p>{{i.ip}}</p>
     {%endfor%}
- 
-    
-   
+
+
+
     <label id="barlTypeLbl" for="verticalBar">Vertical bar</label>
-    <input id="verticalBar" type="checkbox" onclick="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
+    <input id="verticalBar" type="checkbox"
+      onclick="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
 
     <div id="Plot" style="width:25%;max-width:400px; height:250px;">Double-click this text to hide the chart</div>
   </center>
   <div id="showDiv" style="display: none;">
     <button id="showBtn">Show chart</button>
-    
+
   </div>
 
   <script>
@@ -60,7 +61,7 @@
       })
     })
 
-  
+
 
   </Script>
 
@@ -76,7 +77,7 @@
       x: xArray,
       y: yArray,
       //numeroväli 1, eli desimaaleja ei näytetä
-      dtick:1,
+      dtick: 1,
       //kaavion tyyppi
       type: "bar",
       //kaavion piirtosuunta
@@ -84,13 +85,15 @@
       marker: { color: "rgba(50, 168, 145)" }
     }];
 
-    const layout = { title: "Visits on page", plot_bgcolor:"lightblue",
-    paper_bgcolor:"lightblue"};
+    const layout = {
+      title: "Visits on page", plot_bgcolor: "lightblue",
+      paper_bgcolor: "lightblue"
+    };
 
     Plotly.newPlot("Plot", data, layout);
 
   </script>
-  
+
   <form action="/login-form/" method="post">
     {% csrf_token %}
     <input type="text" name="username" id="username" placeholder="Username">
@@ -98,39 +101,41 @@
 
 
     <br><br>
+    <span class="login-span">
     <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
+  </span>
   </form>
-  <br><br>
-  <button  class="btn btn-primary"  id="voiceLogin" onclick="voiceLogin()">Voice login</button>
+  <span class="voice-login-span">
+    <button class="btn btn-primary" id="voiceLogin" onclick="voiceLogin()">Voice login<span class="voice-span"> <i
+          class="fa-solid fa-volume-high"></i></span></button>
+  </span>
   <br>
-  
-  
+
+
   <form action="/register/" method="post">
     {% csrf_token %}
-  <span class="regbtn">
-  <button class="btn btn-warning" id="regBtn" type="submit" value="Login">Register</button>
-</span>
-</form>
-  <button id="showpsw" class="showpsw" onclick="showPsw()"><i
-      class="fa-solid fa-eye"></i></button>
-      <script>
-        //banned funktion kutsu rivillä 156, funktio suoritetaan aina sivun latautuessa (window.onload = Banned;)
-      function Banned() {
-        var add = document.getElementById("ip").innerHTML;
-        console.log(add)
-        if (add === "banned!") 
-        {//asetetaan loginBtn id:llä nimettu buttoni disabloiduksi
-           
-    
-          //document.querySelector('#ban').click();
-    
-          document.querySelector('#loginBtn').setAttribute('disabled', true);
+    <span class="regbtn">
+      <button class="btn btn-warning" id="regBtn" type="submit" value="Login">Register</button>
+    </span>
+  </form>
+  <button id="showpsw" class="showpsw" onclick="showPsw()"><i class="fa-solid fa-eye"></i></button>
+  <script>
+    //banned funktion kutsu rivillä 156, funktio suoritetaan aina sivun latautuessa (window.onload = Banned;)
+    function Banned() {
+      var add = document.getElementById("ip").innerHTML;
+      console.log(add)
+      if (add === "banned!") {//asetetaan loginBtn id:llä nimettu buttoni disabloiduksi
 
-        }
-        console.log(add)
+
+        //document.querySelector('#ban').click();
+
+        document.querySelector('#loginBtn').setAttribute('disabled', true);
+
       }
-    </script>
-   
+      console.log(add)
+    }
+  </script>
+
 
   <script>
     function showPsw() {
@@ -142,20 +147,24 @@
         psw.type = "password";
       }
     }
- 
- </script>
+
+  </script>
 
 
-  
+
   <p><b>Login status: {{info}}</b></p>
   <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
   <br><br>
-  <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
-  <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
+  <span class="board-span">
+    <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
+  </span>
+  <span class="shop-span">
+    <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
+  </span>
   <input type="checkbox" onclick="showModal()" id="instructions">
   <label for="instructions">Show log in instructions</label>
   <br>
-  
+
   <script>
 
     window.onload = Banned;
@@ -167,21 +176,21 @@
   <form action="/logout/" method="post">
     {% csrf_token %}
     <span class="logout">
-    <button class="btn btn-danger">Logout</button>
-  </span>
+      <button class="btn btn-danger">Logout</button>
+    </span>
   </form>
   <script>
 
     function Check() {
-      
-    
+
+
       var psw = document.getElementById('password').value;
       var user = document.getElementById('username').value;
 
       //talletetaan times muuttujaan times p tagin sisältö eli view.py:ssä
       //määritelty numero
       var times = document.getElementById('times').innerHTML
-      
+
 
       console.log(times)
       //times muuttujan avulla suoritetaan modal ikkunan näyttö vain kerran ilman ehtoa

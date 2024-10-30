@@ -70,13 +70,15 @@ function setAmount() {
 
 }
 //TILAUKSEN TIETOJEN TALLENNUS LOCALSTORAGEEN
-var prodCounter = 0
+let prodCounter = 0
+
 
 function AddToCart() {
   
   //ostoskori painikkeen kulmassa, ilmaisee tuotteiden määrää korissa
-  prodCounter +=1
-  localStorage.setItem("counter",parseInt(prodCounter))
+  prodCounter =prodCounter+1
+  console.log(prodCounter)
+  localStorage.setItem("counter",prodCounter)
 
   //poistetaan määrä ja vahvuus tässä kohtaa, että ne eivät tule lopulliselle tilausriville.
   localStorage.removeItem("str");

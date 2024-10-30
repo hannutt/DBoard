@@ -79,6 +79,12 @@
     <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
   
     {% csrf_token %}
+    <button id="sendOrder">
+
+      <a href="/select-product-send/{{p.productId}}/">
+        <i class="fa-solid fa-cart-plus"></i></a>
+  
+    </button>
 
     <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">
       <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
@@ -156,12 +162,13 @@
   <input hidden itype="text" value="{{p.productId}}" id="pID{{forloop.counter}}">
 
   <!--for silmukaan sisältyy linkki joissa on jokaisen tuotteen productid parametrina-->
+  <!--
   <button id="sendOrder">
 
     <a href="/select-product-send/{{p.productId}}/">
       <i class="fa-solid fa-cart-plus"></i></a>
 
-  </button>
+  </button>-->
 </form>
   {%endfor%}
 
