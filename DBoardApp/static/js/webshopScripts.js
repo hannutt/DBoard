@@ -195,6 +195,7 @@ function ShoppingCart() {
   document.getElementById("productForm").style.display = "block";
   var list = document.getElementById("list")
   var btn = document.createElement("BUTTON")
+  btn.setAttribute("class","cartBtn")
   btn.textContent = "X"
 
 

@@ -249,3 +249,19 @@
     left:450px;
     top:-380px;
 }
+.form_popup {
+    border-radius: 10px;
+    background-color: #f1f1f1;
+}
+.shoppingCartBtn {
+    border-radius: 10px;
+    background-color: lightblue;
+}
+.cartBtn {
+    background-color: #f55d5d;
+    border-radius: 8px;
+}
+.changing {
+    font-weight: bold;
+    
+}

@@ -2,7 +2,7 @@ function isAdmin(btnCount) {
     //tekstin piilotus tupla klikkaamalla sitä jos kirjautunut käyttäjä on admin
     var user = document.getElementById("user").innerHTML
     var btnInt = parseInt(btnCount)
-    console.log("buttons ",btnCount )
+   
     if (user === '<b>admin</b>') {
       jQuery(".bodyTxt").dblclick(function () {
         event.preventDefault();
@@ -33,13 +33,48 @@ function setFilter(CBvar) {
     if (CBvar.checked===true)
     {
         document.getElementById("setBtn").click()
-
     }
-    
 }
 
 function DoClick() {
     document.getElementById("startBtn").click()
   }
 
+var data=''
+var subjects=[]
+
+function getHeaders() {
+  var lastReply = document.getElementById("lastReply").innerHTML
+  var lastReplyInt = Number(lastReply) 
+  for (var i=1;i<lastReplyInt;i++)
+  {
+    data=document.getElementById("subject"+i).innerHTML
+    subjects.push(data)
+    
+  }
+  console.log(subjects)
+  return lastReplyInt
+}
+
+//kutsutaan subjectChange funkiota joka 5 sekunti, setinterval talletetaan muuttujaan,
+//että voidaan clearInterval funktiota, joka pysäyttää toiston.
+const interval = setInterval(subjectChange, 5000);
+var j = 0;
+//subject change kasvattaa j:n arvoa yhdellä eli subjects listalta näytetään aina seuraava arvo
+function subjectChange() {
+  var last = getHeaders()
+ 
+  if (j===last)
+  {
+    j=0
+  }
+  else{
+    j=j+1
+  }
+  document.getElementById("changingSubjects").innerHTML=subjects[j]
+
   
+}
+function stopChanging() {
+  clearInterval(interval);  
+}

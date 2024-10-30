@@ -1,5 +1,5 @@
 
-var API_KEY="";
+var API_KEY=localStorage.getItem("apk");
 // fetch the txt file
 
 
@@ -28,8 +28,7 @@ function showQuestions(pid,event) {
 
 function askFromBot(text)
 {
-
-
+    console.log(API_KEY)
     const API_URL="https://api.openai.com/v1/chat/completions"
     
 

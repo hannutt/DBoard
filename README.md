@@ -1,6 +1,6 @@
 # DBoard
 
-Project keywords: AI, Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
+Project keywords: AI-integration, Python, Django, JavaScript, JQuery, NoSQL, MongoDB, SQLite, Bootstrap 5, Font Awesome.
 
 This Python Django and JavaScript application simulates two things. An online store that uses artificial intelligence. OpenAI GPT 3.5 chatbot is integrated into the online store, where you can ask for more information about the products.
 
@@ -17,14 +17,26 @@ Overview of the discussion board and its user interface. By default, the accordi
 
 ![alt text](DBoardApp/static/images/DboardUI.png)
 
+The Discussion board also has a feature that automatically displays and changes the topics of discussions every 5 seconds. This feature is made with JavaScript functions. The first function grabs the items and stores them in an array. Then the setInterval function calls the topic switch function, which switches the array's display element.
+
+Changing and displaying topics can be stopped by clicking the "Stop Changing" check box. - the checkbox has an onClick event handler that calls the clearInterval function.
+
+![alt text](DBoardApp/static/images/changing.png)
+
+
 Example picture of discussion forum text filtering when the user has selected "show only body text".
 
 ![alt text](DBoardApp/static/images/filtered.png)
 
 
-Example picture where the user has clicked on the first question. clicking on the question activates a jquery function that saves the clicked text and sends it to a javascript function that communicates with the chat GPT-API. GPT's response is displayed in the alert window.
+An example image where the user has opened the question menu by clicking on the question mark button.
+clicking the button activates a jQuery function that records the clicked text and sends it to a JavaScript function that communicates with the chat GPT API. GPT's response is displayed in the alert window.
 
 ![alt text](DBoardApp/static/images/webshopAI.png)
+
+An example image of an online store shopping cart. products are stored in localStorage using a JavaScript function. the product can be removed from the shopping cart by clicking the button with the X sign
+
+![alt text](DBoardApp/static/images/shoppingCart.png)
 
 An example picture of the banning page, where the user can view banned addresses and devices, add new ones or delete banned addresses and devices. If a prohibited address or device is found in the data, the user cannot log in to the service.
 

@@ -45,7 +45,7 @@
 <!--ostoskori-->
   <div class="form_popup" id="productForm">
     <form action="" class="form-container">
-    <h4>Your orders</h4>
+    <h4>Shopping cart</h4>
     <ol id="list">
     
   </ol>
@@ -53,7 +53,7 @@
     <script>
     
     </script>
-    <button onclick="closeShoppingCart()">Close</button>
+    <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
   </form>
   </div>
 
@@ -111,11 +111,15 @@
   </div>
   <div class="ask">
     <div class="questions" id="questions{{forloop.counter}}" hidden>
+     
       <h4>Ask an AI</h4>
       <!--kasvatetaan forloop counteria ilman for-silmukkaa-->
-      {% with count=0  %}  
-      <p id="question{{count}}">What are nicotine pouches?</p>
-      <p id="question{{count|add:1}}">Is nicotine pouches unhealthy?</p>
+      <ul>
+      {% with count=0  %}
+      <li id="prodName{{forloop.counter}}"> What is {{p.name}}</li>  
+      <li id="question{{count}}">What are nicotine pouches?</li>
+      <li id="question{{count|add:1}}">Is nicotine pouches unhealthy?</li>
+      </ul>
       {%endwith%}
     </div>
     <script>
@@ -126,6 +130,14 @@
         console.log(text)
         askFromBot(text)
       });
+
+      jQuery("#prodName{{forloop.counter}}").click(function () {
+        event.preventDefault();
+        var text = jQuery(this).text();
+        console.log(text)
+        askFromBot(text)
+      });
+    
     
     </script>
     
