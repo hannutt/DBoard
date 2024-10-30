@@ -104,9 +104,6 @@ function showModal() {
 
 }
 
-
-
-
 function setDelivered() {
   document.getElementById("setdeliv").click()
   document.getElementById("setdeliv").hidden = true
@@ -174,14 +171,12 @@ function filterClear(total) {
   }
 
 }
-function voiceLogin() {
-  const recognitionSvc = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-// Instantiate it
+function voiceLogin() {
+  
+const recognitionSvc = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new recognitionSvc();
-/* Set the speech recognition to continuous so it keeps listening to whatever you say. This way you can record long texts, conversations and so on. */
-recognition.continuous = true;
-/* Sets the language for speech recognition. It uses IETF tags, ISO 639-1 like en-GB, en-US, es-ES and so on */
+var resList=[]
 recognition.lang = 'en-GB';
 // Start the speech recognition
 recognition.start();
@@ -190,12 +185,21 @@ recognition.onresult = (event) => {
   for (const result of event.results) {
     // Print the transcription to the console
     console.log(`${result[0].transcript}`);
-    document.getElementById("username").value=`${result[0].transcript}`
+    //talleteaan lausutut sanat listaan, että niitä voidan hyödyntää input-kenttiin sijoittamisessa
+    resList.push(result[0].transcript)
    
+    
 }
+document.getElementById("username").value=resList[0]
+//listan viimeinen elementti
+var lastItem = resList.pop()
+document.getElementById("password").value=lastItem
+console.log(resList)
+
 setTimeout(() => {
   recognition.stop();
   console.log("stopped")
+  resList=[]
   
 }, 10000);  
 }

@@ -24,9 +24,6 @@ def loginView(request):
      #mydb = myclient['DBoardDB']
      collection = dbname['BannedIps']
      result= collection.find({},{ "_id": 0, "ip": 1})
-     for i in result: 
-        print(i)    
-
     
      global times
      times +=1
@@ -39,8 +36,6 @@ def loginView(request):
      #ltarkastetaan onko ip-osoite bannattu, eli löytyykö se kannasta
      isIpExist = collection.count_documents({"ip":ip})
      isDeviceExist=collection.count_documents({"deviceName":hostname})
-     print(isIpExist)
-     print(hostname)
      #existIp=mycol.find({"ip": ip},{'_id':0}).count()
      #jos ip-osoite löytyy
      if isIpExist == 1 or isDeviceExist==1:
