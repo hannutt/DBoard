@@ -225,6 +225,7 @@
 }
 
 .okText {
+    padding: 5px;
     font-weight: bold;
     background-color: green;
 }

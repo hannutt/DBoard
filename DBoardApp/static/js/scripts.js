@@ -2,6 +2,7 @@
 function verticalBar(visits, cb) {
   if (cb.checked == true) {
     console.log(cb.checked)
+    document.getElementById("barlTypeLbl").innerHTML="Horizontal Bar"
     //muunto kokonaisluvuksi
     parseInt(visits)
     const xArray = [""];
@@ -32,7 +33,8 @@ function verticalBar(visits, cb) {
   }
 }
 
-function horizontalBar(visits) {
+function horizontalBar(visits,cb) {
+  document.getElementById("barlTypeLbl").innerHTML="Vertical Bar"
   
   console.log(cb.checked)
   console.log(visits)

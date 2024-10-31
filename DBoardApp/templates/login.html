@@ -36,7 +36,7 @@
 
     <label id="barlTypeLbl" for="verticalBar">Vertical bar</label>
     <input id="verticalBar" type="checkbox"
-      onclick="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
+      onchange="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
 
     <div id="Plot" style="width:25%;max-width:400px; height:250px;">Double-click this text to hide the chart</div>
   </center>
@@ -152,7 +152,7 @@
 
 
 
-  <p><b>Login status: {{info}}</b></p>
+  <p id="loginStatus"><b>Login status: {{info}}</b></p>
   <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
   <br><br>
   <span class="board-span">
@@ -176,7 +176,7 @@
   <form action="/logout/" method="post">
     {% csrf_token %}
     <span class="logout">
-      <button class="btn btn-danger">Logout</button>
+      <button id="logOutBtn" class="btn btn-danger">Logout</button>
     </span>
   </form>
   <script>
