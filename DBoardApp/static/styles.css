@@ -285,3 +285,9 @@
     left:294px;
     top:542px;
 }
+.secondsLeft {
+    position: absolute;
+    top: 415px;
+    left: 220px;
+    font-weight: bold;
+}

@@ -25,34 +25,32 @@
             //checkemails on onchange eventinä 3 input kentässä, eli se tarkistaa että emailit täsmää
             //eikä textarea ole tyhjä. jos nämä ehdot täyttyy, niin sendbtn disablointi poistuu
             function checkEmails() {
-                var required=["@","."]
-                var reason=document.getElementById("reason").value
-                var email=document.getElementById("email").value
-                var emailAgain = document.getElementById("emailAgain").value
-                if (email===emailAgain && reason !='')
-                {   document.getElementById("sendBtn").disabled=false
-                    document.getElementById("okText").hidden=false
-                    $("div").animate({left: '250px'});
-        
-                }
-                //indexofin avulla voidaan tarkastaa onko/puuttuuko merkkijonossa useampi kuin 1 vaadittu
-                //merkki
-                else if (["@","."].indexOf(email) && ["@","."].indexOf(emailAgain))
-                {
-                  document.getElementById("okText").hidden=false
-                  document.getElementById("okText").innerHTML="Incorrect email!"
-                    $("div").animate({left: '250px'});
 
-                }
+              var required=["@","."]
+              var reason=document.getElementById("reason").value
+              var email=document.getElementById("email").value
+              var emailAgain = document.getElementById("emailAgain").value
+              //ehto tarkastaa että email ja emailagain ovat samat, reason muuttuja ei ole tyhjä ja että
+              // molemmista email muuttujista löytyy @ ja . merkit
+              if (email===emailAgain && reason !='' && email.includes("@") &&email.includes(".") && emailAgain.includes("@") && emailAgain.includes("."))
+              {        
+                document.getElementById("sendBtn").disabled=false
+                
+                document.getElementById("okText").innerHTML="Emails ok & reason accepted!"
+                $("div").animate({left: '250px'});
+                document.getElementById("okText").hidden=false
+        
+              }
+                
                 else{
-                  document.getElementById("okText").innerHTML="Correct email!"
+                  document.getElementById("okText").innerHTML="Incorrect email!"
 
                 }
             }
           </script>
        
           <div style="position: absolute;">
-            <p id="okText" class="okText" hidden>Emails OK!</p>
+            <p id="okText" class="okText" hidden></p>
           </div>
 
     </body>

@@ -117,6 +117,8 @@ VOICE-ASSISTED LOGIN (EXPIREMENTAL)
 
 The user can also log in by saying the username and password into the microphone of the computer. Voice-assisted login is started by clicking the "voice login" button. after clicking, the user has 10 seconds to say the username and password.  After 10 seconds, the JavaScript timeout function stops speech recognition and adds the username and password stored in the list to the username and password input fields on the login page. The voice-assisted login feature is made with the JavaScript Web Speech API speech recognition library.
 
+The remaining time is displayed to the user with the setInterval function. When the set limit of 10 seconds has passed, the time calculation is stopped with the ClearTimeout function.
+
 
 NEW USER REGISTRATION 
 
