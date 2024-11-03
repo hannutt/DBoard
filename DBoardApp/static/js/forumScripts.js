@@ -49,12 +49,14 @@ function getHeaders() {
   var lastReplyInt = Number(lastReply) 
   for (var i=1;i<lastReplyInt;i++)
   {
+    
     data=document.getElementById("subject"+i).innerHTML
     subjects.push(data)
     
+    
   }
   console.log(subjects)
- 
+ //käytetään allaolevassa funktiossa
   return lastReplyInt
 }
 
@@ -74,6 +76,7 @@ function subjectChange() {
     j=j+1
   }
   document.getElementById("changingSubjects").innerHTML=subjects[j]
+  document.getElementById("subjectID").innerHTML=j
 
   
 }

@@ -90,11 +90,27 @@
     <div id="changing" class="changing">
     <p>Currently in discussions</p>
   <p id="changingSubjects"></p>
+  <p hidden id="subjectID"></p>
   <label for="stop">Stop changing</label>
   <input type="checkbox" id="stop" onchange="stopChanging()">
 </div>
 </center>
   <br>
+  <script>
+     //jquery funktio hakee vaihtuvan id-numeron subjectID elementistä, kun käyttäjä klikkaa
+     //changingSubjects elementtiä. klikkauksen jälkeen scrollIntoView funktio siirtää
+     //käyttäjän klikattuun subject+id diviin.
+      jQuery("#changingSubjects").click(function () {
+        event.preventDefault();
+        var idNumber = jQuery("#subjectID").text();
+        console.log(idNumber)
+        var element = document.getElementById("subject"+idNumber);
+        element.scrollIntoView();
+      
+        
+      
+      });
+  </script>
  
   <!--for silmukoilla käydään kannasta haettu data läpi. data ja likedata on määritelty views.py:ssä-->
   {% for d in data %}

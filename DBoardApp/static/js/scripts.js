@@ -65,33 +65,7 @@ function horizontalBar(visits,cb) {
 
 
 
-function CheckId() {   //haetaan käyttäjän syöttämä arvo
-  var userInput = document.getElementById("prodIdVal").value;
-  //muunnetaan se kokonaisluvuksi
-  var userInputInt = parseInt(userInput)
-  console.log(typeof (userInputInt))
 
-  var numberList = []
-  //käytetyt numerot ovat li-tagin sisällä, joten haku kohdistuu
-  //li tagiin
-  var numbers = document.getElementsByTagName("li")
-
-  //var result = Array.isArray(numberList)
-
-  //käytettyjen numeroiden läpikäynti    
-  for (var i = 0; i < numbers.length; i++) {
-    //numeroiden tallennus listaan ja muunto kokonaisluvuksi
-    numberList.push(numbers[i].innerHTML)
-    numberList = numberList.map(Number)
-    console.log(numberList)
-
-
-
-  } //jos lista sisältää käyttäjän syöttämän numero, tulostetaan ilmoitus
-  if (numberList.includes(userInputInt)) {
-    alert("id already used")
-  }
-}
 function visitors() {
   var visits = document.getElementById("webshopvisitor").innerHTML
   var visitrep = visits.replace("{","").replace("}","")

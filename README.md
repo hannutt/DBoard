@@ -20,6 +20,9 @@ The Discussion board also has a feature that automatically displays and changes 
 
 Changing and displaying topics can be stopped by clicking the "Stop Changing" check box. - the checkbox has an onClick event handler that calls the clearInterval function.
 
+The user can move to changing topics by clicking on the topic. This is done using the jQuery click function.
+All topics are named topic + number id value. A jQuery function grabs and passes them to the scrollIntoView method. Method Scrolls to the topic selected by the user.
+
 ![alt text](DBoardApp/static/images/changing.png)
 
 
