@@ -1,0 +1,74 @@
+<html>
+<center>
+    <p hidden>Visitor count:</p>
+    <p hidden id="times">{{times}}</p>
+    <br>
+    <p hidden>Ip Address</p>
+
+    <p hidden id="ip">{{result}}</p>
+    {% for i in result %}
+    <p>{{i.ip}}</p>
+    {%endfor%}
+
+
+
+    <label id="barlTypeLbl" for="verticalBar">Vertical bar</label>
+    <input id="verticalBar" type="checkbox"
+      onchange="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
+
+    <div id="Plot" style="width:25%;max-width:400px; height:250px;">Double-click this text to hide the chart</div>
+  </center>
+  <div id="showDiv" style="display: none;">
+    <button id="showBtn">Show chart</button>
+
+  </div>
+
+  <script>
+    //jquery koodi plot-divn piilottamiseen tuplaklikkaamlla piilottamisen jälkeen
+    //näytetään shwoDiv ja button elementti
+    $(document).ready(function () {
+      $('#Plot').dblclick(function () {
+        $("#Plot").hide();
+        $('#showDiv').show();
+      })
+    });
+    //jquery funktion liittäminen buttoniin showBtn klikattaessa näytetään Plot div
+    $(document).ready(function () {
+      $('#showBtn').click(function () {
+        $('#Plot').show()
+      })
+    })
+
+
+
+  </script>
+
+  <!--Bar chartin js-koodi eli visitor counter-->
+  <script>
+    var visits = document.getElementById('times').innerHTML;
+    //muunto kokonaisluvuksi
+    parseInt(visits)
+    const xArray = [visits];
+    const yArray = [""];
+
+    const data = [{
+      x: xArray,
+      y: yArray,
+      //numeroväli 1, eli desimaaleja ei näytetä
+      dtick: 1,
+      //kaavion tyyppi
+      type: "bar",
+      //kaavion piirtosuunta
+      orientation: "h",
+      marker: { color: "rgba(50, 168, 145)" }
+    }];
+
+    const layout = {
+      title: "Visits on page", plot_bgcolor: "lightblue",
+      paper_bgcolor: "lightblue"
+    };
+
+    Plotly.newPlot("Plot", data, layout);
+
+  </script>
+  </html>

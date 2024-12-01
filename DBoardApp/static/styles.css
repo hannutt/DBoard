@@ -291,3 +291,19 @@
     left: 220px;
     font-weight: bold;
 }
+.flex-login {
+    display: flex;
+  
+}
+.flex-buttons {
+    display: flex;
+}
+.flex-visitor
+ {
+    display: flex;
+ }
+ .flex-flex
+ {
+    display: flex;
+ }
+

@@ -15,49 +15,51 @@
   <script src="{% static 'js/scripts.js' %}"></script>
   <script src="{% static 'js/webshopScripts.js' %}"></script>
   <script src="{% static 'js/chatbot.js' %}"></script>
+  <script src="{% static 'js/jqueryScript.js' %}"></script>
   <title>Webshop</title>
 
 </head>
 
 <body onload="getProductCounter();DoBtnClick();" style="background-image: url(/static/images/BGPic.jpg);">
   <h2>Webshop</h2>
-   <p id= "webshopvisitor">{{count}}</p>
-  
+  <p id="webshopvisitor">{{count}}</p>
+
   <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
- 
+
   <form action="/back-to-shop/" method="post">
-    
+
     <button class="btn btn-info" id="gobackShop">Go back to shop</button>
-    
+
 
     {% csrf_token %}
   </form>
   <!--span elementissä on tuotelaskuri-->
   <div class="shoppingCartBtn" id="shoppingCart">
-  <a class="btn btn-primary btn-lg" onclick="ShoppingCart()">Show shopping cart<span id="cartNum" class="cartNum"></span></a>
-</div>
-  
-  
-
-<!--ostoskori-->
-  <div class="form_popup" id="productForm">
-    <form action="" class="form-container">
-    <h4>Shopping cart</h4>
-    <ol id="list">
-    
-  </ol>
- 
-    <script>
-    
-    </script>
-    <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
-  </form>
+    <a class="btn btn-primary btn-lg" onclick="ShoppingCart()">Show shopping cart<span id="cartNum"
+        class="cartNum"></span></a>
   </div>
 
-<br>
+
+
+  <!--ostoskori-->
+  <div class="form_popup" id="productForm">
+    <form action="" class="form-container">
+      <h4>Shopping cart</h4>
+      <ol id="list">
+
+      </ol>
+
+      <script>
+
+      </script>
+      <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
+    </form>
+  </div>
+
+  <br>
   <div class="ourProducts" id="ourProducts">
 
     <p id="prodCheck" class="prodCheck"><i class="fa-solid fa-hand-point-right"></i>Check our products <i
@@ -67,91 +69,82 @@
     <p>Change the font size of the product card with the switch below</p>
     <div class="form-check form-switch" style="width: 25px; height: 25px;">
 
-      <input class="form-check-input" style="background-color: #1ddecb;" type="checkbox" role="switch" id="toggleSwitch" onchange="fontChange(document.getElementById('Prodcard'),document.getElementById('toggleSwitch'))">
+      <input class="form-check-input" style="background-color: #1ddecb;" type="checkbox" role="switch" id="toggleSwitch"
+        onchange="fontChange(document.getElementById('Prodcard'),document.getElementById('toggleSwitch'))">
       <label class="form-check-label" for="flexSwitchCheckDefault"> Medium </label>
     </div>
     <br>
-   
 
-  
+
+
     {%for p in prods %}
+    <button onclick="jsAdd()">add</button>
+
     <form action="/select-product-send/{{p.productId}}/" method="post">
-    <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
-  
-    {% csrf_token %}
-    <button id="sendOrder">
+      <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
 
-      <a href="/select-product-send/{{p.productId}}/">
-        <i class="fa-solid fa-cart-plus"></i></a>
-  
-    </button>
+      {% csrf_token %}
+      <button id="sendOrder">
 
-    <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">
-      <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
-      {% if p.instock < 5 %} <div class="card-header"
-        style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img class="productPicture" src="/static/images/box50px.png" height="30">
-    </div>
-    {%else%}
-    <div class="card-header"
-      style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img class="productPicture" src="/static/images/box50px.png" height="30">
-    </div>
-    {%endif%}
-    <div class="card-body">
-      <h5 id="Prodcard" class="card-title" style="font-size: large;
-                      font-family: 'Brush Script MT',cursive;"><p hidden>{{p.productId}}</p> Price: {{p.price}} €/can inStock:
-        {{p.instock}} pcs</h5>
-        
-      <p class="card-text"></p>
-     
-      <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength(8)">8 MG
-      <input type="radio" id="{{productId}}" name="str" value="16mg" onchange="setStrength(16)">16 MG
+        <a href="/select-product-send/{{p.productId}}/">
+          <i class="fa-solid fa-cart-plus"></i></a>
+      </button>
 
 
-      
-      <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
-        onchange="setAmountField()">
-      
+      <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">
+        <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
+        {% if p.instock < 5 %} <div class="card-header" id="Prodcard"
+          style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
+            class="productPicture" src="/static/images/box50px.png" height="30">
+      </div>
 
+      {%else%}
+      <div class="card-header" id="Prodcard"
+        style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
+          class="productPicture" src="/static/images/box50px.png" height="30">
+        <input id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
+      </div>
 
-    </div>
+      {%endif%}
+      <div class="card-body">
+        <h5 id="{{forloop.counter}}" class="card-title" style="font-size: large;
+                      font-family: 'Brush Script MT',cursive;">
+          <p hidden>{{p.productId}}</p> Price: {{p.price}} €/can inStock:
+          {{p.instock}} pcs
+        </h5>
+
+        <p class="card-text"></p>
+
+        <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength('{{forloop.counter}}',8)">8
+        MG
+        <input type="radio" id="{{productId}}" name="str" value="16mg"
+          onchange="setStrength('{{forloop.counter}}',16)">16 MG
+
+        <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
+          onchange="setAmountField();createProw('{{forloop.counter}}')">
+
+      </div>
   </div>
   <div class="ask">
     <div class="questions" id="questions{{forloop.counter}}" hidden>
-     
+
       <h4>Ask an AI</h4>
       <!--kasvatetaan forloop counteria ilman for-silmukkaa-->
       <ul>
-      {% with count=0  %}
-      <li id="prodName{{forloop.counter}}"> What is {{p.name}}</li>  
-      <li id="question{{count}}">What are nicotine pouches?</li>
-      <li id="question{{count|add:1}}">Is nicotine pouches unhealthy?</li>
+        {% with count=0 %}
+        <li id="prodName{{forloop.counter}}"> What is {{p.name}}</li>
+        <li id="question{{count}}">What are nicotine pouches?</li>
+        <li id="question{{count|add:1}}">Is nicotine pouches unhealthy?</li>
       </ul>
       {%endwith%}
     </div>
-    <script>
-      //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
-      jQuery("#question{{forloop.counter}}").click(function () {
-        event.preventDefault();
-        var text = jQuery(this).text();
-        console.log(text)
-        askFromBot(text)
-      });
 
-      jQuery("#prodName{{forloop.counter}}").click(function () {
-        event.preventDefault();
-        var text = jQuery(this).text();
-        console.log(text)
-        askFromBot(text)
-      });
-    
-    
-    </script>
-    
     <!--forloop counterin lisäys id:hin yksilöi jokaisen prodname inputin, joten
     jokaisella klikkauksella saadaan oikea tuotenimi, event parametri suorittaa preventDefaultin
     js-funktiossa eli tässä tapauksessa estää formin post metodin suorituksen
     pid on textarea elementin id-arvo -->
-    <button onclick="showQuestions(document.getElementById(`pID{{forloop.counter}}`).value,event)"class="btn btn-info">?</button>
+    <button onclick="showQuestions(document.getElementById(`pID{{forloop.counter}}`).value,event)"
+      class="btn btn-info">?</button>
     <!--
 <button onclick="ask(document.getElementById(`prodName{{forloop.counter}}`).value,document.getElementById(`pID{{forloop.counter}}`).value,event)" class="btn btn-info">?</button>
   -->
@@ -161,6 +154,7 @@
   <input hidden type="text" value="{{p.price}}" id="unitPrice">
   <input hidden itype="text" value="{{p.productId}}" id="pID{{forloop.counter}}">
 
+
   <!--for silmukaan sisältyy linkki joissa on jokaisen tuotteen productid parametrina-->
   <!--
   <button id="sendOrder">
@@ -169,29 +163,9 @@
       <i class="fa-solid fa-cart-plus"></i></a>
 
   </button>-->
-</form>
+  </form>
   {%endfor%}
-
-
-
-
-
   </div>
-  <script>
-    //jquery koodi plot-divn piilottamiseen tuplaklikkaamlla piilottamisen jälkeen
-    //näytetään shwoDiv ja button elementti
-    $(document).ready(function () {
-      $('#ourProducts').dblclick(function () {
-        $('#prods').show();
-      })
-    });
-
-    $(document).ready(function () {
-      $('#ourProducts').click(function () {
-        $('#prods').hide();
-      })
-    });
-  </script>
 
   {%for d in data %}
   <div id="orderFormPlace">
@@ -202,33 +176,12 @@
 
     <body onload="DoBtnClick()"></body>
     <script>
-      function DoBtnClick() {
-        document.getElementById("setBtn").click()
-      }
+
     </script>
     <button hidden id="setBtn" onclick="setAmount()">set</button>
 
 
-    <table border="1px solid black">
-
-      <tr>
-        <th>Product</th>
-        <th>Unit price</th>
-        <th>Amount</th>
-        <th>Strength</th>
-        <th>Total price</th>
-      </tr>
-      <tr>
-        <!--order form rivi-->
-        <td id="product">{{d.name}}</td>
-        <td id="price">{{d.price}} €</td>
-        <td id="finalAm" name="finaAm"></td>
-        <td id="str"></td>
-        <td id="total"></td>
-      </tr>
-    </table>
-    
-
+    {% include 'orderForm.html' %}
     <div id="orderRow"></div>
     <p id="ordersFromList"></p>
     <table id="orderTable">
@@ -236,32 +189,32 @@
         <td></td>
       </tr>
     </table>
-    <div id="clearOrder"  class="clearOrder">
-    <button class="btn btn-warning" onclick="clearOrderTable()">X</button>
-  </div>
-  
+    <div id="clearOrder" class="clearOrder">
+      <button class="btn btn-warning" onclick="clearOrderTable()">X</button>
+    </div>
+
     <button id="createorder" onclick="AddToCart()">Add to cart</button>
     <p id="qtyList"></p>
-  
+
     <p id="compare">{{code}}</p>
     <form action="/discount-code/" method="post">
       {% csrf_token %}
       <input type="text" id="code" name="code">
       <button class="btn btn-primary" type="submit">Discount code</button>
     </form>
-    
+
 
 
 
     <form action="/save-order/" method="post">
       <input hidden type="text" name="prodid" value="{{productId}}">
-      <input hidden  id="qty" type="text" name="qty" value="">
+      <input hidden id="qty" type="text" name="qty" value="">
       <script>
         getQty()
       </script>
       {% csrf_token %}
-      
-     
+
+
       <input type="text" name="flname" placeholder="First and lastname">
       <input type="text" name="address" placeholder="Address">
       <input type="text" name="city" placeholder="City">
@@ -292,13 +245,6 @@
       <label for="phone">Phone</label>
       <input type="text" placeholder="phone number" name="phone">
     </div>
-
-    <script>
-  
-    </script>
-
-
-
     <br>
 
 </body>

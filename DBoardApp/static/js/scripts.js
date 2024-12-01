@@ -147,6 +147,9 @@ function filterClear(total) {
   }
 
 }
+function DoBtnClick() {
+  document.getElementById("setBtn").click()
+}
 
 
 

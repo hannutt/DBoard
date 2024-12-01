@@ -4,9 +4,8 @@ function getQty() {
   document.getElementById("qty").value=qty
 }
 
-
-function setStrength(strength) {
-  console.log(strength)
+//id on webshop.html:ssä for silmukassa läpi käydyn tuotekortin id-numero
+function setStrength(id,strength) {
   var elem = document.getElementsByName("str")
   //silmukassa käydään läpi str nimiset radiobuttonit
   for (i = 0; i < elem.length; i++)
@@ -14,6 +13,7 @@ function setStrength(strength) {
     if (elem[i].checked) {
       console.log(elem[i].value)
       localStorage.setItem('str', elem[i].value)
+      document.getElementById("prow"+id).value+=elem[i].value
 
     }
 
@@ -32,8 +32,18 @@ function setAmountField() {
       console.log(am)
       localStorage.setItem("qty", am)
 
-
     }
+
+}
+function createProw(id) {
+  var quantity = document.getElementsByName("amount")
+  for (i = 0; i < quantity.length; i++)
+    //jos jokin amount nimisen input kentän arvo on suurempi kuin 0 talletetaan arvo am-muuttujaan ja am
+    //muuttuja puolestaan talletetaan localstorageen
+    if (quantity[i].value > 0) {
+      var am = quantity[i].value
+    }
+    document.getElementById("prow"+id).value+=am
 
 }
 

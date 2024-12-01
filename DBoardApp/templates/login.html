@@ -3,6 +3,7 @@
 <html>
 
 <head onload>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>login</title>
   {% load static %}
   <link rel="stylesheet" href="{%static 'styles.css' %}">
@@ -22,78 +23,7 @@
 
 <body class="loginPage" onload="Check();">
   <h3 class="loginHeader">Log-in Page</h3>
-  <center>
-    <p hidden>Visitor count:</p>
-    <p hidden id="times">{{times}}</p>
-    <br>
-    <p hidden>Ip Address</p>
-
-    <p hidden id="ip">{{result}}</p>
-    {% for i in result %}
-    <p>{{i.ip}}</p>
-    {%endfor%}
-
-
-
-    <label id="barlTypeLbl" for="verticalBar">Vertical bar</label>
-    <input id="verticalBar" type="checkbox"
-      onchange="verticalBar(document.getElementById('times').innerHTML,document.getElementById('verticalBar'))"><br>
-
-    <div id="Plot" style="width:25%;max-width:400px; height:250px;">Double-click this text to hide the chart</div>
-  </center>
-  <div id="showDiv" style="display: none;">
-    <button id="showBtn">Show chart</button>
-
-  </div>
-
-  <script>
-    //jquery koodi plot-divn piilottamiseen tuplaklikkaamlla piilottamisen jälkeen
-    //näytetään shwoDiv ja button elementti
-    $(document).ready(function () {
-      $('#Plot').dblclick(function () {
-        $("#Plot").hide();
-        $('#showDiv').show();
-      })
-    });
-    //jquery funktion liittäminen buttoniin showBtn klikattaessa näytetään Plot div
-    $(document).ready(function () {
-      $('#showBtn').click(function () {
-        $('#Plot').show()
-      })
-    })
-
-
-
-  </Script>
-
-  <!--Bar chartin js-koodi eli visitor counter-->
-  <script>
-    var visits = document.getElementById('times').innerHTML;
-    //muunto kokonaisluvuksi
-    parseInt(visits)
-    const xArray = [visits];
-    const yArray = [""];
-
-    const data = [{
-      x: xArray,
-      y: yArray,
-      //numeroväli 1, eli desimaaleja ei näytetä
-      dtick: 1,
-      //kaavion tyyppi
-      type: "bar",
-      //kaavion piirtosuunta
-      orientation: "h",
-      marker: { color: "rgba(50, 168, 145)" }
-    }];
-
-    const layout = {
-      title: "Visits on page", plot_bgcolor: "lightblue",
-      paper_bgcolor: "lightblue"
-    };
-
-    Plotly.newPlot("Plot", data, layout);
-
-  </script>
+  {%include 'visitorCounter.html'%}
 
   <form action="/login-form/" method="post">
     {% csrf_token %}
@@ -102,15 +32,18 @@
 
 
     <br><br>
-    <span class="login-span">
+    <div class="flex-login">
+    <span>
     <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
   </span>
   </form>
-  <span class="voice-login-span">
+  <span>
     <button class="btn btn-primary" id="voiceLogin" onclick="voiceLogin()">Voice login<span class="voice-span"> <i
           class="fa-solid fa-volume-high"></i></span></button>
   </span>
+</div>
   <br>
+
   <p hidden class="secondsLeft" id="secondsLeft"></p>
 
 
@@ -155,14 +88,16 @@
 
 
   <p id="loginStatus"><b>Login status: {{info}}</b></p>
+  <div class="flex-buttons">
   <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
-  <br><br>
-  <span class="board-span">
+
+  <span>
     <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
   </span>
-  <span class="shop-span">
+  <span>
     <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
   </span>
+  </div>
   <input type="checkbox" onclick="showModal()" id="instructions">
   <label for="instructions">Show log in instructions</label>
   <br>
