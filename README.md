@@ -63,6 +63,8 @@ Each product in the Shopping Cart has a delete button, which can be pressed to r
 
 Then, with the settAttribute method, an onclick event and a function that performs the deletion are set for the buttons. The delete function takes a this.value parameter, which in this case is the name of the localStorage key.
 
+The shopping cart also has a "real world example" of automatic removal of products after the deadline.Automatic removal is done with the JavaScript setInterval method, When the deadline has passed, the cart is emptied by setting the shopping cart innerHtml property to null.
+
 User experience is taken into account in the purchase transaction.
 For example, when a product is added to the cart, the cart button gets a red border for a few seconds (Using the JavaScript setTimeout function and the style.className change) and the button also has a span element that contains a JavaScript variable that displays the number of items in the cart.
 

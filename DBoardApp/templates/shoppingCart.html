@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    {% load static %}
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/webshopScripts.js' %}"></script>
+</head>
+<!--ostoskori-->
+<div class="form_popup" id="productForm">
+    <form action="" class="form-container">
+        <h4>Shopping cart</h4>
+        <ol id="list">
+
+        </ol>
+        <p id="notice"></p>
+        <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
+    </form>
+    <script>
+        var seconds = 10
+        //ostoskorin tyhjennys määräajan jälkeen
+        function removeProducts() {
+            var list = document.getElementById("list").innerHTML
+            
+            if (list.length > 0) {
+                var interval = setInterval(() => {
+                    seconds = seconds - 1
+                    document.getElementById("notice").innerHTML = "Products are automatically removed at: " + seconds
+                    if (seconds === 0) {
+                        clearInterval(interval)
+                        document.getElementById("list").innerHTML=""
+                    }
+
+
+                }, 1000)
+
+            }
+            else {
+                document.getElementById("notice").innerHTML="Cart is already empty"
+            }
+
+
+
+        }
+    </script>
+    <script>
+        removeProducts()
+    </script>
+</div>
+
+</html>

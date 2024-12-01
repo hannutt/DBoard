@@ -41,23 +41,7 @@
     <a class="btn btn-primary btn-lg" onclick="ShoppingCart()">Show shopping cart<span id="cartNum"
         class="cartNum"></span></a>
   </div>
-
-
-
-  <!--ostoskori-->
-  <div class="form_popup" id="productForm">
-    <form action="" class="form-container">
-      <h4>Shopping cart</h4>
-      <ol id="list">
-
-      </ol>
-
-      <script>
-
-      </script>
-      <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
-    </form>
-  </div>
+  {% include 'shoppingCart.html' %}
 
   <br>
   <div class="ourProducts" id="ourProducts">
@@ -78,7 +62,7 @@
 
 
     {%for p in prods %}
-    <button onclick="jsAdd()">add</button>
+    
 
     <form action="/select-product-send/{{p.productId}}/" method="post">
       <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
@@ -114,7 +98,8 @@
         </h5>
 
         <p class="card-text"></p>
-
+        <!--forloop counterin arvo lähetetään funktiolle onchangessa parametrina, että funktio tietää
+        mikä tuotekortti on kyseessä-->
         <input type="radio" id="{{productId}}" name="str" value="8mg" onchange="setStrength('{{forloop.counter}}',8)">8
         MG
         <input type="radio" id="{{productId}}" name="str" value="16mg"
@@ -202,9 +187,6 @@
       <input type="text" id="code" name="code">
       <button class="btn btn-primary" type="submit">Discount code</button>
     </form>
-
-
-
 
     <form action="/save-order/" method="post">
       <input hidden type="text" name="prodid" value="{{productId}}">
