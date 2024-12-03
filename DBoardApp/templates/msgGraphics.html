@@ -11,8 +11,7 @@
       <script type="text/javascript">
         var deleted = document.getElementById("delinput").value;
         var posted = document.getElementById('postinput').value;
-        console.log(deleted)
-        console.log(posted)
+       
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
           type: 'bar',
@@ -22,12 +21,8 @@
               {
                 label: 'Deleted & posted',
                 data: [deleted, posted],
-                backgroundColor: ['rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
+                backgroundColor: ['#ba0d10',
+                '#4caf50',
                 ],
 
                 borderColor: [
@@ -56,7 +51,7 @@
       </script>
       <div class="collapse" id="collapseExample">
 
-        <div class="card card-body" style="background-image: url('/static/images/BGPic.jpg')">
+       
           {% for de in deleted %}
     
           <p id="del">Deleted posts: <b>{{de.count}}</p></b> Latest delete: <b>{{de.deldate}}</b>

@@ -83,7 +83,7 @@ def backToWebShop(request):
 
 def webshop(request):
     
-    webshopCount=webshopCount+1
+    
     collection = dbname['products']
     #maxId = collection.find().sort({'productId':-1}).limit(1)
     prods = collection.find()

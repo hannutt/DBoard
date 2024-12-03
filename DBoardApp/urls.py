@@ -14,7 +14,7 @@ urlpatterns = [
     path('login-form/',loginViews.login_user,name='login_user'),
     path('logout/',loginViews.logout_user),
     path('',loginViews.loginView),
-    path("index/",loginViews.FrontPage),
+    path("index/<str:username>/",loginViews.FrontPage),
     path('banIps/',BanViews.BanPage),
     path('ban-form/',BanViews.SaveBannedIp),
     path('del-ban/',BanViews.DeleteFromBan),

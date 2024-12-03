@@ -94,9 +94,4 @@ function stopChanging() {
     interval=setInterval(subjectChange, 5000);
 
   }
-  
-  
-
- 
-  
 }

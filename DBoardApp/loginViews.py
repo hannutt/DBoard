@@ -2,7 +2,7 @@ from datetime import date
 import socket
 import pymongo
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login,logout,get_user
 import speech_recognition as sr
 
 global today
@@ -44,9 +44,6 @@ def loginView(request):
      else:
         result=ip
         context = {'info':loginfo,'status':status,'times':times,'result':result}
-
-    
-   
    
      return render(request,'login.html',context)
 
@@ -54,7 +51,7 @@ def login_user(request):
      username = request.POST["username"]
      password = request.POST["password"]
     #authenticate metodi, joka saa parametreina tunnuksen ja salasanan
-     global user
+     #global user
      user = authenticate(username = username, password = password)
     #jos tiedot löytyvät/täsmäävät tietokannassa oleviin niin kirjataan käyttäjä sisälle
      if user:
@@ -62,10 +59,10 @@ def login_user(request):
         login(request,user)
 
         loginfo = "[Logged in]"
-        context = {'name':user,'info':loginfo}
+        #context = {'name':user}
 
         #return render (request,'login.html',context)
-        return redirect(FrontPage)
+        return redirect(FrontPage,user)
      if not user:
          return render(request,'loginerror.html')
 
@@ -82,13 +79,13 @@ def goToFrontPage(request):
     loginfo = "[logged in]"
     context = {'info':loginfo}
     #tämän avulla pysytään kirjautuneena.
-    login(request,user)
+    login(request,get_user)
     return render(request,'login.html',context)
 
 
 
 
-def FrontPage(request):
+def FrontPage(request,username):
    
      #kirjautumisen tarkastus, jos käyttäjä ei ole kirjautunut näytetään login.html sivu
      if not request.user.is_authenticated:
@@ -113,5 +110,5 @@ def FrontPage(request):
       deleted = col4.find()
       posted =  col4.find({'_id':2})
      
-      return render(request,'index.html',{"data":data,'deleted':deleted,'posted':posted,'user':user})
+      return render(request,'index.html',{"data":data,'deleted':deleted,'posted':posted,'user':username})
 

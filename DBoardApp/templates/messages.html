@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+</head>
+
+
+<!--for silmukoilla käydään kannasta haettu data läpi. data ja likedata on määritelty views.py:ssä-->
+{% for d in data %}
+
+<!--forloop.counter laskee for silmukan kierroksen ja kun kierrosnumero
+       lisätään div id jatkoksi saadaan accordion/collapse toimimaan yksi div kerrallaan klikkaamalla-->
+<div class="accordion" id="accordionExample{{forloop.counter}}">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="false" aria-controls="collapseOne">
+
+                <strong id="subject{{forloop.counter}}">Subject: {{d.title}} </strong>
+                <p hidden class="postid">Post ID: {{d.postid}}</p>
+
+                <form action="/post-delete/{{d.postid}}/" method="post">
+
+                    {% csrf_token %}
+
+                    <input hidden name="deletePostId" value="{{d.postid}}">
+                    <button id="deleteBtn{{forloop.counter}}" class="btn btn-danger">X</button>
+                </form>
+
+                <!--font awesome ikoni + tykkäysten määrä-->
+            </button>
+        </h2>
+
+        <div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse show"
+            data-bs-parent="#accordionExample{{forloop.counter}}">
+            <div class="accordion-body">
+                <p class="postDate"><strong>{{d.postDate}}</strong></p>
+                <p id="bodyTxt" class="bodyTxt">
+                    <strong>{{d.body}}<br>
+                </p>
+
+                <p id="reply{{forloop.counter}}" class="reply">
+                    Reply: {{d.replymsg}}
+
+                    <!--jos viimeinen forloopin luku, asetetan se lastreply p-tagiin-->
+                    {% if forloop.last %}
+                <p id="lastReply">{{forloop.counter}}</p>
+                {%endif%}
+                <script>
+                    isAdmin(document.getElementById("lastReply").innerHTML)
+                </script>
+                </p>
+                <br><br>
+
+                <!--IF/endif templatessa, jos postauksella ei ole tykkäyksiä, sen arvo on null jolloin näytetään likes:0-->
+                {%if d.likes == null %}
+                <strong>Likes: 0</strong>
+                <!--jos tykkäyksiä on eli arvo on suurempi kuin 0 niin näytetään kannasta haettu likes arvo-->
+                {%elif d.likes > 0 %}
+                <strong>Likes:{{d.likes}}</strong>
+                {%endif%}
+
+                <br>
+                <!--template if lauseen käyttö, jos reply eli tietokannan reply-kenttä on tyhjä näytetään
+               empty reply teksti-->
+
+                <p>{{postId}}</p>
+            </div>
+            <br>
+            <br>
+            <p class="d-inline-flex gap-1">
+                <a id="" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseReply{{forloop.counter}}"
+                    role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Reply
+                </a>
+                <!--font awesome-->
+            <form action="/post-Like/" method="post">
+                {% csrf_token %}
+                <input hidden type="number" name="postIDval" value="{{d.postid}}">
+                <!--
+         <input hidden type="text" value={{forloop.counter}} name="postNumber">-->
+                <button type="submit">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                </button>
+            </form>
+            <script>
+                const container = document.getElementById('container')
+                function openForm() {
+                    var subject = document.createElement('input')
+                    subject.placeholder = 'New subject'
+
+                    container.appendChild(subject)
+                }
+            </script>
+
+            <!--
+      <i id="copy" class="fa-solid fa-copy fa-lg" onclick="copyText()"></i>-->
+            <!--lomake saa parametrina mongodb:n postid:n eli d.postid joka käydään html:ssä for silmukalla
+    läpi näin post-edit lomake saa id numeron tietoon ja osaa välittää sen edit.html sivulle-->
+            <form action="/post-edit/{{d.postid}}/">
+                <!--button sisään on kääritty fontawesome kuvake, eli kuvake näkyy button-->
+                <button>
+                    <a href="/post-edit/{{d.postid}}/">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </button>
+
+            </form>
+
+
+
+            <div class="collapse" id="collapseReply{{forloop.counter}}">
+                <div class="card card-body">
+                    <form action="/post-Reply/" method="post">
+                        {% csrf_token %}
+                        <input type="number" name="postIDval" value="{{d.postid}}">
+                        <input id="reply" name="reply" placeholder="Your reply">
+                        <input type="submit" value="Reply to message">
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</div>
+{%endfor%}
+
+<div>
+
+</html>
