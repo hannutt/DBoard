@@ -64,6 +64,7 @@
 
     {%for p in prods %}
     
+    
     <button onclick="adding('{{forloop.counter}}')"> <i class="fa-solid fa-cart-plus"></i></a></button>
   
     <form action="/select-product-send/{{p.productId}}/" method="post">
@@ -89,14 +90,14 @@
       <div class="card-header" id="Prodcard"
         style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
           class="productPicture" src="/static/images/box50px.png" height="30">
-        <input id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
+        <input hidden id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
       </div>
 
       {%endif%}
       <div class="card-body">
         <h5 id="{{forloop.counter}}" class="card-title" style="font-size: large;
                       font-family: 'Brush Script MT',cursive;">
-          <p hidden>{{p.productId}}</p> Price: {{p.price}} €/can inStock:
+          <p hidden>{{p.productId}}</p> <p id="priceText" class="priceText">Price:</p> <p id="priceTag" class="priceTag">{{p.price}}</p>  €/can inStock:
           {{p.instock}} pcs
         </h5>
 
@@ -108,8 +109,8 @@
         <input type="radio" id="{{productId}}" name="str" value="16mg"
           onchange="setStrength('{{forloop.counter}}',16)">16 MG
 
-        <input type="text" max="{{p.instock}}" id="{{productId}}" name="amount" size="3" value="0"
-          onchange="setAmountField();createProw('{{forloop.counter}}')">
+        <input type="text" max="{{p.instock}}" id="amount{{forloop.counter}}" name="amount" size="3" value="0"
+          onchange="setAmountField();createProw('{{forloop.counter}}',document.getElementById('priceTag').innerText)">
 
       </div>
   </div>

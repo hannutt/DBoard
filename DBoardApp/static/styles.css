@@ -306,4 +306,11 @@
  {
     display: flex;
  }
+ /*dispaly inlinen avulla saadaan p-tagit pysymään samalla rivillä*/
+ .priceText {
+    display: inline;
+ }
+ .priceTag {
+    display: inline;
+ }
 

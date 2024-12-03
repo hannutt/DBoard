@@ -116,7 +116,7 @@ The use of the chatbot is started by clicking the question mark button. when the
 
 USER AUTHENTICATION:
 
-Log-in and Log-out features. Made with Django Authenticate library.
+Log-in and Log-out features. Made with Django Authenticate library. Access to the online store administrator's view is limited. the staff status of the logged in user must be true. This is checked at login using the Django Authenticate is_staff method.
 
 VOICE-ASSISTED LOGIN (EXPIREMENTAL)
 

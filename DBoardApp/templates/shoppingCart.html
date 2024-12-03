@@ -9,30 +9,22 @@
 <div class="form_popup" id="productForm">
     <form action="" class="form-container">
         <h4>Shopping cart</h4>
-        <ol id="list">
-
-        </ol>
+        <ol id="list"> </ol>
         <p id="notice"></p>
         <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
+        <!--
         <label for="preventCB">Prevent auto remove</label>
-        <input type="checkbox" id="preventCB" onchange="removeProducts()">
+        <input type="checkbox" id="preventCB" onchange="removeProducts()">-->
     </form>
     <script>
         var seconds = 10
-        var cb=true
-       
+        var cb = true
+
         //ostoskorin tyhjennys määräajan jälkeen
         function removeProducts() {
-            cb=false
-
-            console.log(returnedCB)
             var list = document.getElementById("list").innerHTML
-            if (returnedCB == true) {
-                document.getElementById("notice").innerHTML = "stopped"
-                return;
-            }
-            else {
-
+            console.log("list len "+list.length)
+            if (list.length > 0) {
                 var interval = setInterval(() => {
                     seconds = seconds - 1
                     document.getElementById("notice").innerHTML = "Products are automatically removed at: " + seconds
@@ -43,18 +35,13 @@
 
 
                 }, 1000)
-
-
             }
-        
-            /*
             else {
                 document.getElementById("notice").innerHTML = "Cart is already empty"
-            }*/
-
-
-
+            }
         }
+
+
     </script>
     <script>
         removeProducts()

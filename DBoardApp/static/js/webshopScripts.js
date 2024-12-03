@@ -35,7 +35,7 @@ function setAmountField() {
     }
 
 }
-function createProw(id) {
+function createProw(id,price) {
   var quantity = document.getElementsByName("amount")
   for (i = 0; i < quantity.length; i++)
     //jos jokin amount nimisen input kentän arvo on suurempi kuin 0 talletetaan arvo am-muuttujaan ja am
@@ -43,7 +43,7 @@ function createProw(id) {
     if (quantity[i].value > 0) {
       var am = quantity[i].value
     }
-    document.getElementById("prow"+id).value+=" "+am
+    document.getElementById("prow"+id).value+=" "+am+" "+price
 
 }
 
