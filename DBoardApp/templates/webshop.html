@@ -16,6 +16,7 @@
   <script src="{% static 'js/webshopScripts.js' %}"></script>
   <script src="{% static 'js/chatbot.js' %}"></script>
   <script src="{% static 'js/jqueryScript.js' %}"></script>
+  <script src="{% static 'js/productScripts.js' %}"></script>
   <title>Webshop</title>
 
 </head>
@@ -63,16 +64,18 @@
 
     {%for p in prods %}
     
-
+    <button onclick="adding('{{forloop.counter}}')"> <i class="fa-solid fa-cart-plus"></i></a></button>
+  
     <form action="/select-product-send/{{p.productId}}/" method="post">
       <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
 
       {% csrf_token %}
+      <!--
       <button id="sendOrder">
 
         <a href="/select-product-send/{{p.productId}}/">
           <i class="fa-solid fa-cart-plus"></i></a>
-      </button>
+      </button>-->
 
 
       <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">

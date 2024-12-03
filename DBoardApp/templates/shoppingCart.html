@@ -14,29 +14,43 @@
         </ol>
         <p id="notice"></p>
         <button class="shoppingCartBtn" onclick="closeShoppingCart()">Close</button>
+        <label for="preventCB">Prevent auto remove</label>
+        <input type="checkbox" id="preventCB" onchange="removeProducts()">
     </form>
     <script>
         var seconds = 10
+        var cb=true
+       
         //ostoskorin tyhjennys määräajan jälkeen
         function removeProducts() {
+            cb=false
+
+            console.log(returnedCB)
             var list = document.getElementById("list").innerHTML
-            
-            if (list.length > 0) {
+            if (returnedCB == true) {
+                document.getElementById("notice").innerHTML = "stopped"
+                return;
+            }
+            else {
+
                 var interval = setInterval(() => {
                     seconds = seconds - 1
                     document.getElementById("notice").innerHTML = "Products are automatically removed at: " + seconds
                     if (seconds === 0) {
                         clearInterval(interval)
-                        document.getElementById("list").innerHTML=""
+                        document.getElementById("list").innerHTML = ""
                     }
 
 
                 }, 1000)
 
+
             }
+        
+            /*
             else {
-                document.getElementById("notice").innerHTML="Cart is already empty"
-            }
+                document.getElementById("notice").innerHTML = "Cart is already empty"
+            }*/
 
 
 

@@ -4,9 +4,9 @@
 
 <head>
   <title>DBoard</title>
-  <style> 
-   
-</style> 
+  <style>
+
+  </style>
   <!--bootstrap ja fontawesome-->
   {% load static %}
 
@@ -22,16 +22,17 @@
   <script src="{% static 'js/scripts.js' %}"></script>
   <script src="{% static 'js/forumScripts.js' %}"></script>
   <script src="{% static 'js/jqueryScript.js' %}"></script>
- 
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css" rel="stylesheet">
   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <!--google kääntäjä-->
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script type="text/javascript">
- 
-    </script>
+
+  </script>
   {% endblock %}
 </head>
 <p class="userTop"><b>Logged in user:</b></p>
@@ -41,7 +42,7 @@
   <div class="LogoutBtn">
     <button class="btn btn-primary">Logout</button>
   </div>
- 
+
 </form>
 
 <form action="/" method="post">
@@ -49,13 +50,14 @@
   <div class="toIndexPageBtn">
     <button class="btn btn-primary">Front page (stay log-in)</button>
   </div>
- 
+
 </form>
 
 <center>
-<h3>DISCUSSION BOARD</h3>
+  <h3>DISCUSSION BOARD</h3>
 </center>
 <div id="google_translate_element"></div>
+
 <body class="forum" onload="getHeaders()">
   <form action="/post-filter/" method="post">
     {% csrf_token %}
@@ -63,44 +65,48 @@
       <!--HUOMAA ONCLICK KUN JOMPIKUMPI CHECKBOX ON VALITTU SUORITETAAN SET FILTER JOKA AINOASTAAN
     TOTEUTTAA SETBUTTONIN PAINALLUKSEN. NÄIN SAADAAN SUORITETTU VIEWS.PY:N FILTERPOST FUNKTIO ILMAN
     ERILLISTÄ PAINIKKEEN KLIKKAUSTA-->
-      <input class="form-check-input" type="checkbox" value="title" id="titleCB" name="selection" onclick="setFilter(document.getElementById('titleCB'))">
+      <input class="form-check-input" type="checkbox" value="title" id="titleCB" name="selection"
+        onclick="setFilter(document.getElementById('titleCB'))">
       <label class="form-check-label" for="titleCB">
         Show titles only
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="body" id="bodyCB" name="selection" onclick="setFilter(document.getElementById('bodyCB'))">
+      <input class="form-check-input" type="checkbox" value="body" id="bodyCB" name="selection"
+        onclick="setFilter(document.getElementById('bodyCB'))">
       <label class="form-check-label" for="bodyCB">
         Show bodytext only
       </label>
     </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="reply" id="replyCB" name="selection" onclick="setFilter(document.getElementById('replyCB'))">
-        <label class="form-check-label" for="replyCB">
-          Show replys only
-        </label>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="reply" id="replyCB" name="selection"
+        onclick="setFilter(document.getElementById('replyCB'))">
+      <label class="form-check-label" for="replyCB">
+        Show replys only
+      </label>
     </div>
     <div class="form-check">
-    <label class="form-check-label" for="prettyTextCB">Remove the extra marks from the answers</label>
-    <input class="form-check-input" type="checkbox" id="prettyTextCB" onchange="prettyText(document.getElementById('prettyTextCB'),document.getElementById('lastReply').innerHTML)">
-    <input hidden type="submit" value="set" id="setBtn">
+      <label class="form-check-label" for="prettyTextCB">Remove the extra marks from the answers</label>
+      <input class="form-check-input" type="checkbox" id="prettyTextCB"
+        onchange="prettyText(document.getElementById('prettyTextCB'),document.getElementById('lastReply').innerHTML)">
+      <input hidden type="submit" value="set" id="setBtn">
     </div>
   </form>
   <br>
   <center>
     <div id="changing" class="changing">
-    <p>Currently in discussions</p>
-  <p id="changingSubjects"></p>
-  <p hidden id="subjectID"></p>
-  <label for="stop">Stop changing</label>
-  <input type="checkbox" id="stop" onchange="stopChanging()">
-</div>
-</center>
+      <p>Currently in discussions</p>
+      <p id="changingSubjects"></p>
+      <p hidden id="subjectID"></p>
+      <label for="stop">Stop changing</label>
+      <input type="checkbox" id="stop" onchange="stopChanging()">
+    </div>
+  </center>
   <br>
   <script>
-    
+
   </script>
- 
+
   <!--for silmukoilla käydään kannasta haettu data läpi. data ja likedata on määritelty views.py:ssä-->
   {% for d in data %}
 
@@ -108,22 +114,22 @@
         lisätään div id jatkoksi saadaan accordion/collapse toimimaan yksi div kerrallaan klikkaamalla-->
   <div class="accordion" id="accordionExample{{forloop.counter}}">
     <div class="accordion-item">
-      <h2 class="accordion-header" >
+      <h2 class="accordion-header">
 
         <button class="accordion-button" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="false" aria-controls="collapseOne">
 
-          <strong id="subject{{forloop.counter}}">Subject: {{d.title}} </strong> 
+          <strong id="subject{{forloop.counter}}">Subject: {{d.title}} </strong>
           <p hidden class="postid">Post ID: {{d.postid}}</p>
-          
+
           <form action="/post-delete/{{d.postid}}/" method="post">
-            
+
             {% csrf_token %}
-            
+
             <input hidden name="deletePostId" value="{{d.postid}}">
             <button id="deleteBtn{{forloop.counter}}" class="btn btn-danger">X</button>
           </form>
-         
+
           <!--font awesome ikoni + tykkäysten määrä-->
         </button>
       </h2>
@@ -135,18 +141,18 @@
           <p id="bodyTxt" class="bodyTxt">
             <strong>{{d.body}}<br>
           </p>
-         
+
           <p id="reply{{forloop.counter}}" class="reply">
-            Reply: {{d.replymsg}} 
-            
+            Reply: {{d.replymsg}}
+
             <!--jos viimeinen forloopin luku, asetetan se lastreply p-tagiin-->
             {% if forloop.last %}
-            <p id="lastReply">{{forloop.counter}}</p>
-            {%endif%}
-            <script>
+          <p id="lastReply">{{forloop.counter}}</p>
+          {%endif%}
+          <script>
             isAdmin(document.getElementById("lastReply").innerHTML)
-          </script>            
-         </p>
+          </script>
+          </p>
           <br><br>
 
           <!--IF/endif templatessa, jos postauksella ei ole tykkäyksiä, sen arvo on null jolloin näytetään likes:0-->
@@ -176,7 +182,7 @@
           <input hidden type="number" name="postIDval" value="{{d.postid}}">
           <!--
           <input hidden type="text" value={{forloop.counter}} name="postNumber">-->
-          <button type="submit" >
+          <button type="submit">
             <i class="fa-solid fa-thumbs-up"></i>
           </button>
         </form>
@@ -251,13 +257,8 @@
         <input type="submit" value="Send">
 
       </form>
-
-
-
-
     </div>
   </div>
-
 
   </div>
   </div>
@@ -280,16 +281,16 @@
 
   <div class="collapse" id="collapseExample">
 
-    <div class="card card-body" style="background-image: url('/static/images/BGPic.jpg')"
+    <div class="card card-body" style="background-image: url('/static/images/BGPic.jpg')">
       {% for de in deleted %}
-      
+
       <p id="del">Deleted posts: <b>{{de.count}}</p></b> Latest delete: <b>{{de.deldate}}</b>
       <br>
       <p id="posted">New posts: {{de.postCount}} since {{de.postDate}}</p>
       <!--tietokanta arvojen tallennus input kenttin, josta ne talletetaan javascript muuttujiin
       ja käytetään muuttujia js koodissa-->
       <input hidden id="delinput" type="number" value="{{de.count}}">
-    
+
 
       <br>
 

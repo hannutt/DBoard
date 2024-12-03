@@ -105,6 +105,8 @@ def webshopAdmin(request):
 
 def productSelection(request,productId):
     if productId==0:
+        return render (request,'orderForm.html')
+
 
         #qty=request.POST['amount']
         #qtyList.append(qty)

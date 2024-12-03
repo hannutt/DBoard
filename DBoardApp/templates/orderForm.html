@@ -7,23 +7,36 @@
     <script src="{% static 'js/scripts.js' %}"></script>
 </head>
 <div class="order-flex">
-    <table border="1px solid black">
 
-        <tr>
-            <th>Product</th>
-            <th>Unit price</th>
-            <th>Amount</th>
-            <th>Strength</th>
-            <th>Total price</th>
-        </tr>
-        <tr>
-            <!--order form rivi-->
-            <td id="product">{{d.name}}</td>
-            <td id="price">{{d.price}} €</td>
-            <td id="finalAm" name="finaAm"></td>
-            <td id="str"></td>
-            <td id="total"></td>
-        </tr>
+    <button onclick="getLSprods()">click</button>
+    <!--order form rivi-->
+    <script>
+        function getLSprods() {
+            var prods = []
+
+            for (var i = 0; i < localStorage.length; i++) {
+                if (localStorage.key(i).includes("orderrow")) {
+                    prods.push(localStorage.getItem(localStorage.key(i)));
+                    var x = ` <table border="1px solid black">
+                              <tr>
+                              <th>Order</th>
+                              </tr>
+                              <tr> <td id="product">${prods}</td> </table>`
+
+                }
+                document.getElementById("tableplace").innerHTML = x
+
+
+            }
+            
+
+
+        }
+
+    </script>
+    <div id="tableplace"></div>
+
+    </tr>
     </table>
 </div>
 

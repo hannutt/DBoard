@@ -13,7 +13,7 @@ function setStrength(id,strength) {
     if (elem[i].checked) {
       console.log(elem[i].value)
       localStorage.setItem('str', elem[i].value)
-      document.getElementById("prow"+id).value+=elem[i].value
+      document.getElementById("prow"+id).value+=" "+elem[i].value
 
     }
 
@@ -43,7 +43,7 @@ function createProw(id) {
     if (quantity[i].value > 0) {
       var am = quantity[i].value
     }
-    document.getElementById("prow"+id).value+=am
+    document.getElementById("prow"+id).value+=" "+am
 
 }
 
@@ -53,9 +53,7 @@ function getAmount() {
   //localStorage.setItem("Amount",amount)
   document.getElementById("setBtn").click()
 
-
 }
-
 
 function setAmount() {
   //muuttujaan talletetaan html tagin sisältö ( tagin id on price)
