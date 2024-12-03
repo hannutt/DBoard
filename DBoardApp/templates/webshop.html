@@ -23,7 +23,7 @@
 
 <body onload="getProductCounter();DoBtnClick();" style="background-image: url(/static/images/BGPic.jpg);">
   <h2>Webshop</h2>
-  <p id="webshopvisitor">{{count}}</p>
+ 
 
   <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
 
@@ -109,7 +109,7 @@
         <input type="radio" id="{{productId}}" name="str" value="16mg"
           onchange="setStrength('{{forloop.counter}}',16)">16 MG
 
-        <input type="text" max="{{p.instock}}" id="amount{{forloop.counter}}" name="amount" size="3" value="0"
+        <input type="text" max="{{p.instock}}" id="amount{{forloop.counter}}"  name="amount" size="3" value="0"
           onchange="setAmountField();createProw('{{forloop.counter}}',document.getElementById('priceTag').innerText)">
 
       </div>

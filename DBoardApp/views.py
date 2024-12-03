@@ -82,17 +82,13 @@ def backToWebShop(request):
     return redirect (webshop)
 
 def webshop(request):
-    global webshopCount
+    
     webshopCount=webshopCount+1
     collection = dbname['products']
-    count={webshopCount}
-
-    
-    
     #maxId = collection.find().sort({'productId':-1}).limit(1)
     prods = collection.find()
     #print(maxId)
-    return render(request,'webshop.html',{'prods':prods,'count':count})
+    return render(request,'webshop.html',{'prods':prods})
 
 def webshopAdmin(request):
    

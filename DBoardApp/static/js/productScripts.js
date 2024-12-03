@@ -1,8 +1,17 @@
+var pattern=/[0-9]/g
 function adding(id) {
+    var qtyField=document.getElementById("amount"+id).value
+    console.log(qtyField)
+    
     if (document.getElementById("amount"+id).value=="0" ||document.getElementById("amount"+id).value=="")
     {
         alert("set amount")
 
+    }
+    //jos input-kenttä ei sisällä pattern muuttujasssa määriteltyä sisältöä eli numeroita.
+    else if(!qtyField.match(pattern))
+    {
+        alert("use numbers in amount field")
     }
     else {
         var randNum = Math.floor(Math.random() * 5000);

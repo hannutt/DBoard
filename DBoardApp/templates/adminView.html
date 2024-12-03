@@ -48,18 +48,20 @@
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample0">
                 <div class="accordion-body">
                     {% for o in Orders %}
-                    {{o.orderId}}
+                    <p id="oid{{forloop.counter}}">{{o.orderId}}</p>
+                    
                     {{o.name}}
                     {{o.address}}
                     {{o.city}}
                     {{o.zip}}
+                    
                     <p>Order:
                         {{o.orderedOrod}}
                     </p>
                     <p><b>Order date: {{o.orderDate}}</b></p>
-                    <p id="delivered{{forloop.counter}}" class="delivered">Delivered:
-                        {{o.delivered}}
-                    </p>
+                    <p id="delivered{{forloop.counter}}" class="delivered">Delivered: {{o.delivered}}</p>
+                    <button id="btn{{forloop.counter}}" onclick="editOrder('btn{{forloop.counter}}',document.getElementById('oid{{forloop.counter}}').innerText)">Edit order {{o.orderId}}</button>
+                    {%endfor%}  
                    
                     <form action="/mark-delivered/" method="post">
                         {% csrf_token %}
@@ -71,12 +73,15 @@
                         {% if forloop.last %}
                             <p id="last">{{forloop.counter}}</p>
                             {%endif%}
-                        {%endfor%}  
+                        
                     </form>
                     
                     
 
                 </div>
+            </div>
+            <div id="editing" class="editing">
+
             </div>
         
             <script>

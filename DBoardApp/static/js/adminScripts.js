@@ -116,3 +116,13 @@ function CheckId() {   //haetaan käyttäjän syöttämä arvo
       alert("id already used")
     }
   }
+
+  //tämä funktio luo input kentän klikatun painikkeen viereen. btnid on klikatun painikkeen id-arvo
+  function editOrder(btnid,oid)
+  {
+   var editing=document.getElementById(btnid)
+   var x=document.createElement("INPUT")
+   x.value=oid
+   editing.parentNode.insertBefore(x,editing.nextSibling)
+
+  }

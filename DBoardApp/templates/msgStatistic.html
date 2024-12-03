@@ -1,0 +1,23 @@
+<div class="collapse" id="collapseExample">
+
+    <div class="card card-body" style="background-image: url('/static/images/BGPic.jpg')">
+      {% for de in deleted %}
+
+      <p id="del">Deleted posts: <b>{{de.count}}</p></b> Latest delete: <b>{{de.deldate}}</b>
+      <br>
+      <p id="posted">New posts: {{de.postCount}} since {{de.postDate}}</p>
+      <!--tietokanta arvojen tallennus input kenttin, josta ne talletetaan javascript muuttujiin
+      ja käytetään muuttujia js koodissa-->
+      <input hidden id="delinput" type="number" value="{{de.count}}">
+
+
+      <br>
+
+
+      {%endfor%}
+      <!--posted dictionaryssa on vain deleted collection id 2:lla haettu data. erilliset dictionaryt ja for-silmukka, koska
+      muuten postCountia ei saanut näkymään sivulla-->
+      {% for p in posted %}
+      {{p.postCount}}
+      <input hidden id="postinput" type="number" value="{{p.postCount}}">
+      {%endfor%}
