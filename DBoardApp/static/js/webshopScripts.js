@@ -263,12 +263,28 @@ function clearOrderTable() {
 
 //funktiolla muutetaan tuotekortin fontin sisältöä medium-large välillä tuotekortti ja vaihtimen
 //arvo saadaan parametreina, joiden arvot annetaan webshop.html ssä
-function fontChange(productCard,switchVar) {
-  if (switchVar.checked == true) {
-    productCard.style.fontSize = "medium";
+function fontChange(switchVar,total) {
+  console.log(total)
+  var totalInt = parseInt(total)
+  if (switchVar.checked === true) {
+   
+    for (var i=1;i<totalInt;i++)
+    {
+        document.getElementById("Prodcard"+i).style.fontSize="larger"
+
+    }
+    
+    //productCard.style.fontSize = "medium";
   }
+  
   else {
-    productCard.style.fontSize = "large";
+    for (var i=1;i<totalInt;i++)
+      {
+          document.getElementById("Prodcard"+i).style.fontSize="medium"
+  
+      }
+      
+    //productCard.style.fontSize = "large";
   }
 
 }

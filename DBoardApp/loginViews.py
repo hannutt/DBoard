@@ -39,8 +39,14 @@ def loginView(request):
      #existIp=mycol.find({"ip": ip},{'_id':0}).count()
      #jos ip-osoite löytyy
      if isIpExist == 1 or isDeviceExist==1:
-        result='banned!' 
+        result='banned!'
+        
         context = {'info':loginfo,'status':status,'times':times,'result':result}
+     elif request.user.is_authenticated:
+         #kirjautuneen käyttäjän ktunnus
+         usr=request.user
+         loginfo = "[logged in]"
+         context = {'info':loginfo,'status':status,'times':times,'usr':usr}
      else:
         result=ip
         context = {'info':loginfo,'status':status,'times':times,'result':result}
@@ -51,7 +57,7 @@ def login_user(request):
      username = request.POST["username"]
      password = request.POST["password"]
     #authenticate metodi, joka saa parametreina tunnuksen ja salasanan
-     #global user
+    
      user = authenticate(username = username, password = password)
     #jos tiedot löytyvät/täsmäävät tietokannassa oleviin niin kirjataan käyttäjä sisälle
      if user:
@@ -62,7 +68,7 @@ def login_user(request):
         #context = {'name':user}
 
         #return render (request,'login.html',context)
-        return redirect(FrontPage,user)
+        return redirect(FrontPage)
      if not user:
          return render(request,'loginerror.html')
 
@@ -76,16 +82,19 @@ def logout_user(request):
 
 
 def goToFrontPage(request):
-    loginfo = "[logged in]"
-    context = {'info':loginfo}
+
+   if request.user.is_authenticated:
+       loginfo = "[logged in]"
+       context = {'info':loginfo}
+        
     #tämän avulla pysytään kirjautuneena.
-    login(request,get_user)
-    return render(request,'login.html',context)
+      
+       return render(request,'login.html',context)
 
 
 
-
-def FrontPage(request,username):
+#username eli urls.py:ssä määritelty /index/<username> parametri otetaan tässä funktiossa vastaan.
+def FrontPage(request):
    
      #kirjautumisen tarkastus, jos käyttäjä ei ole kirjautunut näytetään login.html sivu
      if not request.user.is_authenticated:
@@ -110,5 +119,5 @@ def FrontPage(request,username):
       deleted = col4.find()
       posted =  col4.find({'_id':2})
      
-      return render(request,'index.html',{"data":data,'deleted':deleted,'posted':posted,'user':username})
+      return render(request,'index.html',{"data":data,'deleted':deleted,'posted':posted})
 

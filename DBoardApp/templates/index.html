@@ -36,7 +36,7 @@
   {% endblock %}
 </head>
 <p class="userTop"><b>Logged in user:</b></p>
-<p id="user" class="user"><b>{{user}}</b></p>
+<p id="user" name="user" class="user"><b>{{user}}</b></p>
 <form action="/logout/" method="post">
   {% csrf_token %}
   <div class="LogoutBtn">
@@ -55,7 +55,7 @@
 
 <center>
   <h3>DISCUSSION BOARD</h3>
- 
+
 </center>
 <div id="google_translate_element"></div>
 
@@ -104,8 +104,8 @@
     </div>
   </center>
   <br>
-{% include 'messages.html' %}
-  
+  {% include 'messages.html' %}
+
 
   <p class="d-inline-flex gap-1">
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#NewPost" role="button" aria-expanded="false"
@@ -120,7 +120,7 @@
 
       <form action="/post-New/" method="post">
         {% csrf_token %}
-      
+
         <input id="postTitle" name="postTitle" class="postTitle" placeholder="Post title">
         <br>
         <textarea id="bodyText" name="bodyText" placeholder="Your post"></textarea>
@@ -146,9 +146,9 @@
     </a>
     {% include 'msgStatistic.html' %}
   </p>
-      {% include 'msgGraphics.html' %}
+  {% include 'msgGraphics.html' %}
 
-    </div>
+  </div>
   </div>
 
 </body>

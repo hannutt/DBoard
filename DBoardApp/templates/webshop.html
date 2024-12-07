@@ -23,7 +23,7 @@
 
 <body onload="getProductCounter();DoBtnClick();" style="background-image: url(/static/images/BGPic.jpg);">
   <h2>Webshop</h2>
- 
+
 
   <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
 
@@ -52,42 +52,44 @@
   </div>
   <div class="prods" id="prods" style="display: none" ;>
     <p>Change the font size of the product card with the switch below</p>
-    <div class="form-check form-switch" style="width: 25px; height: 25px;">
+    <div class="form-check form-switch">
 
-      <input class="form-check-input" style="background-color: #1ddecb;" type="checkbox" role="switch" id="toggleSwitch"
-        onchange="fontChange(document.getElementById('Prodcard'),document.getElementById('toggleSwitch'))">
-      <label class="form-check-label" for="flexSwitchCheckDefault"> Medium </label>
+      <span class="medium">
+      <label class="form-check-label" for="flexSwitchCheckDefault">MEDIUM</label>
+    </span>
+    
+      <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch"
+        onchange="fontChange(document.getElementById('toggleSwitch'),document.getElementById('forloopLast').innerText)">
+      
+        <span class="larger">
+      <label class="form-check-label" for="flexSwitchCheckDefault"> LARGER </label>
+    </span>
     </div>
     <br>
 
 
 
     {%for p in prods %}
-    
-    
+
+    <!--forloop counterin arvoa käytetään funktion parametrin arvona, että ohjelma tietää, mikä tuote on valittu-->
     <button onclick="adding('{{forloop.counter}}')"> <i class="fa-solid fa-cart-plus"></i></a></button>
-  
+
     <form action="/select-product-send/{{p.productId}}/" method="post">
       <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
 
       {% csrf_token %}
-      <!--
-      <button id="sendOrder">
 
-        <a href="/select-product-send/{{p.productId}}/">
-          <i class="fa-solid fa-cart-plus"></i></a>
-      </button>-->
 
 
       <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">
         <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
-        {% if p.instock < 5 %} <div class="card-header" id="Prodcard"
+        {% if p.instock < 5 %} <div class="card-header" id="Prodcard{{forloop.counter}}"
           style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
             class="productPicture" src="/static/images/box50px.png" height="30">
       </div>
 
       {%else%}
-      <div class="card-header" id="Prodcard"
+      <div class="card-header" id="Prodcard{{forloop.counter}}"
         style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
           class="productPicture" src="/static/images/box50px.png" height="30">
         <input hidden id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
@@ -97,7 +99,9 @@
       <div class="card-body">
         <h5 id="{{forloop.counter}}" class="card-title" style="font-size: large;
                       font-family: 'Brush Script MT',cursive;">
-          <p hidden>{{p.productId}}</p> <p id="priceText" class="priceText">Price:</p> <p id="priceTag" class="priceTag">{{p.price}}</p>  €/can inStock:
+          <p hidden>{{p.productId}}</p>
+          <p id="priceText" class="priceText">Price:</p>
+          <p id="priceTag" class="priceTag">{{p.price}}</p> €/can inStock:
           {{p.instock}} pcs
         </h5>
 
@@ -109,11 +113,14 @@
         <input type="radio" id="{{productId}}" name="str" value="16mg"
           onchange="setStrength('{{forloop.counter}}',16)">16 MG
 
-        <input type="text" max="{{p.instock}}" id="amount{{forloop.counter}}"  name="amount" size="3" value="0"
+        <input type="text" max="{{p.instock}}" id="amount{{forloop.counter}}" name="amount" size="3" value="0"
           onchange="setAmountField();createProw('{{forloop.counter}}',document.getElementById('priceTag').innerText)">
 
       </div>
   </div>
+  {% if forloop.last %}
+  <p hidden id="forloopLast">{{forloop.counter}}</p>
+  {%endif%}
   <div class="ask">
     <div class="questions" id="questions{{forloop.counter}}" hidden>
 

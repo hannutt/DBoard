@@ -151,6 +151,32 @@ function DoBtnClick() {
   document.getElementById("setBtn").click()
 }
 
+function visits() {
+  var visits = document.getElementById('times').innerHTML;
+  //muunto kokonaisluvuksi
+  parseInt(visits)
+  const xArray = [visits];
+  const yArray = [""];
+
+  const data = [{
+    x: xArray,
+    y: yArray,
+    //numeroväli 1, eli desimaaleja ei näytetä
+    dtick: 1,
+    //kaavion tyyppi
+    type: "bar",
+    //kaavion piirtosuunta
+    orientation: "h",
+    marker: { color: "rgba(50, 168, 145)" }
+  }];
+
+  const layout = {
+    title: "Visits on page", plot_bgcolor: "lightblue",
+    paper_bgcolor: "lightblue"
+  };
+
+  Plotly.newPlot("Plot", data, layout);
+}
 
 
 

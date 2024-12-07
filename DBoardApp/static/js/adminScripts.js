@@ -23,36 +23,7 @@
  }
  
  //lasketaan varastomäärä kaikkien tuotteiden osalta
- function countItems() {
-    var items = []
-    var sum = 0
-    //classnamella voidaan hakea kaikki luokan sisällä olevat arvot
-    var amount = document.getElementsByClassName("amount")
-
-    //toisto eli niin kauan kuin i on pienempi kuin amount
-    //luokan merkkimäärä lisätään merkkejä listaan
-    for (i = 0; i < amount.length; i++) {
-        //muunto luvuiksi
-        items.push(Number(amount[i].outerText))
-        //yhteenlasku
-        sum += Number(amount[i].outerText)
-        console.log(items)
-        console.log(sum)
-
-
-    }
-    //tuloksen näyttö sum p-tagissa ja värien määrittely
-    document.getElementById("sum").style.background="lightgray"
-    document.getElementById("sum").style.color="blue"
-    document.getElementById("most").style.background="lightgray"
-    document.getElementById("most").style.color="green"
-    document.getElementById("least").style.background="lightgray"
-    document.getElementById("least").style.color="red"
-    
-    document.getElementById("sum").innerHTML = "Sum of all products: " + sum
-
-
-}
+ 
 
 function CheckId() {   //haetaan käyttäjän syöttämä arvo
     var userInput = document.getElementById("prodIdVal").value;
@@ -117,12 +88,3 @@ function CheckId() {   //haetaan käyttäjän syöttämä arvo
     }
   }
 
-  //tämä funktio luo input kentän klikatun painikkeen viereen. btnid on klikatun painikkeen id-arvo
-  function editOrder(btnid,oid)
-  {
-   var editing=document.getElementById(btnid)
-   var x=document.createElement("INPUT")
-   x.value=oid
-   editing.parentNode.insertBefore(x,editing.nextSibling)
-
-  }

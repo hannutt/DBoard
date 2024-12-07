@@ -20,7 +20,9 @@
 </head>
 
 <body class="adminBody" onload="countItems();">
-    <center><h3>Admin view</h3></center>
+    <center>
+        <h3>Admin view</h3>
+    </center>
 
     <br>
     <!--usedid sql-taulun numerot-->
@@ -36,54 +38,58 @@
     </ul>
 
     {%endfor%}
-   
+
     <div class="accordion" id="accordionExample0" style="width: 350px;">
         <div class="accordion-item" style="background-color: lightgray;">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
                     aria-expanded="false" aria-controls="collapseOne">
-                    Orders<span class="order-span"><i class="fa-solid fa-toolbox"></i></span> 
+                    Orders<span class="order-span"><i class="fa-solid fa-toolbox"></i></span>
                 </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample0">
                 <div class="accordion-body">
                     {% for o in Orders %}
                     <p id="oid{{forloop.counter}}">{{o.orderId}}</p>
-                    
+
                     {{o.name}}
                     {{o.address}}
                     {{o.city}}
                     {{o.zip}}
-                    
+
                     <p>Order:
                         {{o.orderedOrod}}
                     </p>
                     <p><b>Order date: {{o.orderDate}}</b></p>
                     <p id="delivered{{forloop.counter}}" class="delivered">Delivered: {{o.delivered}}</p>
-                    <button id="btn{{forloop.counter}}" onclick="editOrder('btn{{forloop.counter}}',document.getElementById('oid{{forloop.counter}}').innerText)">Edit order {{o.orderId}}</button>
-                    {%endfor%}  
-                   
+                    <form action="/order-edit/{{o.orderId}}/{{o.name}}/{{o.city}}/{{o.zip}}/{{o.orderedOrod}}/{{o.address}}/{{o.orderDate}}">
+                        <button id="btn{{forloop.counter}}">Edit
+                            order {{o.orderId}}</button>
+                    </form>
+                    {%endfor%}
+
                     <form action="/mark-delivered/" method="post">
                         {% csrf_token %}
                         <input hidden type="text" name="orderid" value="{{o.orderId}}">
-                        
-                        <button id="setdelivered{{forloop.counter}}" type="submit"><i class="fa-solid fa-truck"></i></button>
+
+                        <button id="setdelivered{{forloop.counter}}" type="submit"><i
+                                class="fa-solid fa-truck"></i></button>
                         <br>
-                       <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
+                        <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
                         {% if forloop.last %}
-                            <p id="last">{{forloop.counter}}</p>
-                            {%endif%}
-                        
+                        <p id="last">{{forloop.counter}}</p>
+                        {%endif%}
+
                     </form>
-                    
-                    
+
+
 
                 </div>
             </div>
             <div id="editing" class="editing">
 
             </div>
-        
+
             <script>
                 delivered(document.getElementById("last").innerHTML)
             </script>
@@ -150,9 +156,10 @@
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#collapse3" aria-expanded="false"
                                                     aria-controls="collapse3">
-                                                    Edit products<span class="edit-span"><i class="fa-solid fa-file-pen"></i></span>
+                                                    Edit products<span class="edit-span"><i
+                                                            class="fa-solid fa-file-pen"></i></span>
                                                 </button>
-                                                
+
                                             </h2>
 
                                             <div id="collapse3" class="accordion-collapse collapse show"
@@ -167,103 +174,85 @@
                                                         method="post">
                                                         {% csrf_token %}
 
-                                                        <button type="submit"
-                                                            class="btn btn-primary">Edit</button>
-
-                                                        
-                                                    </form>
-                                                    
+                                                        <button type="submit" class="btn btn-primary">Edit</button>
 
 
-
-
-                                                    {%endfor%}
-
-                                </div>
-                                </div>                    
-                                <div class="accordion-item">
-
-                                    <div class="accordion" id="accordionExample5" style="width: 350px;">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse5" aria-expanded="false"
-                                                    aria-controls="collapse5">
-                                                    Delete products<span class="span-delete"><i class="fa-solid fa-trash"></i></span>
-                                                </button>
-                                                
-                                            </h2>
-
-                                            <div id="collapse5" class="accordion-collapse collapse show"
-                                                data-bs-parent="#accordionExample5">
-                                                <div class="accordion-body">
-                                                    {% for p in prodsDelete %}
-                                                    {{p.productId}}
-                                                    {{p.name}}
-
-
-                                                    <form action="/post-delete-product-send/{{p.productId}}/"
-                                                        method="post">
-                                                        {% csrf_token %}
-
-                                                        <button type="submit"
-                                                            class="btn btn-primary">Delete</button>
-
-                                                        <br>
                                                     </form>
 
 
 
 
+
                                                     {%endfor%}
-
-                                                    <script>
-                                                        function editForm() {
-                                                            var form = `<input type=text name="prodname" value={{p.productId}}>`
-                                                            document.getElementById("editForm").innerHTML = form
-                                                        }
-                                                    </script>
-
-
 
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="accordion-item">
+                                            <div class="accordion-item">
 
-                                            <div class="accordion" id="accordionExample4" style="width: 350px;">
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header">
-                                                        <button class="accordion-button" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapse4"
-                                                            aria-expanded="false" aria-controls="collapse4">
-                                                            MIN/MAX<span class="span-minmax"><i class="fa-solid fa-code-compare"></i></span>
-                                                        </button>
-                                                    </h2>
+                                                <div class="accordion" id="accordionExample5" style="width: 350px;">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="accordion-button" type="button"
+                                                                data-bs-toggle="collapse" data-bs-target="#collapse5"
+                                                                aria-expanded="false" aria-controls="collapse5">
+                                                                Delete products<span class="span-delete"><i
+                                                                        class="fa-solid fa-trash"></i></span>
+                                                            </button>
 
-                                                    <div id="collapse4" class="accordion-collapse collapse show"
-                                                        data-bs-parent="#accordionExample4">
-                                                        <div class="accordion-body">
-                                                            <p>Most in stock:</p>
+                                                        </h2>
 
-                                                            <br>
-                                                            {%for max in maxInstock %}
-                                                            <p id="most"><strong>{{max.name}} {{max.instock}}
-                                                                    pcs</strong></p>
-                                                            {%endfor%}
-                                                            <p>Least in stock:</p>
+                                                        <div id="collapse5" class="accordion-collapse collapse show"
+                                                            data-bs-parent="#accordionExample5">
+                                                            <div class="accordion-body">
+                                                                {% for p in prodsDelete %}
+                                                                {{p.productId}}
+                                                                {{p.name}}
 
-                                                            {%for min in minInstock %}
-                                                            <p id="least"><strong>{{min.name}} {{min.instock}}
-                                                                    pcs</strong> </p>
-                                                            {%endfor%}
 
-                                                            {%for total in stockTotal %}
-                                                            <p class="amount" hidden>{{total.instock}}</p>
-                                                            {%endfor%}
-                                                            <p id="sum"></p>
+                                                                <form
+                                                                    action="/post-delete-product-send/{{p.productId}}/"
+                                                                    method="post">
+                                                                    {% csrf_token %}
 
-                                                          
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Delete</button>
+
+                                                                    <br>
+                                                                </form>
+
+
+
+
+                                                                {%endfor%}
+
+                                                                <script>
+                                                                    function editForm() {
+                                                                        var form = `<input type=text name="prodname" value={{p.productId}}>`
+                                                                        document.getElementById("editForm").innerHTML = form
+                                                                    }
+                                                                </script>
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-item">
+
+                                                        <div class="accordion" id="accordionExample4"
+                                                            style="width: 350px;">
+                                                            <div class="accordion-item">
+                                                                <h2 class="accordion-header">
+                                                                    <button class="accordion-button" type="button"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target="#collapse4"
+                                                                        aria-expanded="false" aria-controls="collapse4">
+                                                                        MIN/MAX<span class="span-minmax"><i
+                                                                                class="fa-solid fa-code-compare"></i></span>
+                                                                    </button>
+                                                                </h2>
+
+                                                            {% include 'stockstatus.html'%}
 
 
 </body>

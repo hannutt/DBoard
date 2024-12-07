@@ -1,0 +1,25 @@
+<div id="collapse4"
+class="accordion-collapse collapse show"
+data-bs-parent="#accordionExample4">
+<div class="accordion-body">
+    <p>Most in stock:</p>
+
+    <br>
+    {%for max in maxInstock %}
+    <p id="most"><strong>{{max.name}}
+            {{max.instock}}
+            pcs</strong></p>
+    {%endfor%}
+    <p>Least in stock:</p>
+
+    {%for min in minInstock %}
+    <p id="least"><strong>{{min.name}}
+            {{min.instock}}
+            pcs</strong> </p>
+    {%endfor%}
+
+    {%for total in stockTotal %}
+    <p class="amount" hidden>{{total.instock}}</p>
+    {%endfor%}
+    <p id="sum"></p>
+

@@ -14,7 +14,9 @@ urlpatterns = [
     path('login-form/',loginViews.login_user,name='login_user'),
     path('logout/',loginViews.logout_user),
     path('',loginViews.loginView),
-    path("index/<str:username>/",loginViews.FrontPage),
+    #url parametri username=käyttäjän syöttämä ktunnus
+    #path("index/<str:username>/",loginViews.FrontPage),
+    path("index/",loginViews.FrontPage),
     path('banIps/',BanViews.BanPage),
     path('ban-form/',BanViews.SaveBannedIp),
     path('del-ban/',BanViews.DeleteFromBan),
@@ -46,6 +48,8 @@ urlpatterns = [
     path('post-delete-product-send/<int:productId>/',AdminViews.deleteProduct),
     path('mark-delivered/',AdminViews.delivered),
     path('register/',registerViews.showRegisteringPage),
-    path("send-mail/",registerViews.sendEmail)
+    path("send-mail/",registerViews.sendEmail),
+    path("order-edit/<int:orderid>/<str:name>/<str:city>/<str:zip>/<str:order>/<str:address>/<str:orderdate>/",AdminViews.orderEdit)
+    
    
 ]

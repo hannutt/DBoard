@@ -85,3 +85,7 @@ def delivered(request):
     print(orderid)
 
     return redirect(showAdminView)
+
+def orderEdit(request,orderid,name,city,zip,order,address,orderdate):
+    context={'orderid':orderid,"name":name,"city":city,"zip":zip,"order":order,"address":address,"orderdate":orderdate}
+    return render(request,"orderEdit.html",context)

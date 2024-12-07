@@ -317,4 +317,18 @@
     font-weight: bold;
     color: white;
 }
+.form-check-input {
+    position: absolute;
+    background-color: blue;
+    padding: 5px;
+    left:200px;
 
+}
+
+.medium {
+
+    float:initial;
+}
+.larger {
+    float: right;
+}

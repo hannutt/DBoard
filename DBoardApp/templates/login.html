@@ -23,6 +23,7 @@
 
 <body class="loginPage" onload="Check();">
   <h3 class="loginHeader">Log-in Page</h3>
+
   {%include 'visitorCounter.html'%}
 
   <form action="/login-form/" method="post">
@@ -33,15 +34,15 @@
 
     <br><br>
     <div class="flex-login">
-    <span>
-    <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
-  </span>
+      <span>
+        <button class="btn btn-primary" id="loginBtn" type="submit" value="Login">Login</button>
+      </span>
   </form>
   <span>
     <button class="btn btn-primary" id="voiceLogin" onclick="voiceLogin()">Voice login<span class="voice-span"> <i
           class="fa-solid fa-volume-high"></i></span></button>
   </span>
-</div>
+  </div>
   <br>
 
   <p hidden class="secondsLeft" id="secondsLeft"></p>
@@ -49,6 +50,7 @@
 
   <form action="/register/" method="post">
     {% csrf_token %}
+
     <span class="regbtn">
       <button class="btn btn-warning" id="regBtn" type="submit" value="Login">Register</button>
     </span>
@@ -87,16 +89,16 @@
 
 
 
-  <p id="loginStatus"><b>Login status: {{info}}</b></p>
+  <p id="loginStatus"><b>Login status: {{info}} {{usr}}</b></p>
   <div class="flex-buttons">
-  <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
+    <a class="btn btn-primary btn-md" href="/banIps">Ban IP-address</a>
 
-  <span>
-    <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
-  </span>
-  <span>
-    <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
-  </span>
+    <span>
+      <a class="btn btn-primary btn-md" href="/index">Discussion Board</a>
+    </span>
+    <span>
+      <a class="btn btn-primary btn-md" href="/webshop">Webshop</a>
+    </span>
   </div>
   <input type="checkbox" onclick="showModal()" id="instructions">
   <label for="instructions">Show log in instructions</label>
