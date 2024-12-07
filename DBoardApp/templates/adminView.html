@@ -29,9 +29,6 @@
     {% for num in numbers %}
     <ul>
         <li hidden>
-
-
-
             {{num}}
         </li>
 
@@ -62,6 +59,7 @@
                     </p>
                     <p><b>Order date: {{o.orderDate}}</b></p>
                     <p id="delivered{{forloop.counter}}" class="delivered">Delivered: {{o.delivered}}</p>
+                    <!--editorder.html saa parametreina tilauksen tiedot-->
                     <form action="/order-edit/{{o.orderId}}/{{o.name}}/{{o.city}}/{{o.zip}}/{{o.orderedOrod}}/{{o.address}}/{{o.orderDate}}">
                         <button id="btn{{forloop.counter}}">Edit
                             order {{o.orderId}}</button>
@@ -139,13 +137,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-
-
-                                    function changeColorBack() {
-                                        document.getElementById("prodIdVal").style.background = "#1fe0"
-                                    }
-                                </script>
 
 
                                 <div class="accordion-item">
@@ -177,12 +168,7 @@
                                                         <button type="submit" class="btn btn-primary">Edit</button>
 
 
-                                                    </form>
-
-
-
-
-
+                                                </form>
                                                     {%endfor%}
 
                                                 </div>
@@ -231,28 +217,10 @@
                                                                         document.getElementById("editForm").innerHTML = form
                                                                     }
                                                                 </script>
-
-
-
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="accordion-item">
-
-                                                        <div class="accordion" id="accordionExample4"
-                                                            style="width: 350px;">
-                                                            <div class="accordion-item">
-                                                                <h2 class="accordion-header">
-                                                                    <button class="accordion-button" type="button"
-                                                                        data-bs-toggle="collapse"
-                                                                        data-bs-target="#collapse4"
-                                                                        aria-expanded="false" aria-controls="collapse4">
-                                                                        MIN/MAX<span class="span-minmax"><i
-                                                                                class="fa-solid fa-code-compare"></i></span>
-                                                                    </button>
-                                                                </h2>
-
-                                                            {% include 'stockstatus.html'%}
+                                                 {% include 'stockstatus.html'%}
 
 
 </body>

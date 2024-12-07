@@ -88,3 +88,7 @@ function CheckId() {   //haetaan käyttäjän syöttämä arvo
     }
   }
 
+  function changeColorBack() {
+    document.getElementById("prodIdVal").style.background = "#1fe0"
+}
+

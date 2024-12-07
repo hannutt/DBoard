@@ -89,3 +89,21 @@ def delivered(request):
 def orderEdit(request,orderid,name,city,zip,order,address,orderdate):
     context={'orderid':orderid,"name":name,"city":city,"zip":zip,"order":order,"address":address,"orderdate":orderdate}
     return render(request,"orderEdit.html",context)
+
+
+def adminEditOrder(request):
+    orders = dbname['orders']
+    oid=request.POST['oid']
+    oidInt=int(oid)
+     #vastaa sql WHERE ID = LAUSETTA
+    filter = {'orderId':oidInt}
+    name=request.POST['cutomername']
+    address=request.POST['customeradd']
+    city=request.POST['customercity']
+    zipcode=request.POST['customerzip']
+    orderdate=request.POST['customerorderdate']
+    order=request.POST['customerorder']
+    updateOrder={"orderDate":orderdate,"name":name,"address":address,"city":city,"zip":zipcode,"orderedOrod":order}
+    order.update_one(filter,updateOrder)
+
+    return render(request,"orderEdit.html")

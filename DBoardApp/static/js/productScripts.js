@@ -1,7 +1,12 @@
 var pattern=/[0-9]/g
 function adding(id) {
     var qtyField=document.getElementById("amount"+id).value
+    var qtyInt = parseInt(qtyField)
+    var priceField=document.getElementById("priceTag").innerHTML
+    var priceInt=parseFloat(priceField)
+    var sum= qtyInt*priceInt
     console.log(qtyField)
+    
     
     if (document.getElementById("amount"+id).value=="0" ||document.getElementById("amount"+id).value=="")
     {
@@ -15,7 +20,7 @@ function adding(id) {
     }
     else {
         var randNum = Math.floor(Math.random() * 5000);
-        var row = document.getElementById("prow" + id).value
+        var row = document.getElementById("prow" + id).value+" "+sum 
         localStorage.setItem('orderrow' + randNum, row)
 
     }
