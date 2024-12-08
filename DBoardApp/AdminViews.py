@@ -48,19 +48,26 @@ def showAdminView(request):
 
 def AddProducts(request):
     prodCollection = dbname['products']
+    
     prodId = request.POST['prodId']
-    connection = sqlite3.connect('db.sqlite3')
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO usedId (used) VALUES(?)",prodId)
-    connection.commit()
-    prodIdInt = int(prodId)
-    prodName = request.POST['prodName']
-    prodPrice = request.POST['prodPrice']
-    prodStock = request.POST['prodStock']
-    addQuery={'productId':prodIdInt,'name':prodName,'price':prodPrice,'instock':prodStock}
-    prodCollection.insert_one(addQuery)
-    connection.close()
-    return redirect(showAdminView)
+    prodIdint=int(prodId)
+    #tarkistetaan löytyykö käyttäjän syöttämä arvo productid kentästä.
+    if prodCollection.find_one({"productId": {"$eq": prodIdint}}):
+        return render(request,"loginerror.html")
+    else:
+        connection = sqlite3.connect('db.sqlite3')
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO usedId (used) VALUES(?)",prodId)
+        connection.commit()
+        prodIdInt = int(prodId)
+        prodName = request.POST['prodName']
+        prodPrice = request.POST['prodPrice']
+        prodStock = request.POST['prodStock']
+        addQuery={'productId':prodIdInt,'name':prodName,'price':prodPrice,'instock':prodStock}
+        prodCollection.insert_one(addQuery)
+        connection.close()
+        
+        return redirect(showAdminView)
 
 def deleteProduct(request,productId):
     prodCollection = dbname['products']
@@ -97,13 +104,13 @@ def adminEditOrder(request):
     oidInt=int(oid)
      #vastaa sql WHERE ID = LAUSETTA
     filter = {'orderId':oidInt}
-    name=request.POST['cutomername']
+    name=request.POST['customername']
     address=request.POST['customeradd']
     city=request.POST['customercity']
     zipcode=request.POST['customerzip']
     orderdate=request.POST['customerorderdate']
     order=request.POST['customerorder']
-    updateOrder={"orderDate":orderdate,"name":name,"address":address,"city":city,"zip":zipcode,"orderedOrod":order}
-    order.update_one(filter,updateOrder)
+    updateOrder={"$set":{"orderDate":orderdate,"name":name,"address":address,"city":city,"zip":zipcode,"orderedOrod":order}}
+    orders.update_one(filter,updateOrder)
 
     return render(request,"orderEdit.html")

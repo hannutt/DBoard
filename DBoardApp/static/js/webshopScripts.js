@@ -271,16 +271,18 @@ function fontChange(switchVar,total) {
     for (var i=1;i<totalInt;i++)
     {
         document.getElementById("Prodcard"+i).style.fontSize="larger"
+        document.getElementById("card-body"+i).style.fontSize="larger"
 
     }
     
-    //productCard.style.fontSize = "medium";
+    
   }
   
   else {
     for (var i=1;i<totalInt;i++)
       {
           document.getElementById("Prodcard"+i).style.fontSize="medium"
+          document.getElementById("card-body"+i).style.fontSize="medium"
   
       }
       

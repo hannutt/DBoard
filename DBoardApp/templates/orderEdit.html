@@ -6,6 +6,7 @@
     <body>
         <h2>Edit order</h2>
         <form action="/admin-edit/" method="post">
+        {% csrf_token %}
         <input type="text" name="oid" id="oid" value="{{orderid}}" readonly><br>
         <input type="text" name="customername" id="customername" value="{{name}}"><br>
         <input type="text" name="customeradd" id="customeradd" value="{{address}}"><br>

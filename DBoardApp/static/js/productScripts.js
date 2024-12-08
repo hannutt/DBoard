@@ -50,17 +50,17 @@ function getLSprods() {
         if (localStorage.key(i).includes("orderrow")) {
             prods.push(localStorage.getItem(localStorage.key(i)));
 
-            var x = ` <table border="1px solid black">
+            var tablecode = ` <table border="1px solid black">
                       <tr>
-                      <th>Order</th>
+                      <th>Your Orders</th>
                       </tr>
-                      <tr> <td id="product">${prods}</tr></td>
+                      <tr><td id="product">${prods}</tr></td>
                      </table>`
 
 
         }
 
-        document.getElementById("tableplace").innerHTML = x
+        document.getElementById("tableplace").innerHTML = tablecode
     }
 }
 function simulateBtnClick() {

@@ -49,7 +49,8 @@ urlpatterns = [
     path('mark-delivered/',AdminViews.delivered),
     path('register/',registerViews.showRegisteringPage),
     path("send-mail/",registerViews.sendEmail),
-    path("order-edit/<int:orderid>/<str:name>/<str:city>/<str:zip>/<str:order>/<str:address>/<str:orderdate>/",AdminViews.orderEdit)
+    path("order-edit/<int:orderid>/<str:name>/<str:city>/<str:zip>/<str:order>/<str:address>/<str:orderdate>/",AdminViews.orderEdit),
+    path("admin-edit/",AdminViews.adminEditOrder)
     
    
 ]

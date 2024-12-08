@@ -52,19 +52,22 @@
   </div>
   <div class="prods" id="prods" style="display: none" ;>
     <p>Change the font size of the product card with the switch below</p>
+   
     <div class="form-check form-switch">
 
       <span class="medium">
       <label class="form-check-label" for="flexSwitchCheckDefault">MEDIUM</label>
     </span>
     
+    <span class="fontChange">
       <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch"
         onchange="fontChange(document.getElementById('toggleSwitch'),document.getElementById('forloopLast').innerText)">
-      
+      </span>
         <span class="larger">
       <label class="form-check-label" for="flexSwitchCheckDefault"> LARGER </label>
     </span>
     </div>
+  
     <br>
 
 
@@ -96,7 +99,7 @@
       </div>
 
       {%endif%}
-      <div class="card-body">
+      <div class="card-body" id="card-body{{forloop.counter}}">
         <h5 id="{{forloop.counter}}" class="card-title" style="font-size: large;
                       font-family: 'Brush Script MT',cursive;">
           <p hidden>{{p.productId}}</p>

@@ -88,7 +88,8 @@ Example view of admin dashboard made with Bootstrap accordion/collapse dive. Ico
 
 ID CHECK in ADMIN VIEW
 
-When the admin page is loaded, the python function also gets the values ​​from the used Id sql table. the id number of each added product is always stored in this table. When adding a new product to the id value input field, there is an onchange Hadler that checks the ids used with a javaScript function, which are imported to the html page with a Python function. If the ID given by the user already exists, the program displays a notification.
+When the admin page is loaded, the python function also gets the values ​​from the used Id sql table. the id number of each added product is always stored in this table. When adding a new product to the id value input field, there is an onchange Hadler that checks the ids used with a javaScript function, which are imported to the html page with a Python function. If the ID given by the user already exists, the program displays a notification. The ID number entered is also checked with MongoDB's $eq operator before saving.
+So the user cannot use the same id number a second time.
 
 MARK DELIVERED IN ADMIN VIEW
 

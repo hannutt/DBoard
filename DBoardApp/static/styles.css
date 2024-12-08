@@ -317,11 +317,9 @@
     font-weight: bold;
     color: white;
 }
-.form-check-input {
-    position: absolute;
-    background-color: blue;
-    padding: 5px;
-    left:200px;
+.fontChange {
+   position: absolute;
+   left:200px;
 
 }
 
