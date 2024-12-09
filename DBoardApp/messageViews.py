@@ -5,16 +5,8 @@ from django.shortcuts import render,redirect
 import time
 from DBoardApp import loginViews
 
-global today
-today = date.today()
-global todayStr
-todayStr =today.strftime('%d.%m.%y')
 
-global curTime
-curTime =  time.strftime("%H:%M:%S", time.localtime())
-todayStr =today.strftime('%d.%m.%y')
-global dateNtime
-dateNtime = todayStr+' '+curTime
+
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 dbname = client['DBoardDB']
 
@@ -59,6 +51,10 @@ def postReply(request):
      return redirect (loginViews.FrontPage)
 
 def postNew(request):
+      today = date.today()
+      todayStr =today.strftime('%d.%m.%y')
+      curTime =  time.strftime("%H:%M:%S", time.localtime())
+      dateNtime = todayStr+' '+curTime
       newPostid =2
       postId = random.randint(1,500)
       title = request.POST['postTitle']
@@ -79,12 +75,6 @@ def postNew(request):
         Postcollection.insert_one(post)
         deletecol.update_one({"_id":newPostid},{'$inc':{"postCount":+1},'$set':{"postDate":todayStr}})        
     
-      #newQuery = {"_id":newid,"postCount":1,"postDate":todayStr}
-      #client = pymongo.MongoClient('mongodb://localhost:27017/')
-      #dbname = client['DBoardDB']
-     
-      
-      #col.insert_one(newQuery)
       #redirectillä palautetaan haluttu näkymä lisäksi html sivun formissa ja urls.pyssä täytyy lisätä / merkki
       return redirect (loginViews.FrontPage)
 
@@ -125,22 +115,23 @@ def showEdit(request,postid):
 
 
 def deletePost(request,postid):
-      
+    today = date.today()
+    todayStr =today.strftime('%d.%m.%y')
       #options = ['title','body']
       #selection on index.html checkboksien name ominaisuuden arvo eli merkkijono
      
-      collection = dbname['posts']
-      updCollection = dbname['deleted']
+    collection = dbname['posts']
+    updCollection = dbname['deleted']
     
-      delquery = {"postid":postid}
-      postId = 1
-      collection.delete_one(delquery)
+    delquery = {"postid":postid}
+    postId = 1
+    collection.delete_one(delquery)
       
      #päivitetään poistettujen dokumenttien lukumäärä
-      updCollection.update_one({"_id":postId},{'$inc':{"count":+1},'$set':{"deldate":todayStr}})
+    updCollection.update_one({"_id":postId},{'$inc':{"count":+1},'$set':{"deldate":todayStr}})
      
     
-      return render(request,'index.html')
+    return render(request,'index.html')
 
 
 def filterPost(request):

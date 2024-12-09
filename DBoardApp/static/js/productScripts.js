@@ -1,30 +1,28 @@
-var pattern=/[0-9]/g
+var pattern = /[0-9]/g
+
 function adding(id) {
-    var qtyField=document.getElementById("amount"+id).value
+    var qtyField = document.getElementById("amount" + id).value
     var qtyInt = parseInt(qtyField)
-    var priceField=document.getElementById("priceTag").innerHTML
-    var priceInt=parseFloat(priceField)
-    var sum= qtyInt*priceInt
-    console.log(qtyField)
-    
-    
-    if (document.getElementById("amount"+id).value=="0" ||document.getElementById("amount"+id).value=="")
-    {
+    var priceField = document.getElementById("priceTag").innerHTML
+    var priceInt = parseFloat(priceField)
+    var sum = qtyInt * priceInt
+
+    if (document.getElementById("amount" + id).value == "0" || document.getElementById("amount" + id).value == "") {
         alert("set amount")
 
     }
     //jos input-kenttä ei sisällä pattern muuttujasssa määriteltyä sisältöä eli numeroita.
-    else if(!qtyField.match(pattern))
-    {
+    else if (!qtyField.match(pattern)) {
         alert("use numbers in amount field")
     }
     else {
         var randNum = Math.floor(Math.random() * 5000);
-        var row = document.getElementById("prow" + id).value+" "+sum 
+        var row = document.getElementById("prow" + id).value + " " + sum
         localStorage.setItem('orderrow' + randNum, row)
 
     }
-   
+
+
 
 
 
@@ -61,9 +59,12 @@ function getLSprods() {
         }
 
         document.getElementById("tableplace").innerHTML = tablecode
+
     }
+    var order = document.getElementById("product").innerText
+    document.getElementById("orderRow").value = order
 }
 function simulateBtnClick() {
     document.getElementById("prodClick").click()
-  }
-  
+}
+

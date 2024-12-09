@@ -5,6 +5,7 @@ from DBoardApp import messageViews
 from DBoardApp import BanViews
 from DBoardApp import AdminViews
 from DBoardApp import registerViews
+from DBoardApp import orderForm
 from .views import saveCsv,webshop,productSelection,saveOrderToDb,discount,webshopAdmin,editProduct,updateProd,\
 backToWebShop
 
@@ -37,7 +38,7 @@ urlpatterns = [
     path('post-filter/',messageViews.filterPost),
     path('webshop/',webshop),
     path('discount-code/',discount),
-    path('select-product-send/<int:productId>/',productSelection),
+    #path('select-product-send/<int:productId>/',productSelection),
     path('save-order/',saveOrderToDb),
     path('adminView/',AdminViews.showAdminView),
     path('add-product/',AdminViews.AddProducts),
@@ -50,7 +51,9 @@ urlpatterns = [
     path('register/',registerViews.showRegisteringPage),
     path("send-mail/",registerViews.sendEmail),
     path("order-edit/<int:orderid>/<str:name>/<str:city>/<str:zip>/<str:order>/<str:address>/<str:orderdate>/",AdminViews.orderEdit),
-    path("admin-edit/",AdminViews.adminEditOrder)
+    path("admin-edit/",AdminViews.adminEditOrder),
+    path("orderform/",orderForm.orderFormPage),
+    path("orderform-send/",orderForm.saveOrderToDatabase),
     
    
 ]

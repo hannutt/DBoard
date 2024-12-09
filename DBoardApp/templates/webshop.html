@@ -25,7 +25,7 @@
   <h2>Webshop</h2>
 
 
-  <a class="btn btn-primary" href="/select-product-send/{{0}}">Return to cart </a>
+  <a class="btn btn-primary" href="/orderform">Return to cart </a>
 
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
@@ -75,7 +75,7 @@
     {%for p in prods %}
 
     <!--forloop counterin arvoa käytetään funktion parametrin arvona, että ohjelma tietää, mikä tuote on valittu-->
-    <button onclick="adding('{{forloop.counter}}')"> <i class="fa-solid fa-cart-plus"></i></a></button>
+    <button onclick="adding('{{forloop.counter}}')"> <i class="fa-solid fa-cart-plus"></i></button>
 
     <form action="/select-product-send/{{p.productId}}/" method="post">
       <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
@@ -89,13 +89,14 @@
         {% if p.instock < 5 %} <div class="card-header" id="Prodcard{{forloop.counter}}"
           style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
             class="productPicture" src="/static/images/box50px.png" height="30">
+            <input id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
       </div>
 
       {%else%}
       <div class="card-header" id="Prodcard{{forloop.counter}}"
         style="background-color: green; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
           class="productPicture" src="/static/images/box50px.png" height="30">
-        <input hidden id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
+        <input id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
       </div>
 
       {%endif%}
