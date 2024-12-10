@@ -92,3 +92,9 @@ function CheckId() {   //haetaan käyttäjän syöttämä arvo
     document.getElementById("prodIdVal").style.background = "#1fe0"
 }
 
+function getMongoField(field) {
+  var fieldName=document.getElementById("fields").value = field.options[field.selectedIndex].text
+  console.log(fieldName)
+  document.getElementById("field").value=fieldName
+
+}

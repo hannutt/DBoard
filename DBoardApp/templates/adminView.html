@@ -24,12 +24,38 @@
         <h3>Admin view</h3>
     </center>
     <div>
-        Search from orders:
+        <p>Select field</p>
+        <select name="fields" id="fields" onchange="getMongoField(this)">
+        {% for f in fields %}
+
+        <option value="{{f}}">{{f}}</option>
+        {%endfor%}
+
+        </select>
+        <br>
+
+        <p>Enter a search word</p>
+       
         <form action="/search-fromdb/" method="post">
             {% csrf_token %}
-        <input type="text" name="search" id="search">
-        <button>Find</button>
-    </form>
+            <input hidden type="text" name="field" id="field">
+            <input type="text" name="search" id="search">
+            <button  class="btn btn-primary">Find</button>
+        </form>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Order</th>
+                <th>Orderdate</th>
+            </tr>
+            <tr>
+                {% for r in results %}
+                <td>{{r.name}}</td>
+                <td>{{r.orderedOrod}}</td>
+                <td>{{r.orderDate}}</td>
+            </tr>
+            {%endfor%}
+        </table>
     </div>
 
     <br>
@@ -88,9 +114,9 @@
                         <button id="setdelivered{{forloop.counter}}" type="submit"><i
                                 class="fa-solid fa-truck"></i></button>
 
-                    {%endfor%}
+                        {%endfor%}
 
-                  
+
                         <br>
                         <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
                         {% if forloop.last %}

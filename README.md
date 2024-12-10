@@ -82,11 +82,18 @@ Inventory management, from the view you can quickly check which product is the m
 Attention color for the products that are most and least in stock.
 The name of the product that is in short supply is shown in red and the name of the product with the most stock is shown in green.
 
-The administrator also has a search function that can be used to search for information about orders stored in the database.
-
 Example view of admin dashboard made with Bootstrap accordion/collapse dive. Icons are Fontawesome icons.
 
 ![alt text](DBoardApp/static/images/adminPanel.png)
+
+ADMINISTRATOR SEARCH FUNCTION
+
+the administrator can retrieve order information from the MongoDB database. First, the program searches for the field names of the "orders" collection using pymongo's Find method, after which the field names are displayed in the HTML selection component using the Django for-loop. The system administrator selects a field from the Select component, whose value is used as a search filter, and writes the search value in the input field.
+
+The search filter and search value are sent to a Python function that performs a search based on them and displays the search results on an HTML page.
+
+![alt text](DBoardApp/static/images/Dboardfind.png)
+
 
 ID CHECK in ADMIN VIEW
 

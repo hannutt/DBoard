@@ -8,6 +8,9 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 dbname = client['DBoardDB']
 
 def showAdminView(request):
+
+
+      fields=[]
       #jos käyttäjä ei ole kirjautunut tai käyttäjä on kijrautunut mutta ei ole merkitty staffiksi.
       if not request.user.is_authenticated or request.user.is_authenticated and not request.user.is_staff:
           return redirect(loginViews.loginView)
@@ -18,6 +21,10 @@ def showAdminView(request):
           
         col = dbname['orders']
         Orders = col.find()
+         #haetaan kenttien nimet
+        fieldNames=col.find_one()
+        for f in fieldNames:
+            fields.append(f)
     
         numbers = []
         connection = sqlite3.connect('db.sqlite3')
@@ -43,7 +50,7 @@ def showAdminView(request):
       #  maxiumStock={'maxiumStock':maxstock}
    
    
-        return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal,'Orders':Orders,'prodsDelete':prodsDelete})
+        return render(request,'adminView.html',{'prods':prods,"numbers":numbers,"maxInstock":maxInstock,'minInstock':minInstock,"stockTotal":stockTotal,'Orders':Orders,'prodsDelete':prodsDelete,"fields":fields})
 
 
 def AddProducts(request):
@@ -122,10 +129,15 @@ def adminDeleteOrder(request,orderid):
     return render(request,"adminView.html")
 
 def searchData(request):
+    results=[]
+    field=request.POST['field']
     orders = dbname['orders']
+
     search=request.POST['search']
-    searchQuery={"name":search}
+    searchQuery={field:search}
     res = orders.find(searchQuery)
-    for x in res:
-        print(x)
-    return render(request,"adminView.html")
+    for r in res:
+        results.append(r)
+       
+    content={"results":results}
+    return render(request,"adminView.html",content)
