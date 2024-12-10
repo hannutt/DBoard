@@ -330,3 +330,7 @@
 .larger {
     float: right;
 }
+.btn-container {
+    display: flex;
+    
+}

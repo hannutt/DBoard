@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
         <title></title>
     </head>
     <body>
@@ -13,8 +18,12 @@
         <input type="text" name="customercity" id="customercity" value="{{city}}"><br>
         <input type="text" name="customerzip" id="customerzip" value="{{zip}}"><br>
         <input type="text" name="customerorder" id="customerorder" value="{{order}}"><br>
-        <input type="text" name="customerorderdate" id="customerorderdate" value="{{orderdate}}"><br>
-        <button>Save changes</button>
+        <input type="text" name="customerorderdate" id="customerorderdate" value="{{orderDate}}"><br>
+        <br>
+        <button class="btn btn-primary">Save changes</button>
     </form>
+    <form action="/adminView/" method="post">
+        {% csrf_token %}
+    <button class="btn btn-info">Go back</button></form>
     </body>
 </html>

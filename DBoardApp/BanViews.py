@@ -13,10 +13,9 @@ def BanPage(request):
     dateInfo = collection.find({},{"_id":0,"ip":0,"BanDate":1})
     #lasketaan BannedIps kokoelman dokumenttien määrä
     counter = collection.count_documents({})
-    print(counter)
     context={'result':result,'counter':counter}
     dateContext = {'dateInfo':dateInfo}
-    print(dateInfo)
+
     
     return render(request,'banIps.html',context)
 

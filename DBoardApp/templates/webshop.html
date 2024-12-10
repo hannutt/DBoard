@@ -25,8 +25,7 @@
   <h2>Webshop</h2>
 
 
-  <a class="btn btn-primary" href="/orderform">Return to cart </a>
-
+  <a class="btn btn-primary" href="/orderform">Order form </a>
   <a class="btn btn-primary" href="/adminView">Admin view</a>
   <br><br>
 
@@ -52,22 +51,22 @@
   </div>
   <div class="prods" id="prods" style="display: none" ;>
     <p>Change the font size of the product card with the switch below</p>
-   
+
     <div class="form-check form-switch">
 
       <span class="medium">
-      <label class="form-check-label" for="flexSwitchCheckDefault">MEDIUM</label>
-    </span>
-    
-    <span class="fontChange">
-      <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch"
-        onchange="fontChange(document.getElementById('toggleSwitch'),document.getElementById('forloopLast').innerText)">
+        <label class="form-check-label" for="flexSwitchCheckDefault">MEDIUM</label>
       </span>
-        <span class="larger">
-      <label class="form-check-label" for="flexSwitchCheckDefault"> LARGER </label>
-    </span>
+
+      <span class="fontChange">
+        <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch"
+          onchange="fontChange(document.getElementById('toggleSwitch'),document.getElementById('forloopLast').innerText)">
+      </span>
+      <span class="larger">
+        <label class="form-check-label" for="flexSwitchCheckDefault"> LARGER </label>
+      </span>
     </div>
-  
+
     <br>
 
 
@@ -81,15 +80,12 @@
       <!--formin määrittelyssä annetaan p eli for silmukan muuttuja-->
 
       {% csrf_token %}
-
-
-
       <div class="card text-bg-primary mb-4" style=" max-width: 18rem; background-image: url(/static/productBG.jpg)">
         <!--JOS INSTOCK ON PIENEMPI KUIN 5 NÄYTETÄÄ SILLÄ RIVILLÄ TAUSTAVÄRI PUNAISELLA-->
         {% if p.instock < 5 %} <div class="card-header" id="Prodcard{{forloop.counter}}"
           style="background-color: red; font-size: medium; font-family: 'Brush Script MT',cursive;">{{p.name}}<img
             class="productPicture" src="/static/images/box50px.png" height="30">
-            <input id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
+          <input id="prow{{forloop.counter}}" type="text" value="{{p.name}}">
       </div>
 
       {%else%}
@@ -105,7 +101,7 @@
                       font-family: 'Brush Script MT',cursive;">
           <p hidden>{{p.productId}}</p>
           <p id="priceText" class="priceText">Price:</p>
-          <p id="priceTag" class="priceTag">{{p.price}}</p> €/can inStock:
+          <p id="priceTag{{forloop.counter}}" class="priceTag">{{p.price}}</p> €/can inStock:
           {{p.instock}} pcs
         </h5>
 
@@ -118,7 +114,7 @@
           onchange="setStrength('{{forloop.counter}}',16)">16 MG
 
         <input type="text" max="{{p.instock}}" id="amount{{forloop.counter}}" name="amount" size="3" value="0"
-          onchange="setAmountField();createProw('{{forloop.counter}}',document.getElementById('priceTag').innerText)">
+          onchange="setAmountField();createProw('{{forloop.counter}}',document.getElementById('priceTag{{forloop.counter}}').innerText)">
 
       </div>
   </div>
@@ -149,20 +145,9 @@
 <button onclick="ask(document.getElementById(`prodName{{forloop.counter}}`).value,document.getElementById(`pID{{forloop.counter}}`).value,event)" class="btn btn-info">?</button>
   -->
   </div>
-  <input hidden type="text" value="{{p.name}}" id="prodName{{forloop.counter}}" name="prodName">
 
-  <input hidden type="text" value="{{p.price}}" id="unitPrice">
   <input hidden itype="text" value="{{p.productId}}" id="pID{{forloop.counter}}">
 
-
-  <!--for silmukaan sisältyy linkki joissa on jokaisen tuotteen productid parametrina-->
-  <!--
-  <button id="sendOrder">
-
-    <a href="/select-product-send/{{p.productId}}/">
-      <i class="fa-solid fa-cart-plus"></i></a>
-
-  </button>-->
   </form>
   {%endfor%}
   </div>
@@ -182,19 +167,8 @@
 
 
     {% include 'orderForm.html' %}
-    <div id="orderRow"></div>
-    <p id="ordersFromList"></p>
-    <table id="orderTable">
-      <tr>
-        <td></td>
-      </tr>
-    </table>
-    <div id="clearOrder" class="clearOrder">
-      <button class="btn btn-warning" onclick="clearOrderTable()">X</button>
-    </div>
-
-    <button id="createorder" onclick="AddToCart()">Add to cart</button>
-    <p id="qtyList"></p>
+   
+   
 
     <p id="compare">{{code}}</p>
     <form action="/discount-code/" method="post">
@@ -203,24 +177,7 @@
       <button class="btn btn-primary" type="submit">Discount code</button>
     </form>
 
-    <form action="/save-order/" method="post">
-      <input hidden type="text" name="prodid" value="{{productId}}">
-      <input hidden id="qty" type="text" name="qty" value="">
-      <script>
-        getQty()
-      </script>
-      {% csrf_token %}
-
-
-      <input type="text" name="flname" placeholder="First and lastname">
-      <input type="text" name="address" placeholder="Address">
-      <input type="text" name="city" placeholder="City">
-      <input type="text" name="zip" placeholder="Zip code">
-      <br>
-      <textarea id="orderDetails" name="orderDetails"></textarea>
-
-      <input class="btn btn-primary" type="submit" value="Send order">
-    </form>
+   
 
     </table>
     <br>

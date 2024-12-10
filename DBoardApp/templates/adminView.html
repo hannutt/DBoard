@@ -19,10 +19,18 @@
     <title>Admin View</title>
 </head>
 
-<body class="adminBody" onload="countItems();">
+<body class="adminBody" onload="countItems();delivered();">
     <center>
         <h3>Admin view</h3>
     </center>
+    <div>
+        Search from orders:
+        <form action="/search-fromdb/" method="post">
+            {% csrf_token %}
+        <input type="text" name="search" id="search">
+        <button>Find</button>
+    </form>
+    </div>
 
     <br>
     <!--usedid sql-taulun numerot-->
@@ -47,8 +55,8 @@
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample0">
                 <div class="accordion-body">
                     {% for o in Orders %}
-                    <p id="oid{{forloop.counter}}">{{o.orderId}}</p>
-
+                    <p hidden id="oid{{forloop.counter}}">{{o.orderId}}</p>
+                    <!--btn container luokan avulla saadaan buttonit samalle-->
                     {{o.name}}
                     {{o.address}}
                     {{o.city}}
@@ -57,21 +65,32 @@
                     <p>Order:
                         {{o.orderedOrod}}
                     </p>
-                    <p><b>Order date: {{o.orderDate}}</b></p>
-                    <p id="delivered{{forloop.counter}}" class="delivered">Delivered: {{o.delivered}}</p>
-                    <!--editorder.html saa parametreina tilauksen tiedot-->
-                    <form action="/order-edit/{{o.orderId}}/{{o.name}}/{{o.city}}/{{o.zip}}/{{o.orderedOrod}}/{{o.address}}/{{o.orderDate}}">
+                    <form
+                        action="/order-edit/{{o.orderId}}/{{o.name}}/{{o.city}}/{{o.zip}}/{{o.orderedOrod}}/{{o.address}}/{{o.orderDate}}/"
+                        method="post">
+                        {% csrf_token %}
                         <button id="btn{{forloop.counter}}">Edit
                             order {{o.orderId}}</button>
                     </form>
-                    {%endfor%}
 
+                    <form action="/order-delete-admin/{{o.orderId}}/" method="post">
+                        {% csrf_token %}
+                        <button id="btnDel{{forloop.counter}}">X</button>
+                    </form>
+
+                    <p><b>Order date: {{o.orderDate}}</b></p>
+                    <p id="delivered{{forloop.counter}}" class="delivered">Delivered: {{o.delivered}}</p>
+                    <!--editorder.html saa parametreina tilauksen tiedot-->
                     <form action="/mark-delivered/" method="post">
                         {% csrf_token %}
                         <input hidden type="text" name="orderid" value="{{o.orderId}}">
 
                         <button id="setdelivered{{forloop.counter}}" type="submit"><i
                                 class="fa-solid fa-truck"></i></button>
+
+                    {%endfor%}
+
+                  
                         <br>
                         <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
                         {% if forloop.last %}
@@ -168,7 +187,7 @@
                                                         <button type="submit" class="btn btn-primary">Edit</button>
 
 
-                                                </form>
+                                                    </form>
                                                     {%endfor%}
 
                                                 </div>
@@ -220,7 +239,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                 {% include 'stockstatus.html'%}
+                                                    {% include 'stockstatus.html'%}
 
 
 </body>

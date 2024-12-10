@@ -62,10 +62,6 @@ function horizontalBar(visits,cb) {
 
 }
 
-
-
-
-
 function visitors() {
   var visits = document.getElementById("webshopvisitor").innerHTML
   var visitrep = visits.replace("{","").replace("}","")

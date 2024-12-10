@@ -8,29 +8,32 @@
     <script src="{% static 'js/productScripts.js' %}"></script>
 </head>
 
-<body onload="simulateBtnClick()"> 
-<div class="order-flex">
+<body onload="simulateBtnClick()">
+    <div class="order-flex">
 
-    <button hidden id="prodClick" onclick="getLSprods()">click</button>
-    <!--order form rivi-->
-    <h2>Order form</h2>
-    <p id="productIds"></p>
-   
-    <div id="tableplace"></div>
-    <button onclick="showform()">Fill order form</button>
-    <div id="orderForm" hidden>
-    <form action="/orderform-send/" method="post">
-        {% csrf_token %}
-    <input type="text" name="names" placeholder="First and lastname">
-    <input type="text" name="address" placeholder="Address">
-    <input type="text" name="city" placeholder="City">
-    <input type="text" name="zip" placeholder="Zip code">
-    <input type="text" name="orderRow" id="orderRow">
-    <br>
-    <button>Send order</button>
-</form>
-</div>
-</div>
+        <button hidden id="prodClick" onclick="getLSprods()">click</button>
+        <!--order form rivi-->
+        <h2>Order form</h2>
+        <form action="/back-to-shop/" method="post">
+            <button class="btn btn-info" id="gobackShop">Go back to shop</button>
+            {% csrf_token %}
+        </form>
+
+        <div id="tableplace"></div>
+        <button onclick="showform()">Fill order form</button>
+        <div id="orderForm" hidden>
+            <form action="/orderform-send/" method="post">
+                {% csrf_token %}
+                <input type="text" name="names" placeholder="First and lastname">
+                <input type="text" name="address" placeholder="Address">
+                <input type="text" name="city" placeholder="City">
+                <input type="text" name="zip" placeholder="Zip code">
+                <input type="text" name="orderRow" id="orderRow">
+                <br>
+                <button>Send order</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 

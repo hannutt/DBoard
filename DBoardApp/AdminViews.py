@@ -94,7 +94,7 @@ def delivered(request):
     return redirect(showAdminView)
 
 def orderEdit(request,orderid,name,city,zip,order,address,orderdate):
-    context={'orderid':orderid,"name":name,"city":city,"zip":zip,"order":order,"address":address,"orderdate":orderdate}
+    context={'orderid':orderid,"name":name,"city":city,"zip":zip,"order":order,"address":address,"orderDate":orderdate}
     return render(request,"orderEdit.html",context)
 
 
@@ -114,3 +114,18 @@ def adminEditOrder(request):
     orders.update_one(filter,updateOrder)
 
     return render(request,"orderEdit.html")
+
+def adminDeleteOrder(request,orderid):
+    orders = dbname['orders']
+    delQuery={'orderId':orderid}
+    orders.delete_one(delQuery)
+    return render(request,"adminView.html")
+
+def searchData(request):
+    orders = dbname['orders']
+    search=request.POST['search']
+    searchQuery={"name":search}
+    res = orders.find(searchQuery)
+    for x in res:
+        print(x)
+    return render(request,"adminView.html")

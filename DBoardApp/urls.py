@@ -51,9 +51,12 @@ urlpatterns = [
     path('register/',registerViews.showRegisteringPage),
     path("send-mail/",registerViews.sendEmail),
     path("order-edit/<int:orderid>/<str:name>/<str:city>/<str:zip>/<str:order>/<str:address>/<str:orderdate>/",AdminViews.orderEdit),
+    path("order-delete-admin/<int:orderid>/",AdminViews.adminDeleteOrder),
     path("admin-edit/",AdminViews.adminEditOrder),
     path("orderform/",orderForm.orderFormPage),
     path("orderform-send/",orderForm.saveOrderToDatabase),
+    path("search-fromdb/",AdminViews.searchData)
+   
     
    
 ]

@@ -78,9 +78,9 @@ function openForm() {
 function DelFromCart(lsItem) {
 
   prodCounter = localStorage.getItem("counter")
-  //prodCounter=prodCounter-1
-  localStorage.setItem("counter", parseInt(prodCounter) - 1)
-  document.getElementById("cartNum").innerHTML = parseInt(prodCounter)
+  prodCounter-=1
+  localStorage.setItem("counter",prodCounter)
+  document.getElementById("cartNum").innerText = prodCounter
   localStorage.removeItem(lsItem)
   console.log(lsItem)
 
@@ -158,8 +158,16 @@ function fontChange(switchVar, total) {
 }
 
 function getProductCounter() {
-  prodCounter = localStorage.getItem("counter")
-  document.getElementById("cartNum").innerHTML = parseInt(prodCounter)
+  if (localStorage.getItem("counter")===null){
+    var count=0
+    localStorage.setItem("counter",count)
+    document.getElementById("cartNum").innerText = count
+  }
+  else{
+    count = localStorage.getItem("counter")
+    document.getElementById("cartNum").innerText = count
+  }
+  //document.getElementById("cartNum").innerText = parseInt(prodCounter)
 }
 
 

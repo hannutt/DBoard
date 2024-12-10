@@ -82,8 +82,6 @@ def backToWebShop(request):
     return redirect (webshop)
 
 def webshop(request):
-    
-    
     collection = dbname['products']
     #maxId = collection.find().sort({'productId':-1}).limit(1)
     prods = collection.find()

@@ -1,4 +1,5 @@
 
+from datetime import date
 import random
 from django.shortcuts import render
 import pymongo
@@ -8,6 +9,8 @@ def orderFormPage(request):
 
 
 def saveOrderToDatabase(request):
+    today = date.today()
+    todayStr =today.strftime('%d.%m.%y')
     orrderid=random.randint(1,5000)
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     dbname = client['DBoardDB']
@@ -19,6 +22,6 @@ def saveOrderToDatabase(request):
     order=request.POST["orderRow"]
 
 
-    orderDetails = {"orderId":orrderid,"name":name,"address":address,"city":city,"zip":zipcode,"orderedOrod":order,"delivered":"no"}
+    orderDetails = {"orderId":orrderid,"name":name,"address":address,"city":city,"zip":zipcode,"orderedOrod":order,"delivered":"no","orderDate":todayStr}
     collection.insert_one(orderDetails)
     return render(request,"orderForm.html")

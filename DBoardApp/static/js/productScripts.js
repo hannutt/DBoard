@@ -1,9 +1,12 @@
 var pattern = /[0-9]/g
-
+var counter=0
 function adding(id) {
+  
+    localStorage.setItem("counter",counter+=1)
+    document.getElementById("cartNum").innerText=counter
     var qtyField = document.getElementById("amount" + id).value
     var qtyInt = parseInt(qtyField)
-    var priceField = document.getElementById("priceTag").innerHTML
+    var priceField = document.getElementById("priceTag"+id).innerHTML
     var priceInt = parseFloat(priceField)
     var sum = qtyInt * priceInt
 
@@ -21,11 +24,6 @@ function adding(id) {
         localStorage.setItem('orderrow' + randNum, row)
 
     }
-
-
-
-
-
 }
 var c = 0
 function showform() {
