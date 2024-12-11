@@ -88,9 +88,15 @@ Example view of admin dashboard made with Bootstrap accordion/collapse dive. Ico
 
 ADMINISTRATOR SEARCH FUNCTION
 
-the administrator can retrieve order information from the MongoDB database. First, the program searches for the field names of the "orders" collection using pymongo's Find method, after which the field names are displayed in the HTML selection component using the Django for-loop. The system administrator selects a field from the Select component, whose value is used as a search filter, and writes the search value in the input field.
+The administrator can retrieve order information from the MongoDB database. First, the program searches for the field names of the "orders" collection using pymongo's Find method, after which the field names are displayed in the HTML selection component using the Django for-loop. The system administrator selects a field from the Select component, whose value is used as a search filter, and writes the search value in the input field.
 
 The search filter and search value are sent to a Python function that performs a search based on them and displays the search results on an HTML page.
+
+The administrator can retrieve order information from the MongoDB database. First, the program searches for the field names of the "orders" collection using pymongo's Find method, after which the field names are displayed in the HTML selection component using the Django for-loop. The system administrator selects a field from the Select component, whose value is used as a search filter, and writes the search value in the input field.
+
+The search filter and search value are sent to a Python function that performs a search based on them and displays the search results on an HTML page.
+
+The user can also select the "show only relevant information" check box, in which case credentials etc. the information is removed from the search result and only personal and order information is displayed.
 
 ![alt text](DBoardApp/static/images/Dboardfind.png)
 

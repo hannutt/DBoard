@@ -129,15 +129,25 @@ def adminDeleteOrder(request,orderid):
     return render(request,"adminView.html")
 
 def searchData(request):
+    #checkboksin value attribuutin haku
+    selection = request.POST.getlist('relevantCB')
     results=[]
     field=request.POST['field']
     orders = dbname['orders']
-
     search=request.POST['search']
     searchQuery={field:search}
-    res = orders.find(searchQuery)
+    #jos checkboksi on valittu _id ja order id kentät eivät näy tuloksessa
+    if selection==['relevant']:
+        
+        showFields={"_id":0,"orderId":0}
+        
+        res = orders.find(searchQuery,showFields)
+    else:
+        res=orders.find(searchQuery)
+
     for r in res:
         results.append(r)
        
-    content={"results":results}
+        content={"results":results}
+    
     return render(request,"adminView.html",content)

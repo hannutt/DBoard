@@ -13,7 +13,7 @@
         if (d.includes("yes"))
         {
             var btn=document.getElementById("setdelivered"+i)
-            btn.setAttribute('disabled','true')
+            btn.disabled=true
             
         }
        

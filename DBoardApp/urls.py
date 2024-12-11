@@ -6,7 +6,7 @@ from DBoardApp import BanViews
 from DBoardApp import AdminViews
 from DBoardApp import registerViews
 from DBoardApp import orderForm
-from .views import saveCsv,webshop,productSelection,saveOrderToDb,discount,webshopAdmin,editProduct,updateProd,\
+from .views import saveCsv,webshop,discount,webshopAdmin,editProduct,updateProd,\
 backToWebShop
 
 
@@ -38,8 +38,7 @@ urlpatterns = [
     path('post-filter/',messageViews.filterPost),
     path('webshop/',webshop),
     path('discount-code/',discount),
-    #path('select-product-send/<int:productId>/',productSelection),
-    path('save-order/',saveOrderToDb),
+  
     path('adminView/',AdminViews.showAdminView),
     path('add-product/',AdminViews.AddProducts),
     #path('mark-delivered/',delivered),

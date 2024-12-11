@@ -24,39 +24,66 @@
         <h3>Admin view</h3>
     </center>
     <div>
-        <p>Select field</p>
-        <select name="fields" id="fields" onchange="getMongoField(this)">
-        {% for f in fields %}
 
-        <option value="{{f}}">{{f}}</option>
-        {%endfor%}
 
-        </select>
-        <br>
 
-        <p>Enter a search word</p>
-       
+
+
+
         <form action="/search-fromdb/" method="post">
+            <!--form-group row on bootstrapin luokka -->
+            <div class="form-group row">
+                <label for="fields">Select field</label>
+                <!--col-sm-10 määrittää sen sisälle käärityn elementin koon-->
+                <div class="col-sm-10">
+                    <select name="fields" id="fields" onchange="getMongoField(this)">
+                        <option value="" selected>select</option>
+                        {% for f in fields %}
+
+                        <option value="{{f}}">{{f}}</option>
+                        {%endfor%}
+
+                    </select>
+                </div>
+            </div>
+
             {% csrf_token %}
-            <input hidden type="text" name="field" id="field">
-            <input type="text" name="search" id="search">
-            <button  class="btn btn-primary">Find</button>
+            <div class="form-group row">
+
+                <input hidden type="text" name="field" id="field">
+
+                <label for="search">Enter a search word</label>
+                <div class="col-sm-10">
+                    <input type="text" name="search" id="search">
+                </div>
+                <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="relevantCB" id="relevantCB" value="relevant" name="relecantCB">
+                    <label class="form-check-label">Show only relevant info</label>
+                </div>
+                </div>
+                <div class="col-sm-10">
+                    <button class="btn btn-primary btn-sm">Find</button>
+                </div>
+            </div>
+
+            <table>
+                <tr id="data" hidden>
+                    <th>Name</th>
+                    <th>Order</th>
+                    <th>Orderdate</th>
+                </tr>
+                <tr>
+                    {% for r in results %}
+                    <td>{{r}}</td>
+
+                </tr>
+                {%endfor%}
+            </table>
+
         </form>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Order</th>
-                <th>Orderdate</th>
-            </tr>
-            <tr>
-                {% for r in results %}
-                <td>{{r.name}}</td>
-                <td>{{r.orderedOrod}}</td>
-                <td>{{r.orderDate}}</td>
-            </tr>
-            {%endfor%}
-        </table>
     </div>
+
 
     <br>
     <!--usedid sql-taulun numerot-->
@@ -83,6 +110,27 @@
                     {% for o in Orders %}
                     <p hidden id="oid{{forloop.counter}}">{{o.orderId}}</p>
                     <!--btn container luokan avulla saadaan buttonit samalle-->
+                    <div class="btn-container">
+                        <form action="/mark-delivered/" method="post">
+                            {% csrf_token %}
+                            <input hidden type="text" name="orderid" value="{{o.orderId}}">
+
+                            <button id="setdelivered{{forloop.counter}}" type="submit"><i
+                                    class="fa-solid fa-truck"></i></button>
+                        </form>
+                        <form
+                            action="/order-edit/{{o.orderId}}/{{o.name}}/{{o.city}}/{{o.zip}}/{{o.orderedOrod}}/{{o.address}}/{{o.orderDate}}/"
+                            method="post">
+                            {% csrf_token %}
+                            <button id="btn{{forloop.counter}}">Edit
+                                order {{o.orderId}}</button>
+                        </form>
+                        <form action="/order-delete-admin/{{o.orderId}}/" method="post">
+                            {% csrf_token %}
+                            <button id="btnDel{{forloop.counter}}">X</button>
+                        </form>
+
+                    </div>
                     {{o.name}}
                     {{o.address}}
                     {{o.city}}
@@ -91,37 +139,23 @@
                     <p>Order:
                         {{o.orderedOrod}}
                     </p>
-                    <form
-                        action="/order-edit/{{o.orderId}}/{{o.name}}/{{o.city}}/{{o.zip}}/{{o.orderedOrod}}/{{o.address}}/{{o.orderDate}}/"
-                        method="post">
-                        {% csrf_token %}
-                        <button id="btn{{forloop.counter}}">Edit
-                            order {{o.orderId}}</button>
-                    </form>
 
-                    <form action="/order-delete-admin/{{o.orderId}}/" method="post">
-                        {% csrf_token %}
-                        <button id="btnDel{{forloop.counter}}">X</button>
-                    </form>
+
 
                     <p><b>Order date: {{o.orderDate}}</b></p>
                     <p id="delivered{{forloop.counter}}" class="delivered">Delivered: {{o.delivered}}</p>
                     <!--editorder.html saa parametreina tilauksen tiedot-->
-                    <form action="/mark-delivered/" method="post">
-                        {% csrf_token %}
-                        <input hidden type="text" name="orderid" value="{{o.orderId}}">
-
-                        <button id="setdelivered{{forloop.counter}}" type="submit"><i
-                                class="fa-solid fa-truck"></i></button>
-
-                        {%endfor%}
 
 
-                        <br>
-                        <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
-                        {% if forloop.last %}
-                        <p id="last">{{forloop.counter}}</p>
-                        {%endif%}
+
+
+
+                    <br>
+                    <!--JOS KYSEESSÄ ON FORLOOPin VIIMEINEN LUKU, ASETETAAN SE LAST ID:LLÄ NIMETTYYN P-TAGIIN-->
+                    {% if forloop.last %}
+                    <p id="last">{{forloop.counter}}</p>
+                    {%endif%}
+                    {%endfor%}
 
                     </form>
 
@@ -134,7 +168,7 @@
             </div>
 
             <script>
-                delivered(document.getElementById("last").innerHTML)
+                delivered(document.getElementById("last").innerText)
             </script>
             <div class="accordion-item">
                 <!--accordion divin pituus 250 pikseliin-->
